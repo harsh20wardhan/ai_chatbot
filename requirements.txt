@@ -1,0 +1,9 @@
+requests
+beautifulsoup4
+docx2txt
+pdfminer.six
+pymupdf
+sentence-transformers
+transformers
+torch
+numpy

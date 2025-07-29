@@ -1,0 +1,9 @@
+# vector_db/docker-compose.yml
+version: '3.8'
+services:
+  qdrant:
+    image: qdrant/qdrant
+    restart: always
+    ports:
+      - "6333:6333"
+      - "6334:6334"
