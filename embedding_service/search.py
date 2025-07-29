@@ -5,15 +5,11 @@ model = SentenceTransformer("hkunlp/instructor-xl")
 client = QdrantClient(host="localhost", port=6333)
 collection_name = "chatbot_embeddings"
 
-question = "What is your return policy?"
+# Prompt user for their question via terminal/CLI
+question = input("Enter your question: ")
 query_vec = model.encode([question])[0]
 
-# Use new query_points method replacing deprecated search
-hits = client.query_points(
-    collection_name=collection_name,
-    query_vector=query_vec,
-    limit=3
-)
+hits = client.search(collection_name, query_vec, limit=3)
 
 for hit in hits:
     print(f"Score: {hit.score}")
