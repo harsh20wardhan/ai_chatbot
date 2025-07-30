@@ -7,3 +7,6 @@ sentence-transformers
 transformers
 torch
 numpy
+pandas
+openpyxl
+xlrd
