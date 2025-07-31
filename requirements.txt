@@ -1,9 +1,29 @@
-requests
-beautifulsoup4
-docx2txt
-pdfminer.six
-pymupdf
-sentence-transformers
-transformers
-torch
-numpy
+# API and Web Framework
+flask==2.3.3
+flask-socketio==5.3.6
+gunicorn==21.2.0
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Database
+pg8000==1.30.4
+
+# Database and Vector DB
+qdrant-client==1.6.4
+
+# Document Processing - Use PyPDF2 instead of PyMuPDF for better Windows compatibility
+PyPDF2==3.0.1
+docx2txt==0.8
+beautifulsoup4==4.12.2
+
+# Embeddings and ML
+sentence-transformers>=2.5.0
+torch>=2.2.0
+
+# HTTP Client
+requests==2.31.0
+
+# Utility
+tqdm==4.66.1
+uuid==1.30

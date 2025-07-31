@@ -1,0 +1,215 @@
+Detailed Approach Document: AI-Powered
+Customer Support Chatbot (Free & OpenSource Stack)
+1. Project Goals & Scope
+•
+
+•
+
+Objective: Build an embeddable AI customer support chatbot that answers website
+visitor queries based on website content, uploaded documents, and FAQ pages,
+using retrieval-augmented generation (RAG).
+Constraints: Use only free or open-source tools; minimize ongoing costs.
+
+2. Solution Overview
+The chatbot system will:
+•
+•
+
+Crawl and process public website content and user-uploaded files.
+Chunk and embed text using a locally hosted open-source model.
+
+•
+•
+
+Store embeddings in a free vector database.
+Serve a chat widget embeddable in any site, powered by a backend API (via
+Cloudflare Worker).
+Retrieve relevant info via semantic search and combine it with a language model for
+accurate, up-to-date answers.
+
+•
+
+3. High-Level Architecture
+Components & Technologies:
+Component
+
+Free/Opensource?
+
+Tool/Technology
+
+Auth/Database
+
+Supabase
+
+Free tier
+
+File Storage
+
+Supabase Storage
+
+Free tier
+
+Web Crawler
+
+Scrapy (Python)
+
+Yes
+
+Document Parser
+
+pdfminer.six, docx2txt,
+PyMuPDF
+
+Yes
+
+Embedding Model
+
+InstructorXL (HF, local)
+
+Yes
+
+Vector Database
+
+Qdrant (Docker)
+
+Yes
+
+RAG Engine
+
+LangChain or LlamaIndex
+
+Yes
+
+LLM (Chat Model)
+
+HuggingFace LLMs (local)
+
+Yes
+
+API Gateway
+
+Cloudflare Worker / Vercel
+
+Free tier
+
+Chat Widget
+
+Vanilla JS + Tailwind CDN
+
+Yes
+
+Admin Dashboard
+
+Appsmith Cloud (free)
+
+Yes
+
+CI/CD/DevOps
+
+GitHub Actions, Docker
+
+Yes
+
+4. Step-by-Step Approach
+Phase 1: Core Infrastructure Setup
+Core Infrastructure Setup
+•
+•
+•
+
+Set up repositories (GitHub) and define a basic project structure for modular
+development.
+Provision and configure Supabase for user management, bot config, file storage,
+and chat logging.
+Create a Docker Compose service for Qdrant (vector DB); test locally.
+
+Phase 2: Data Pipeline Implementation
+•
+
+•
+•
+
+Website Crawler:
+o Build Python/Scrapy scripts to recursively crawl user-specified pages,
+skipping navigation/ads/footer.
+Document Parser:
+o Set up Python scripts for PDF, DOCX, and TXT parsing; output plain text.
+Chunking:
+o Implement logic to break text into 500–1,000 token blocks for efficient
+embedding.
+
+Phase 3: Embedding & Storage
+•
+•
+•
+
+Integrate HuggingFace InstructorXL (or other free/compact sentence-transformer)
+for embedding.
+Store embeddings and metadata in Qdrant via Python Qdrant client.
+Record mapping (source URL/docname, chunk ID) in Supabase for traceability.
+
+Phase 4: API Development
+•
+
+•
+
+Scaffold Cloudflare Worker API for:
+o Authentication (delegating to Supabase)
+o Bot and document management
+o Triggering crawls/uploads
+o Embedding chat widget logic: /api/chat
+Implement a simple microservice (if needed) to handle local embedding and LLM
+inference outside Worker limitations.
+
+Phase 5: Retrieval-Augmented Chat Pipeline (RAG)
+•
+
+On a chat request:
+o Embed the user query locally.
+o Query Qdrant for top-k similar text chunks.
+o Pass retrieved context and user prompt to local LLM for answer generation.
+o Return the final answer along with source attributions (URLs or doc names).
+
+Phase 6: Frontend Integration
+•
+
+•
+
+Chat Widget:
+o Build a static, embeddable JS widget (HTML + Vanilla JS/Tailwind CDN).
+o Configure it to POST chat messages and display responses.
+Admin Dashboard:
+o Use Appsmith (or similar) to provide a free, user-friendly management UI for
+bot owners (CRUD, uploads, status).
+
+Phase 7: Security, Monitoring & DevOps
+•
+•
+•
+•
+•
+
+Use environment variables for all secrets—store securely in deployment platforms.
+Implement API rate-limiting and origin validation in the Cloudflare Worker.
+Log critical pipeline events (crawls, embeddings, chat requests) for
+troubleshooting.
+Set up CI/CD using GitHub Actions: automate linting, testing, and (if possible)
+deployment to Cloudflare Pages/Workers and Netlify.
+Write shell scripts for repeatable local startup and teardown.
+
+5. Deliverables
+•
+•
+•
+•
+•
+•
+
+Modular codebase split into crawler, parser, embedding, and API layers
+Configured Supabase and vector DB environments
+Fully working RAG QA pipeline
+Embeddable chat widget with backend integration
+Comprehensive documentation and scripts for local and cloud deployment
+Tests for key pipeline steps
+
+

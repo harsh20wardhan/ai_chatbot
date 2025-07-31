@@ -1,0 +1,20 @@
+{
+  "name": "ai-chatbot-api",
+  "version": "1.0.0",
+  "description": "API for AI customer support chatbot",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.22.0"
+  },
+  "type": "module"
+} 

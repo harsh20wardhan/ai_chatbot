@@ -1,0 +1,576 @@
+{
+  "info": {
+    "_postman_id": "9e210d8f-4e7b-4d13-9f86-0e84a7b4e12f",
+    "name": "AI Chatbot API",
+    "description": "Collection for AI Chatbot microservices\n\nNOTE: To use authentication endpoints, you need a working Supabase instance. The Cloudflare worker API (port 8787) connects to Supabase.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"securepassword\",\n    \"name\": \"User Name\"\n}"
+            },
+            "url": {
+              "raw": "{{api_url}}/api/auth/register",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Register a new user"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"securepassword\"\n}"
+            },
+            "url": {
+              "raw": "{{api_url}}/api/auth/login",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Log in user"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{api_url}}/api/auth/logout",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Log out user"
+          }
+        },
+        {
+          "name": "Get current user",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{api_url}}/api/auth/user",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "user"
+              ]
+            },
+            "description": "Get current user information"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bot Management",
+      "item": [
+        {
+          "name": "List all bots",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{api_url}}/api/bots",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "bots"
+              ]
+            },
+            "description": "List all bots"
+          }
+        },
+        {
+          "name": "Create a new bot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"My Bot\",\n    \"description\": \"This is my new chatbot\",\n    \"welcome_message\": \"Hello! How can I help you today?\",\n    \"avatar_url\": \"https://example.com/avatar.png\"\n}"
+            },
+            "url": {
+              "raw": "{{api_url}}/api/bots",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "bots"
+              ]
+            },
+            "description": "Create a new bot"
+          }
+        },
+        {
+          "name": "Get bot details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{api_url}}/api/bots/:botId",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "bots",
+                ":botId"
+              ],
+              "variable": [
+                {
+                  "key": "botId",
+                  "value": "123e4567-e89b-12d3-a456-426614174000"
+                }
+              ]
+            },
+            "description": "Get bot details"
+          }
+        },
+        {
+          "name": "Update bot",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated Bot Name\",\n    \"description\": \"Updated description\",\n    \"welcome_message\": \"Welcome to the updated bot!\",\n    \"avatar_url\": \"https://example.com/updated-avatar.png\"\n}"
+            },
+            "url": {
+              "raw": "{{api_url}}/api/bots/:botId",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "bots",
+                ":botId"
+              ],
+              "variable": [
+                {
+                  "key": "botId",
+                  "value": "123e4567-e89b-12d3-a456-426614174000"
+                }
+              ]
+            },
+            "description": "Update bot"
+          }
+        },
+        {
+          "name": "Delete bot",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{api_url}}/api/bots/:botId",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "bots",
+                ":botId"
+              ],
+              "variable": [
+                {
+                  "key": "botId",
+                  "value": "123e4567-e89b-12d3-a456-426614174000"
+                }
+              ]
+            },
+            "description": "Delete bot"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Crawler",
+      "item": [
+        {
+          "name": "Start crawling website",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"url\": \"https://example.com\",\n    \"max_pages\": 100,\n    \"max_depth\": 3,\n    \"bot_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+            },
+            "url": {
+              "raw": "{{api_url}}/api/crawl/website",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "crawl",
+                "website"
+              ]
+            },
+            "description": "Start crawling a website"
+          }
+        },
+        {
+          "name": "Check crawl status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{api_url}}/api/crawl/status/:jobId",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "crawl",
+                "status",
+                ":jobId"
+              ],
+              "variable": [
+                {
+                  "key": "jobId",
+                  "value": "job-123456"
+                }
+              ]
+            },
+            "description": "Check crawl status"
+          }
+        },
+        {
+          "name": "Cancel crawl job",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{api_url}}/api/crawl/job/:jobId",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "crawl",
+                "job",
+                ":jobId"
+              ],
+              "variable": [
+                {
+                  "key": "jobId",
+                  "value": "job-123456"
+                }
+              ]
+            },
+            "description": "Cancel crawl job"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Send message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bot_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"message\": \"What services do you offer?\",\n    \"conversation_id\": \"conv-123456\"\n}"
+            },
+            "url": {
+              "raw": "{{api_url}}/api/chat",
+              "host": [
+                "{{api_url}}"
+              ],
+              "path": [
+                "api",
+                "chat"
+              ]
+            },
+            "description": "Send a message and get a RAG-powered response"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Microservices Direct Access",
+      "item": [
+        {
+          "name": "Crawler Service",
+          "item": [
+            {
+              "name": "Crawler Health Check",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{crawler_url}}/health",
+                  "host": [
+                    "{{crawler_url}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                },
+                "description": "Check if the crawler service is up"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Parser Service",
+          "item": [
+            {
+              "name": "Parser Health Check",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{parser_url}}/health",
+                  "host": [
+                    "{{parser_url}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                },
+                "description": "Check if the parser service is up"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Embedding Service",
+          "item": [
+            {
+              "name": "Embedding Health Check",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{embedding_url}}/health",
+                  "host": [
+                    "{{embedding_url}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                },
+                "description": "Check if the embedding service is up"
+              }
+            }
+          ]
+        },
+        {
+          "name": "RAG Service",
+          "item": [
+            {
+              "name": "RAG Health Check",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{rag_url}}/health",
+                  "host": [
+                    "{{rag_url}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                },
+                "description": "Check if the RAG service is up"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Qdrant",
+      "item": [
+        {
+          "name": "Qdrant Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{qdrant_url}}/healthz",
+              "host": [
+                "{{qdrant_url}}"
+              ],
+              "path": [
+                "healthz"
+              ]
+            },
+            "description": "Check if Qdrant vector DB is up"
+          }
+        },
+        {
+          "name": "List Collections",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{qdrant_url}}/collections",
+              "host": [
+                "{{qdrant_url}}"
+              ],
+              "path": [
+                "collections"
+              ]
+            },
+            "description": "List all collections in Qdrant"
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Store JWT token from login response",
+          "if (pm.response.code === 200 && pm.info.requestName === \"Login\") {",
+          "    var jsonResponse = pm.response.json();",
+          "    if (jsonResponse.token) {",
+          "        pm.environment.set(\"token\", jsonResponse.token);",
+          "        console.log(\"Token saved to environment\");",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+} 

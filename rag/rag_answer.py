@@ -2,7 +2,7 @@ import requests
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 
-ollama_model = "llama3"  # Or any model you have pulled with Ollama (check with: ollama list)
+ollama_model = "mistral:7b"  # Or any model you have pulled with Ollama (check with: ollama list)
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
 embed_model = SentenceTransformer("hkunlp/instructor-xl")

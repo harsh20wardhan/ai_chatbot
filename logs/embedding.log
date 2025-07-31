@@ -1,0 +1,14 @@
+C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
+  warnings.warn("Api key is used with unsecure connection.")
+Loading embedding model...
+Embedding model loaded
+Connecting to Qdrant...
+Connected to Qdrant at http://localhost:6333
+Starting embedding service on port 8003...
+ * Serving Flask app 'embedding_service'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8003
+ * Running on http://10.198.50.4:8003
+Press CTRL+C to quit

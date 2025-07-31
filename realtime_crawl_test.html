@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime Crawl Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+        .log {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+        .log-info { color: #0066cc; }
+        .log-success { color: #28a745; }
+        .log-warning { color: #ffc107; }
+        .log-error { color: #dc3545; }
+        .progress {
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #007bff;
+            transition: width 0.3s ease;
+        }
+        .pages-list {
+            margin-top: 20px;
+        }
+        .page-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .page-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .page-url {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .page-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .status-pending { background-color: #ffc107; color: #000; }
+        .status-embedded { background-color: #28a745; color: white; }
+        .status-failed { background-color: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Realtime Crawl Test</h1>
+        
+        <div class="form-group">
+            <label for="url">Website URL:</label>
+            <input type="text" id="url" placeholder="https://example.com" value="https://example.com">
+        </div>
+        
+        <div class="form-group">
+            <label for="maxDepth">Max Depth:</label>
+            <input type="number" id="maxDepth" value="3" min="1" max="10">
+        </div>
+        
+        <div class="form-group">
+            <label for="botId">Bot ID:</label>
+            <input type="text" id="botId" placeholder="Enter bot ID">
+        </div>
+        
+        <div class="form-group">
+            <label for="excludePatterns">Exclude Patterns (comma-separated):</label>
+            <input type="text" id="excludePatterns" placeholder="admin,login,logout">
+        </div>
+        
+        <button id="startCrawl" onclick="startCrawl()">Start Realtime Crawl</button>
+        <button id="stopCrawl" onclick="stopCrawl()" disabled>Stop Crawl</button>
+        <button id="clearLog" onclick="clearLog()">Clear Log</button>
+        
+        <div class="status" id="status">
+            <strong>Status:</strong> Ready to start crawl
+        </div>
+        
+        <div class="progress" id="progress" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div id="progressText">0%</div>
+        </div>
+        
+        <div class="log" id="log"></div>
+        
+        <div class="pages-list" id="pagesList" style="display: none;">
+            <h3>Crawled Pages</h3>
+            <div id="pagesContainer"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        let socket = null;
+        let currentSessionId = null;
+        let isCrawling = false;
+        
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logContainer.appendChild(entry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('status').innerHTML = `<strong>Status:</strong> ${message}`;
+        }
+        
+        function updateProgress(percent) {
+            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressText').textContent = `${percent}%`;
+        }
+        
+        async function startCrawl() {
+            const url = document.getElementById('url').value;
+            const maxDepth = document.getElementById('maxDepth').value;
+            const botId = document.getElementById('botId').value;
+            const excludePatterns = document.getElementById('excludePatterns').value;
+            
+            if (!url || !botId) {
+                alert('Please enter both URL and Bot ID');
+                return;
+            }
+            
+            document.getElementById('startCrawl').disabled = true;
+            document.getElementById('stopCrawl').disabled = false;
+            isCrawling = true;
+            
+            updateStatus('Starting crawl...');
+            log('Starting realtime crawl...', 'info');
+            
+            try {
+                // Start the crawl job
+                const response = await fetch('/api/realtime-crawl/start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer your-auth-token' // Replace with actual auth
+                    },
+                    body: JSON.stringify({
+                        url,
+                        maxDepth: parseInt(maxDepth),
+                        botId,
+                        excludePatterns: excludePatterns ? excludePatterns.split(',').map(p => p.trim()) : []
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+                }
+                
+                const data = await response.json();
+                currentSessionId = data.session_id;
+                
+                log(`Crawl job started: ${data.job_id}`, 'success');
+                log(`Session ID: ${data.session_id}`, 'info');
+                
+                // Connect to WebSocket
+                connectWebSocket(data.session_id);
+                
+                updateStatus('Crawling in progress...');
+                document.getElementById('progress').style.display = 'block';
+                
+            } catch (error) {
+                log(`Error starting crawl: ${error.message}`, 'error');
+                updateStatus('Failed to start crawl');
+                document.getElementById('startCrawl').disabled = false;
+                document.getElementById('stopCrawl').disabled = true;
+                isCrawling = false;
+            }
+        }
+        
+        function connectWebSocket(sessionId) {
+            // Replace with your actual WebSocket URL
+            const wsUrl = 'ws://localhost:8005';
+            
+            try {
+                socket = io(wsUrl);
+                
+                socket.on('connect', () => {
+                    log('WebSocket connected', 'success');
+                    socket.emit('join', { session_id: sessionId });
+                });
+                
+                socket.on('connected', (data) => {
+                    log(`Joined session: ${data.session_id}`, 'success');
+                });
+                
+                socket.on('crawl_status', (data) => {
+                    log(`Crawling: ${data.url} (${data.pages_crawled}/${data.total_pages})`, 'info');
+                    updateStatus(`Crawling: ${data.url}`);
+                });
+                
+                socket.on('page_crawled', (data) => {
+                    log(`Page crawled: ${data.title} (${data.content_length} chars)`, 'success');
+                    addPageToList(data);
+                });
+                
+                socket.on('embedding_started', (data) => {
+                    log(`Embedding started for page: ${data.page_id}`, 'info');
+                });
+                
+                socket.on('embedding_progress', (data) => {
+                    if (data.status === 'storing_chunks') {
+                        const percent = Math.round((data.chunks_processed / data.total_chunks) * 100);
+                        updateProgress(percent);
+                    }
+                });
+                
+                socket.on('embedding_completed', (data) => {
+                    log(`Embedding completed for page: ${data.page_id} (${data.chunks_stored} chunks)`, 'success');
+                    updatePageStatus(data.page_id, 'embedded');
+                });
+                
+                socket.on('crawl_completed', (data) => {
+                    log(`Crawl completed! Total pages: ${data.total_pages}`, 'success');
+                    updateStatus('Crawl completed');
+                    updateProgress(100);
+                    document.getElementById('startCrawl').disabled = false;
+                    document.getElementById('stopCrawl').disabled = true;
+                    isCrawling = false;
+                });
+                
+                socket.on('crawl_error', (data) => {
+                    log(`Crawl error: ${data.error}`, 'error');
+                });
+                
+                socket.on('embedding_error', (data) => {
+                    log(`Embedding error for page ${data.page_id}: ${data.error}`, 'error');
+                    updatePageStatus(data.page_id, 'failed');
+                });
+                
+                socket.on('disconnect', () => {
+                    log('WebSocket disconnected', 'warning');
+                });
+                
+            } catch (error) {
+                log(`WebSocket connection error: ${error.message}`, 'error');
+            }
+        }
+        
+        function addPageToList(pageData) {
+            const container = document.getElementById('pagesContainer');
+            const pageDiv = document.createElement('div');
+            pageDiv.className = 'page-item';
+            pageDiv.id = `page-${pageData.page_id}`;
+            
+            pageDiv.innerHTML = `
+                <div class="page-title">${pageData.title}</div>
+                <div class="page-url">${pageData.url}</div>
+                <div class="page-status status-pending">Pending</div>
+            `;
+            
+            container.appendChild(pageDiv);
+            document.getElementById('pagesList').style.display = 'block';
+        }
+        
+        function updatePageStatus(pageId, status) {
+            const pageDiv = document.getElementById(`page-${pageId}`);
+            if (pageDiv) {
+                const statusDiv = pageDiv.querySelector('.page-status');
+                statusDiv.className = `page-status status-${status}`;
+                statusDiv.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+            }
+        }
+        
+        function stopCrawl() {
+            if (socket) {
+                socket.disconnect();
+            }
+            
+            updateStatus('Crawl stopped');
+            document.getElementById('startCrawl').disabled = false;
+            document.getElementById('stopCrawl').disabled = true;
+            isCrawling = false;
+            
+            log('Crawl stopped by user', 'warning');
+        }
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (socket) {
+                socket.disconnect();
+            }
+        });
+    </script>
+</body>
+</html> 

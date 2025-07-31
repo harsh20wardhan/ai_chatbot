@@ -1,0 +1,43 @@
+name = "ai-chatbot-api"
+main = "src/index.js"
+compatibility_date = "2023-10-30"
+
+# KV Namespace for caching (optional)
+# kv_namespaces = [
+#   { binding = "CACHE", id = "your-kv-namespace-id" }
+# ]
+
+[vars]
+SUPABASE_URL = "https://qpfljbjbyuiymeqghvsz.supabase.co"
+QDRANT_URL = "http://localhost:6333"
+CRAWLER_SERVICE_URL = "http://localhost:8001"
+PARSER_SERVICE_URL = "http://localhost:8002"
+EMBEDDINGS_SERVICE_URL = "http://localhost:8003"
+RAG_SERVICE_URL = "http://localhost:8004"
+
+# Secret environment variables
+# Set these using `wrangler secret put VARIABLE_NAME`
+# - SUPABASE_ANON_KEY
+# - SUPABASE_SERVICE_ROLE_KEY
+# - QDRANT_API_KEY
+# - CRAWLER_SERVICE_KEY
+# - PARSER_SERVICE_KEY
+# - EMBEDDINGS_SERVICE_KEY
+# - RAG_SERVICE_KEY
+
+[triggers]
+# This is an optional scheduled task to clean up expired cache entries
+# crons = ["0 0 * * *"]
+
+# Development environment
+[env.dev]
+# Override variables for development if needed
+# vars = { ... }
+
+# Production environment
+[env.production]
+# Any production-specific configuration
+# vars = { ... }
+
+# Enable Node.js compatibility
+compatibility_flags = ["nodejs_compat"] 

@@ -1,0 +1,66 @@
+
+> ai-chatbot-api@1.0.0 dev
+> wrangler dev
+
+
+ ⛅️ wrangler 3.114.12 (update available 4.26.1)
+-----------------------------------------------
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mThe version of Wrangler you are using is now out-of-date.[0m
+
+  Please update to the latest version to prevent critical errors.
+  Run `npm install --save-dev wrangler@4` to update to the latest version.
+  After installation, run Wrangler with `npx wrangler`.
+
+
+Using vars defined in .dev.vars
+Your Worker and resources are simulated locally via Miniflare. For more information, see: https://developers.cloudflare.com/workers/testing/local-development.
+
+Your worker has access to the following bindings:
+- Vars:
+  - SUPABASE_URL: "https://qpfljbjbyuiymeqghvsz.supabase..."
+  - QDRANT_URL: "http://localhost:6333"
+  - CRAWLER_SERVICE_URL: "http://localhost:8001"
+  - PARSER_SERVICE_URL: "http://localhost:8002"
+  - EMBEDDINGS_SERVICE_URL: "http://localhost:8003"
+  - RAG_SERVICE_URL: "http://localhost:8004"
+  - SUPABASE_ANON_KEY: "(hidden)"
+  - SUPABASE_SERVICE_ROLE_KEY: "(hidden)"
+  - ALLOWED_ORIGIN: "(hidden)"
+  - QDRANT_API_KEY: "(hidden)"
+  - CRAWLER_SERVICE_KEY: "(hidden)"
+  - PARSER_SERVICE_KEY: "(hidden)"
+  - EMBEDDINGS_SERVICE_KEY: "(hidden)"
+  - RAG_SERVICE_KEY: "(hidden)"
+  - OLLAMA_URL: "(hidden)"
+  - OLLAMA_MODEL: "(hidden)"
+  - REALTIME_CRAWL_SERVICE_URL: "(hidden)"
+  - REALTIME_CRAWL_SERVICE_KEY: "(hidden)"
+  - SUPABASE_DB_HOST: "(hidden)"
+  - SUPABASE_DB_NAME: "(hidden)"
+  - SUPABASE_DB_USER: "(hidden)"
+  - SUPABASE_DB_PASSWORD: "(hidden)"
+  - SUPABASE_DB_PORT: "(hidden)"
+[wrangler:inf] Ready on http://127.0.0.1:8787
+⎔ Starting local server...
+[wrangler:inf] GET /api/realtime-crawl/status/2bfe6d2a-e648-4c4d-a58f-0dc496fb59f4 200 OK (2794ms)
+[REALTIME_CRAWL] Starting realtime crawl request...
+[REALTIME_CRAWL] Request data: {
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
+  maxDepth: 2,
+  excludePatterns: [],
+  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
+}
+[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
+[REALTIME_CRAWL] Bot verified successfully
+[REALTIME_CRAWL] Creating crawl job in database...
+[REALTIME_CRAWL] Crawl job created successfully: 9d6c4fdf-37f9-4aa8-b301-97a337abb459
+[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
+[REALTIME_CRAWL] Realtime crawler service started successfully: {
+  max_depth: 2,
+  session_id: '15dca05d-d14d-481a-92e5-a26ce4883a16',
+  status: 'started',
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
+}
+[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (1710ms)
+[wrangler:inf] GET /api/realtime-crawl/status/9d6c4fdf-37f9-4aa8-b301-97a337abb459 200 OK (17696ms)

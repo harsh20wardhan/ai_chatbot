@@ -1,0 +1,40 @@
+C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
+  warnings.warn("Api key is used with unsecure connection.")
+Loading embedding model...
+Embedding model loaded
+Connecting to Qdrant...
+Connected to Qdrant at http://localhost:6333
+Starting realtime crawl service on port 8005...
+ * Serving Flask app 'realtime_crawl_service'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8005
+ * Running on http://10.198.50.4:8005
+Press CTRL+C to quit
+ * Restarting with stat
+C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
+  warnings.warn("Api key is used with unsecure connection.")
+ * Debugger is active!
+ * Debugger PIN: 600-581-873
+127.0.0.1 - - [31/Jul/2025 15:55:02] "GET /crawl-status/2bfe6d2a-e648-4c4d-a58f-0dc496fb59f4 HTTP/1.1" 500 -
+127.0.0.1 - - [31/Jul/2025 15:55:22] "POST /realtime-crawl HTTP/1.1" 200 -
+127.0.0.1 - - [31/Jul/2025 16:04:06] "GET /crawl-status/9d6c4fdf-37f9-4aa8-b301-97a337abb459 HTTP/1.1" 500 -
+Loading embedding model...
+Embedding model loaded
+Connecting to Qdrant...
+Connected to Qdrant at http://localhost:6333
+Starting realtime crawl service on port 8005...
+[REALTIME_CRAWL] Error getting status: cannot convert dictionary update sequence element #0 to a sequence
+[REALTIME_CRAWL] Starting realtime crawl for https://webscraper.io/test-sites/e-commerce/allinone
+[REALTIME_CRAWL] Starting crawl for https://webscraper.io/test-sites/e-commerce/allinone with max_pages=2
+[REALTIME_CRAWL] Crawling: https://webscraper.io/test-sites/e-commerce/allinone
+[REALTIME_CRAWL] Database error for https://webscraper.io/test-sites/e-commerce/allinone: {'S': 'ERROR', 'V': 'ERROR', 'C': '23502', 'M': 'null value in column "user_id" of relation "crawled_pages" violates not-null constraint', 'D': 'Failing row contains (c923bfc1-ebc6-4cab-b026-d9ac732edb8c, 9d6c4fdf-37f9-4aa8-b301-97a337abb459, 40fffdbb-932b-4a2f-aa22-9b004cee27fa, null, https://webscraper.io/test-sites/e-commerce/allinone, Allinone | Web Scraper Test Sites, Allinone | Web Scraper Test Sites Test Sites Home Computers Phon..., 945, pending, null, 2025-07-31 10:25:23.771027+00, null, null).', 's': 'public', 't': 'crawled_pages', 'c': 'user_id', 'F': 'execMain.c', 'L': '1982', 'R': 'ExecConstraints'}
+[REALTIME_CRAWL] Successfully crawled: https://webscraper.io/test-sites/e-commerce/allinone (945 chars)
+[REALTIME_CRAWL] Crawling: https://webscraper.io/test-sites/e-commerce/allinone/computers
+[REALTIME_CRAWL] Failed https://webscraper.io/test-sites/e-commerce/allinone/computers: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+[REALTIME_CRAWL] Crawling: https://webscraper.io/test-sites/e-commerce/allinone/phones
+[REALTIME_CRAWL] Database error for https://webscraper.io/test-sites/e-commerce/allinone/phones: {'S': 'ERROR', 'V': 'ERROR', 'C': '23502', 'M': 'null value in column "user_id" of relation "crawled_pages" violates not-null constraint', 'D': 'Failing row contains (bdecacf8-c469-4878-b9fb-afdd56bfa341, 9d6c4fdf-37f9-4aa8-b301-97a337abb459, 40fffdbb-932b-4a2f-aa22-9b004cee27fa, null, https://webscraper.io/test-sites/e-commerce/allinone/phones, Allinone | Web Scraper Test Sites, Allinone | Web Scraper Test Sites Test Sites Home Computers Phon..., 612, pending, null, 2025-07-31 10:25:27.056695+00, null, null).', 's': 'public', 't': 'crawled_pages', 'c': 'user_id', 'F': 'execMain.c', 'L': '1982', 'R': 'ExecConstraints'}
+[REALTIME_CRAWL] Successfully crawled: https://webscraper.io/test-sites/e-commerce/allinone/phones (612 chars)
+[REALTIME_CRAWL] Crawl completed. Total pages: 2
+[REALTIME_CRAWL] Error getting status: cannot convert dictionary update sequence element #0 to a sequence
