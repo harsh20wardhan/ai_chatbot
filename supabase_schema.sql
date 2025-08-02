@@ -85,6 +85,21 @@ CREATE TABLE documents (
   processed_at TIMESTAMPTZ
 );
 
+-- Create document_chunks table to store document content chunks
+CREATE TABLE document_chunks (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+  bot_id UUID NOT NULL REFERENCES bots(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  chunk_index INTEGER NOT NULL,
+  chunk_text TEXT NOT NULL,
+  chunk_length INTEGER NOT NULL,
+  embedding_vector REAL[], -- Store the actual embedding vector
+  qdrant_point_id TEXT, -- Store the Qdrant point ID for reference
+  embedded_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- Create embedding_jobs table
 CREATE TABLE embedding_jobs (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -124,6 +139,7 @@ ALTER TABLE crawled_pages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE embedding_chunks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE realtime_crawl_sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE document_chunks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE embedding_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE conversations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
@@ -150,6 +166,10 @@ CREATE POLICY realtime_crawl_sessions_user_policy ON realtime_crawl_sessions
 
 -- RLS policy for documents
 CREATE POLICY documents_user_policy ON documents
+  USING (user_id = auth.uid());
+  
+-- RLS policy for document_chunks
+CREATE POLICY document_chunks_user_policy ON document_chunks
   USING (user_id = auth.uid());
 
 -- RLS policy for embedding_jobs
@@ -179,4 +199,6 @@ CREATE INDEX idx_crawled_pages_crawl_job_id ON crawled_pages(crawl_job_id);
 CREATE INDEX idx_crawled_pages_bot_id ON crawled_pages(bot_id);
 CREATE INDEX idx_embedding_chunks_crawled_page_id ON embedding_chunks(crawled_page_id);
 CREATE INDEX idx_embedding_chunks_bot_id ON embedding_chunks(bot_id);
-CREATE INDEX idx_realtime_crawl_sessions_session_token ON realtime_crawl_sessions(session_token); 
+CREATE INDEX idx_realtime_crawl_sessions_session_token ON realtime_crawl_sessions(session_token);
+CREATE INDEX idx_document_chunks_document_id ON document_chunks(document_id);
+CREATE INDEX idx_document_chunks_bot_id ON document_chunks(bot_id); 

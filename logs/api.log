@@ -3,7 +3,7 @@
 > wrangler dev
 
 
- ⛅️ wrangler 3.114.12 (update available 4.26.1)
+ ⛅️ wrangler 3.114.12 (update available 4.27.0)
 -----------------------------------------------
 
 [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mThe version of Wrangler you are using is now out-of-date.[0m
@@ -43,7 +43,6 @@ Your worker has access to the following bindings:
   - SUPABASE_DB_PORT: "(hidden)"
 [wrangler:inf] Ready on http://127.0.0.1:8787
 ⎔ Starting local server...
-[wrangler:inf] GET /api/realtime-crawl/status/2bfe6d2a-e648-4c4d-a58f-0dc496fb59f4 200 OK (2794ms)
 [REALTIME_CRAWL] Starting realtime crawl request...
 [REALTIME_CRAWL] Request data: {
   url: 'https://webscraper.io/test-sites/e-commerce/allinone',
@@ -54,13 +53,145 @@ Your worker has access to the following bindings:
 [REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
 [REALTIME_CRAWL] Bot verified successfully
 [REALTIME_CRAWL] Creating crawl job in database...
-[REALTIME_CRAWL] Crawl job created successfully: 9d6c4fdf-37f9-4aa8-b301-97a337abb459
+[REALTIME_CRAWL] Crawl job created successfully: 6f9f59c4-d8ca-40ba-9596-f219c969d784
 [REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
 [REALTIME_CRAWL] Realtime crawler service started successfully: {
+  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
+  job_id: '6f9f59c4-d8ca-40ba-9596-f219c969d784',
   max_depth: 2,
-  session_id: '15dca05d-d14d-481a-92e5-a26ce4883a16',
+  session_id: '98c63271-ec92-4a61-a595-e9754b44c735',
   status: 'started',
   url: 'https://webscraper.io/test-sites/e-commerce/allinone'
 }
-[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (1710ms)
-[wrangler:inf] GET /api/realtime-crawl/status/9d6c4fdf-37f9-4aa8-b301-97a337abb459 200 OK (17696ms)
+[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2918ms)
+[REALTIME_CRAWL] Starting realtime crawl request...
+[REALTIME_CRAWL] Request data: {
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
+  maxDepth: 2,
+  excludePatterns: [],
+  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
+}
+[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
+[REALTIME_CRAWL] Bot verified successfully
+[REALTIME_CRAWL] Creating crawl job in database...
+[REALTIME_CRAWL] Crawl job created successfully: eb51a61f-04e8-4205-a197-a580cfc4e5e0
+[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
+[REALTIME_CRAWL] Realtime crawler service started successfully: {
+  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
+  job_id: 'eb51a61f-04e8-4205-a197-a580cfc4e5e0',
+  max_depth: 2,
+  session_id: 'c266c6a2-8a4a-4310-a2cf-7ad3171184a0',
+  status: 'started',
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
+}
+[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2034ms)
+[REALTIME_CRAWL] Starting realtime crawl request...
+[REALTIME_CRAWL] Request data: {
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
+  maxDepth: 2,
+  excludePatterns: [],
+  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
+}
+[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
+[REALTIME_CRAWL] Bot verified successfully
+[REALTIME_CRAWL] Creating crawl job in database...
+[REALTIME_CRAWL] Crawl job created successfully: 2bf9d922-ef7f-4607-8b81-b735d40b311d
+[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
+[REALTIME_CRAWL] Realtime crawler service started successfully: {
+  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
+  job_id: '2bf9d922-ef7f-4607-8b81-b735d40b311d',
+  max_depth: 2,
+  session_id: 'a2c04a44-784d-429c-896d-008210b0267d',
+  status: 'started',
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
+}
+[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2445ms)
+[REALTIME_CRAWL] Starting realtime crawl request...
+[REALTIME_CRAWL] Request data: {
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
+  maxDepth: 2,
+  excludePatterns: [],
+  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
+}
+[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
+[REALTIME_CRAWL] Bot verified successfully
+[REALTIME_CRAWL] Creating crawl job in database...
+[REALTIME_CRAWL] Crawl job created successfully: 9ece990b-17bf-4484-a414-3c1dc0952778
+[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
+[REALTIME_CRAWL] Realtime crawler service started successfully: {
+  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
+  job_id: '9ece990b-17bf-4484-a414-3c1dc0952778',
+  max_depth: 2,
+  session_id: 'f104479b-5d3d-4db2-962d-1b026c452674',
+  status: 'started',
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
+}
+[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2679ms)
+[REALTIME_CRAWL] Starting realtime crawl request...
+[REALTIME_CRAWL] Request data: {
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
+  maxDepth: 2,
+  excludePatterns: [],
+  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
+}
+[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
+[REALTIME_CRAWL] Bot verified successfully
+[REALTIME_CRAWL] Creating crawl job in database...
+[REALTIME_CRAWL] Crawl job created successfully: 603271b4-cee2-4322-9429-c358f8670213
+[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
+[REALTIME_CRAWL] Realtime crawler service started successfully: {
+  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
+  job_id: '603271b4-cee2-4322-9429-c358f8670213',
+  max_depth: 2,
+  session_id: 'aca77257-eecd-4756-8c90-24c9def669ae',
+  status: 'started',
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
+}
+[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2695ms)
+[wrangler:inf] POST /api/realtime-crawl/start 401 Unauthorized (801ms)
+[wrangler:inf] POST /api/auth/login 200 OK (660ms)
+[wrangler:inf] POST /api/auth/login 200 OK (649ms)
+[REALTIME_CRAWL] Starting realtime crawl request...
+[REALTIME_CRAWL] Request data: {
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
+  maxDepth: 2,
+  excludePatterns: [],
+  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
+}
+[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
+[REALTIME_CRAWL] Bot verified successfully
+[REALTIME_CRAWL] Creating crawl job in database...
+[REALTIME_CRAWL] Crawl job created successfully: dd27cd5b-7904-4722-bf76-b817a0005d91
+[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
+[REALTIME_CRAWL] Realtime crawler service started successfully: {
+  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
+  job_id: 'dd27cd5b-7904-4722-bf76-b817a0005d91',
+  max_depth: 2,
+  session_id: 'd373da8c-a877-4634-a402-df5c28abdd9f',
+  status: 'started',
+  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
+}
+[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (1984ms)
+[CHAT] Request received
+[CHAT] Request data: query="undefined...", botId=40fffdbb-932b-4a2f-aa22-9b004cee27fa, conversationId=undefined
+[CHAT] Error: Query is required
+[wrangler:inf] POST /api/chat 400 Bad Request (15ms)
+[CHAT] Request received
+[CHAT] Request data: query="What products are available on...", botId=40fffdbb-932b-4a2f-aa22-9b004cee27fa, conversationId=undefined
+[CHAT] Initializing Supabase with URL: https://qpfljbjbyuiymeqghvsz.supabase.co
+[CHAT] Checking if bot exists: 40fffdbb-932b-4a2f-aa22-9b004cee27fa
+[CHAT] Bot found: My Bot
+[CHAT] No conversation ID provided, creating new conversation
+[CHAT] New conversation created: 2a20f21f-be81-4f82-8f4d-18927b4be9cb
+[CHAT] Storing user message in database
+[CHAT] User message stored successfully
+[CHAT] Calling RAG service at http://localhost:8004/chat
+[CHAT] RAG payload: {"query":"What products are available on the e-commerce website?","bot_id":"40fffdbb-932b-4a2f-aa22-9b004cee27fa","conversation_id":"2a20f21f-be81-4f82-8f4d-18927b4be9cb","message_history":[]}
+[CHAT] RAG service response status: 200
+[CHAT] Parsing RAG service response
+[CHAT] Answer received (first 50 chars): Based on the provided context, the following produ...
+[CHAT] Storing assistant message in database
+[CHAT] Assistant message stored successfully
+[CHAT] Sending successful response to client
+[wrangler:inf] POST /api/chat 200 OK (39056ms)
+[wrangler:inf] GET /favicon.ico 404 Not Found (8ms)
