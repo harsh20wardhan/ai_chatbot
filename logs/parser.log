@@ -1,8 +1,178 @@
-Starting parser service on port 8002...
+2025-08-06 14:03:24,164 - parser_service - INFO - Loading embedding model...
+2025-08-06 14:03:24,167 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-06 14:03:24,167 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
+2025-08-06 14:03:24,171 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-06 14:03:25,090 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-06 14:03:25,115 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-06 14:03:25,405 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-06 14:03:25,434 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-06 14:03:25,712 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-06 14:03:25,767 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-06 14:03:26,036 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
+2025-08-06 14:03:26,079 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
+2025-08-06 14:03:26,340 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-06 14:03:26,373 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-06 14:03:26,647 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
+2025-08-06 14:03:26,675 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
+2025-08-06 14:03:26,941 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
+2025-08-06 14:03:27,214 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
+2025-08-06 14:03:27,263 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
+2025-08-06 14:03:27,569 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
+2025-08-06 14:03:27,573 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-06 14:03:28,357 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+2025-08-06 14:03:29,136 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-06 14:03:29,437 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-06 14:03:29,721 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-06 14:03:29,724 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-06 14:03:31,352 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 200 47
+2025-08-06 14:03:31,355 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-06 14:03:33,191 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "GET /call/run/86e23bcca511440baa8b7b24aaae5e1c HTTP/1.1" 200 None
+2025-08-06 14:03:33,494 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-06 14:03:33,870 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-06 14:03:34,133 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
+2025-08-06 14:03:34,155 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-06 14:03:34,163 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
+2025-08-06 14:03:34,428 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors.index.json HTTP/1.1" 404 0
+2025-08-06 14:03:34,472 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
+2025-08-06 14:03:34,691 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors HTTP/1.1" 302 0
+2025-08-06 14:03:34,914 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
+2025-08-06 14:03:34,943 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
+2025-08-06 14:03:35,246 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
+2025-08-06 14:03:35,274 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
+2025-08-06 14:03:35,579 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
+2025-08-06 14:03:35,857 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
+2025-08-06 14:03:36,189 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+2025-08-06 14:03:36,259 - parser_service - INFO - Embedding model loaded
+2025-08-06 14:03:36,259 - parser_service - INFO - Connecting to Qdrant...
+C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
+  warnings.warn("Api key is used with unsecure connection.")
+2025-08-06 14:03:36,867 - parser_service - INFO - Connected to Qdrant at http://localhost:6333
+2025-08-06 14:03:36,868 - parser_service - INFO - Starting parser service on port 8002...
  * Serving Flask app 'parser_service'
  * Debug mode: off
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-08-06 14:03:38,141 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:8002
- * Running on http://10.198.50.4:8002
-Press CTRL+C to quit
+ * Running on http://10.241.130.4:8002
+2025-08-06 14:03:38,141 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-06 14:05:26,855 - parser_service - INFO - Processing document c48a5d8a-da97-41aa-97c4-8173273b061e, file type: txt
+2025-08-06 14:05:26,855 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:05:27,310 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:05:27,699 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): qpfljbjbyuiymeqghvsz.supabase.co:443
+2025-08-06 14:05:29,677 - urllib3.connectionpool - DEBUG - https://qpfljbjbyuiymeqghvsz.supabase.co:443 "GET /storage/v1/object/documents/33f02f79-c8a7-42ac-8b8c-3022b19609cf/6a582832-e37c-43d2-b2e1-eaac0d4fad19/1754469326049_Ai-chatbot-Approach-document.txt HTTP/1.1" 200 None
+2025-08-06 14:05:29,680 - parser_service - INFO - File downloaded successfully: 33f02f79-c8a7-42ac-8b8c-3022b19609cf/6a582832-e37c-43d2-b2e1-eaac0d4fad19/1754469326049_Ai-chatbot-Approach-document.txt -> temp_files\1754469326049_Ai-chatbot-Approach-document.txt
+2025-08-06 14:05:29,691 - parser_service - INFO - TXT parsed successfully: temp_files\1754469326049_Ai-chatbot-Approach-document.txt, extracted 4218 characters
+2025-08-06 14:05:29,692 - parser_service - INFO - Document c48a5d8a-da97-41aa-97c4-8173273b061e split into 9 chunks
+2025-08-06 14:05:29,693 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:05:30,053 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:05:30,826 - parser_service - ERROR - Error storing document chunks: {'S': 'ERROR', 'V': 'ERROR', 'C': '42P01', 'M': 'relation "document_chunks" does not exist', 'P': '34', 'F': 'parse_relation.c', 'L': '1449', 'R': 'parserOpenTable'}
+2025-08-06 14:05:30,874 - parser_service - ERROR - Traceback (most recent call last):
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\legacy.py", line 254, in execute
+    self._context = self._c.execute_unnamed(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\core.py", line 688, in execute_unnamed
+    self.handle_messages(context)
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\core.py", line 827, in handle_messages
+    raise context.error
+pg8000.exceptions.DatabaseError: {'S': 'ERROR', 'V': 'ERROR', 'C': '42P01', 'M': 'relation "document_chunks" does not exist', 'P': '34', 'F': 'parse_relation.c', 'L': '1449', 'R': 'parserOpenTable'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Logiquad\ChatBot\ai_chatbot\parser_service.py", line 201, in store_document_chunks
+    cur.execute("""
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\legacy.py", line 281, in execute
+    raise cls(msg)
+pg8000.dbapi.ProgrammingError: {'S': 'ERROR', 'V': 'ERROR', 'C': '42P01', 'M': 'relation "document_chunks" does not exist', 'P': '34', 'F': 'parse_relation.c', 'L': '1449', 'R': 'parserOpenTable'}
+
+2025-08-06 14:05:31,126 - parser_service - ERROR - Error processing document c48a5d8a-da97-41aa-97c4-8173273b061e: {'S': 'ERROR', 'V': 'ERROR', 'C': '42P01', 'M': 'relation "document_chunks" does not exist', 'P': '34', 'F': 'parse_relation.c', 'L': '1449', 'R': 'parserOpenTable'}
+2025-08-06 14:05:31,127 - parser_service - ERROR - Traceback (most recent call last):
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\legacy.py", line 254, in execute
+    self._context = self._c.execute_unnamed(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\core.py", line 688, in execute_unnamed
+    self.handle_messages(context)
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\core.py", line 827, in handle_messages
+    raise context.error
+pg8000.exceptions.DatabaseError: {'S': 'ERROR', 'V': 'ERROR', 'C': '42P01', 'M': 'relation "document_chunks" does not exist', 'P': '34', 'F': 'parse_relation.c', 'L': '1449', 'R': 'parserOpenTable'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Logiquad\ChatBot\ai_chatbot\parser_service.py", line 457, in parse
+    chunk_ids = store_document_chunks(document_id, bot_id, user_id, chunks)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Logiquad\ChatBot\ai_chatbot\parser_service.py", line 201, in store_document_chunks
+    cur.execute("""
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\legacy.py", line 281, in execute
+    raise cls(msg)
+pg8000.dbapi.ProgrammingError: {'S': 'ERROR', 'V': 'ERROR', 'C': '42P01', 'M': 'relation "document_chunks" does not exist', 'P': '34', 'F': 'parse_relation.c', 'L': '1449', 'R': 'parserOpenTable'}
+
+2025-08-06 14:05:31,129 - werkzeug - INFO - 127.0.0.1 - - [06/Aug/2025 14:05:31] "[35m[1mPOST /parse HTTP/1.1[0m" 500 -
+2025-08-06 14:09:10,009 - parser_service - INFO - Processing document 75c5df63-a0c4-464d-bfde-55a2cfbc2501, file type: pdf
+2025-08-06 14:09:10,009 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:09:10,423 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:09:10,758 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): qpfljbjbyuiymeqghvsz.supabase.co:443
+2025-08-06 14:09:12,394 - urllib3.connectionpool - DEBUG - https://qpfljbjbyuiymeqghvsz.supabase.co:443 "GET /storage/v1/object/documents/33f02f79-c8a7-42ac-8b8c-3022b19609cf/6a582832-e37c-43d2-b2e1-eaac0d4fad19/1754469548787_Ai-chatbot-Approach-document.pdf HTTP/1.1" 200 127795
+2025-08-06 14:09:12,431 - parser_service - INFO - File downloaded successfully: 33f02f79-c8a7-42ac-8b8c-3022b19609cf/6a582832-e37c-43d2-b2e1-eaac0d4fad19/1754469548787_Ai-chatbot-Approach-document.pdf -> temp_files\1754469548787_Ai-chatbot-Approach-document.pdf
+2025-08-06 14:09:12,526 - parser_service - INFO - PDF parsed successfully: temp_files\1754469548787_Ai-chatbot-Approach-document.pdf, extracted 4368 characters
+2025-08-06 14:09:12,527 - parser_service - INFO - Document 75c5df63-a0c4-464d-bfde-55a2cfbc2501 split into 10 chunks
+2025-08-06 14:09:12,527 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:09:12,919 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:09:16,672 - parser_service - INFO - Stored 10 chunks for document 75c5df63-a0c4-464d-bfde-55a2cfbc2501
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|##########| 1/1 [00:26<00:00, 26.84s/it]Batches: 100%|##########| 1/1 [00:26<00:00, 26.84s/it]
+2025-08-06 14:09:43,547 - parser_service - INFO - Generated 10 embeddings for document 75c5df63-a0c4-464d-bfde-55a2cfbc2501
+2025-08-06 14:09:43,568 - httpcore.connection - DEBUG - connect_tcp.started host='localhost' port=6333 local_address=None timeout=5.0 socket_options=None
+2025-08-06 14:09:43,571 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000292379859D0>
+2025-08-06 14:09:43,571 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-06 14:09:43,573 - httpcore.http11 - DEBUG - send_request_headers.complete
+2025-08-06 14:09:43,574 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-06 14:09:43,574 - httpcore.http11 - DEBUG - send_request_body.complete
+2025-08-06 14:09:43,574 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-06 14:09:43,609 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'transfer-encoding', b'chunked'), (b'vary', b'accept-encoding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'content-type', b'application/json'), (b'content-encoding', b'gzip'), (b'date', b'Wed, 06 Aug 2025 08:39:43 GMT')])
+2025-08-06 14:09:43,614 - httpx - INFO - HTTP Request: GET http://localhost:6333/collections "HTTP/1.1 200 OK"
+2025-08-06 14:09:43,616 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-06 14:09:43,618 - httpcore.http11 - DEBUG - receive_response_body.complete
+2025-08-06 14:09:43,618 - httpcore.http11 - DEBUG - response_closed.started
+2025-08-06 14:09:43,618 - httpcore.http11 - DEBUG - response_closed.complete
+2025-08-06 14:09:43,618 - httpcore.connection - DEBUG - close.started
+2025-08-06 14:09:43,618 - httpcore.connection - DEBUG - close.complete
+2025-08-06 14:09:43,643 - httpcore.connection - DEBUG - connect_tcp.started host='localhost' port=6333 local_address=None timeout=5.0 socket_options=None
+2025-08-06 14:09:43,645 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002935FD4D280>
+2025-08-06 14:09:43,645 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'PUT']>
+2025-08-06 14:09:43,646 - httpcore.http11 - DEBUG - send_request_headers.complete
+2025-08-06 14:09:43,646 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'PUT']>
+2025-08-06 14:09:43,646 - httpcore.http11 - DEBUG - send_request_body.complete
+2025-08-06 14:09:43,647 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'PUT']>
+2025-08-06 14:09:43,703 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'transfer-encoding', b'chunked'), (b'content-type', b'application/json'), (b'content-encoding', b'gzip'), (b'vary', b'accept-encoding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'date', b'Wed, 06 Aug 2025 08:39:43 GMT')])
+2025-08-06 14:09:43,703 - httpx - INFO - HTTP Request: PUT http://localhost:6333/collections/6a582832-e37c-43d2-b2e1-eaac0d4fad19/points?wait=true "HTTP/1.1 200 OK"
+2025-08-06 14:09:43,705 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'PUT']>
+2025-08-06 14:09:43,706 - httpcore.http11 - DEBUG - receive_response_body.complete
+2025-08-06 14:09:43,706 - httpcore.http11 - DEBUG - response_closed.started
+2025-08-06 14:09:43,706 - httpcore.http11 - DEBUG - response_closed.complete
+2025-08-06 14:09:43,706 - httpcore.connection - DEBUG - close.started
+2025-08-06 14:09:43,707 - httpcore.connection - DEBUG - close.complete
+2025-08-06 14:09:43,710 - parser_service - INFO - Upserted 10 points to Qdrant collection 6a582832-e37c-43d2-b2e1-eaac0d4fad19
+2025-08-06 14:09:43,710 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:09:44,126 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:09:46,969 - parser_service - INFO - Updated 10 chunks with embedding information
+2025-08-06 14:09:46,969 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:09:47,332 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:09:47,955 - parser_service - INFO - Updated document 75c5df63-a0c4-464d-bfde-55a2cfbc2501 status to processed
+2025-08-06 14:09:47,957 - werkzeug - INFO - 127.0.0.1 - - [06/Aug/2025 14:09:47] "POST /parse HTTP/1.1" 200 -
+ding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'date', b'Wed, 06 Aug 2025 08:39:43 GMT')])
+2025-08-06 14:09:43,703 - httpx - INFO - HTTP Request: PUT http://localhost:6333/collections/6a582832-e37c-43d2-b2e1-eaac0d4fad19/points?wait=true "HTTP/1.1 200 OK"
+2025-08-06 14:09:43,705 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'PUT']>
+2025-08-06 14:09:43,706 - httpcore.http11 - DEBUG - receive_response_body.complete
+2025-08-06 14:09:43,706 - httpcore.http11 - DEBUG - response_closed.started
+2025-08-06 14:09:43,706 - httpcore.http11 - DEBUG - response_closed.complete
+2025-08-06 14:09:43,706 - httpcore.connection - DEBUG - close.started
+2025-08-06 14:09:43,707 - httpcore.connection - DEBUG - close.complete
+2025-08-06 14:09:43,710 - parser_service - INFO - Upserted 10 points to Qdrant collection 6a582832-e37c-43d2-b2e1-eaac0d4fad19
+2025-08-06 14:09:43,710 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:09:44,126 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:09:46,969 - parser_service - INFO - Updated 10 chunks with embedding information
+2025-08-06 14:09:46,969 - parser_service - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 14:09:47,332 - parser_service - DEBUG - Database connection successful
+2025-08-06 14:09:47,955 - parser_service - INFO - Updated document 75c5df63-a0c4-464d-bfde-55a2cfbc2501 status to processed
+2025-08-06 14:09:47,957 - werkzeug - INFO - 127.0.0.1 - - [06/Aug/2025 14:09:47] "POST /parse HTTP/1.1" 200 -

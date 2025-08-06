@@ -23,6 +23,36 @@ router.use(corsMiddleware);
 // Health check endpoint
 router.get('/api/health', authHandler.healthCheck);
 
+// Test endpoint for Supabase configuration
+router.get('/api/test/supabase-config', async ({ env, corsHeaders }) => {
+  try {
+    const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
+    
+    // Try to get the current user (this will fail, but we can see the error)
+    const { data, error } = await supabase.auth.getUser();
+    
+    return new Response(JSON.stringify({ 
+      message: 'Supabase configuration test',
+      hasUrl: !!env.SUPABASE_URL,
+      hasAnonKey: !!env.SUPABASE_ANON_KEY,
+      hasServiceKey: !!env.SUPABASE_SERVICE_ROLE_KEY,
+      error: error ? error.message : null,
+      data: data ? 'User data available' : 'No user data'
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders }
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ 
+      error: 'Failed to test Supabase configuration',
+      details: error.message 
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders }
+    });
+  }
+});
+
 // Test endpoint for debugging (remove in production)
 router.post('/api/test/bot', async ({ request, env, corsHeaders }) => {
   try {
@@ -129,11 +159,13 @@ router.delete('/api/bots/:botId', authMiddleware, botsHandler.deleteBot);
 // Crawler routes
 router.post('/api/crawl/website', authMiddleware, crawlHandler.startCrawl);
 router.get('/api/crawl/status/:jobId', authMiddleware, crawlHandler.getCrawlStatus);
+router.get('/api/crawl/jobs', authMiddleware, crawlHandler.getCrawlJobsByBot);
 router.delete('/api/crawl/job/:jobId', authMiddleware, crawlHandler.deleteCrawlJob);
 
 // Realtime crawler routes
 router.post('/api/realtime-crawl/start', authMiddleware, realtimeCrawlHandler.startRealtimeCrawl);
 router.get('/api/realtime-crawl/status/:jobId', authMiddleware, realtimeCrawlHandler.getRealtimeCrawlStatus);
+router.get('/api/realtime-crawl/jobs', authMiddleware, realtimeCrawlHandler.getRealtimeCrawlJobsByBot);
 router.get('/api/realtime-crawl/pages/:jobId', authMiddleware, realtimeCrawlHandler.getCrawledPages);
 router.get('/api/realtime-crawl/page/:pageId/content', authMiddleware, realtimeCrawlHandler.getPageContent);
 router.delete('/api/realtime-crawl/page/:pageId', authMiddleware, realtimeCrawlHandler.deleteCrawledPage);

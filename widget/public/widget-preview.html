@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot Widget Preview</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #3f51b5;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    .content {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section {
+      margin-bottom: 30px;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #3f51b5;
+    }
+    
+    p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .sample-text {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .controls {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .control-group {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    select, input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    button {
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #303f9f;
+    }
+    
+    .color-preview {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>AI Chatbot Widget Preview</h1>
+      <div class="subtitle">Test your chatbot widget with different configurations</div>
+    </div>
+    
+    <div class="controls">
+      <h2>Widget Controls</h2>
+      <div class="control-row">
+        <div class="control-group">
+          <label for="theme">Theme</label>
+          <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        
+        <div class="control-group">
+          <label for="position">Position</label>
+          <select id="position">
+            <option value="bottom-right">Bottom Right</option>
+            <option value="bottom-left">Bottom Left</option>
+          </select>
+        </div>
+        
+        <div class="control-group">
+          <label for="color">Primary Color</label>
+          <div>
+            <span class="color-preview" id="color-preview" style="background-color: #3f51b5;"></span>
+            <input type="text" id="color" value="#3f51b5">
+          </div>
+        </div>
+      </div>
+      
+      <div class="control-row">
+        <div class="control-group">
+          <label for="welcome-message">Welcome Message</label>
+          <input type="text" id="welcome-message" value="Hi there! How can I help you today?">
+        </div>
+        
+        <div class="control-group">
+          <label for="placeholder">Input Placeholder</label>
+          <input type="text" id="placeholder" value="Ask me anything...">
+        </div>
+      </div>
+      
+      <button id="apply-settings">Apply Settings</button>
+    </div>
+    
+    <div class="content">
+      <div class="section">
+        <h2>About This Preview</h2>
+        <p>This page allows you to test your AI chatbot widget with different configurations. Use the controls above to customize the appearance and behavior of the widget.</p>
+      </div>
+      
+      <div class="section">
+        <h2>Sample Content</h2>
+        <div class="sample-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+          <p>Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>Testing Instructions</h2>
+        <p>Try asking your chatbot different questions to see how it responds. The widget should be able to answer questions based on the content you've provided through crawled websites and uploaded documents.</p>
+        <p>Here are some sample questions you can try:</p>
+        <ul>
+          <li>What services do you offer?</li>
+          <li>How can I contact support?</li>
+          <li>What are your business hours?</li>
+          <li>Tell me about your pricing</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>AI Chatbot Widget Preview | &copy; 2023</p>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeSelect = document.getElementById('theme');
+      const positionSelect = document.getElementById('position');
+      const colorInput = document.getElementById('color');
+      const colorPreview = document.getElementById('color-preview');
+      const welcomeMessageInput = document.getElementById('welcome-message');
+      const placeholderInput = document.getElementById('placeholder');
+      const applyButton = document.getElementById('apply-settings');
+      
+      // Get bot ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const botId = urlParams.get('botId') || 'test-bot-id';
+      
+      // Update color preview when input changes
+      colorInput.addEventListener('input', function() {
+        colorPreview.style.backgroundColor = this.value;
+      });
+      
+      // Apply settings button
+      applyButton.addEventListener('click', function() {
+        if (window.AIChatbotWidget) {
+          window.AIChatbotWidget.updateConfig({
+            theme: themeSelect.value,
+            position: positionSelect.value,
+            primaryColor: colorInput.value,
+            welcomeMessage: welcomeMessageInput.value,
+            placeholderText: placeholderInput.value,
+            botId: botId
+          });
+        }
+      });
+      
+      // Initialize widget with bot ID
+      const script = document.createElement('script');
+      script.id = 'ai-chatbot-widget';
+      script.src = '/ai-chatbot-widget.js';
+      script.async = true;
+      script.dataset.botId = botId;
+      document.body.appendChild(script);
+    });
+  </script>
+</body>
+</html>

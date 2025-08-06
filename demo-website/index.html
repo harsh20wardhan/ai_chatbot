@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Website - AI Chatbot Widget Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .section p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .feature p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .cta {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+        
+        .cta h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .widget-info {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .widget-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .widget-info p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI Chatbot Widget Demo</h1>
+            <p>Test the embedded RAG-enabled AI chatbot on this demo website</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>Welcome to Our Demo Website</h2>
+                <p>This is a demo website showcasing the AI Chatbot Widget integration. You can see the chatbot widget in action by looking at the bottom-right corner of this page.</p>
+                <p>The widget is fully functional and can answer questions based on uploaded documents and crawled websites using RAG (Retrieval-Augmented Generation) technology.</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>🤖 RAG-Powered AI</h3>
+                    <p>The chatbot uses advanced RAG technology to provide accurate answers based on your specific documents and website content.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>📚 Document Integration</h3>
+                    <p>Upload PDFs, DOCX files, and other documents to give the AI context about your business, products, or services.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🌐 Website Crawling</h3>
+                    <p>Automatically crawl your website to extract relevant information and make it available to the AI for answering questions.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🔗 Source Attribution</h3>
+                    <p>Every answer includes source references, showing users exactly which documents or web pages the information came from.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🎨 Customizable Design</h3>
+                    <p>Customize the widget's appearance, colors, position, and behavior to match your website's design and branding.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>📱 Mobile Responsive</h3>
+                    <p>The widget works seamlessly on all devices - desktop, tablet, and mobile - providing a consistent experience.</p>
+                </div>
+            </div>
+            
+            <div class="widget-info">
+                <h3>How to Test the Widget</h3>
+                <p>1. <strong>Look for the chat button</strong> in the bottom-right corner of this page</p>
+                <p>2. <strong>Click the chat button</strong> to open the AI assistant</p>
+                <p>3. <strong>Ask questions</strong> about the content that has been uploaded or crawled</p>
+                <p>4. <strong>See source attribution</strong> for each answer to understand where the information came from</p>
+                
+                <h3 style="margin-top: 30px;">Embed Code Used</h3>
+                <p>This demo uses the following embed code to load the widget:</p>
+                <div class="code-block">
+&lt;script&gt;
+  (function(w, d, s, o) {
+    w.AIChatWidget = o;
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(o)) return;
+    js = d.createElement(s); js.id = o;
+    js.src = 'http://localhost:3000/widget/ai-chatbot-widget.js';
+    js.async = 1;
+    js.dataset.botId = '6a582832-e37c-43d2-b2e1-eaac0d4fad19';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(window, document, 'script', 'ai-chatbot-widget'));
+&lt;/script&gt;
+                </div>
+            </div>
+            
+            <div class="cta">
+                <h2>Ready to Try It?</h2>
+                <p>Click the chat button in the bottom-right corner to start a conversation with our AI assistant!</p>
+                <a href="#chat" class="btn">Start Chatting Now</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2024 AI Chatbot Widget Demo. Built with ❤️ for testing RAG-enabled AI assistants.</p>
+        </div>
+    </div>
+    
+    <!-- AI Chatbot Widget Embed Code -->
+    <script>
+      (function(w, d, s, o) {
+        w.AIChatWidget = o;
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(o)) return;
+        js = d.createElement(s); js.id = o;
+        js.src = 'http://localhost:3000/widget/ai-chatbot-widget.js';
+        js.async = 1;
+        js.dataset.botId = '6a582832-e37c-43d2-b2e1-eaac0d4fad19';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(window, document, 'script', 'ai-chatbot-widget'));
+    </script>
+</body>
+</html> 

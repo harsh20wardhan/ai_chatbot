@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 
 // Helper to initialize Supabase client
 const getSupabase = (env) => {
-  return createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_KEY);
+  return createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 };
 
 // Generate embeddings for documents

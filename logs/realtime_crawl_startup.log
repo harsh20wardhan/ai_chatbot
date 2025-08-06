@@ -1,0 +1,263 @@
+2025-08-06 13:01:12,358 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-06 13:01:12,359 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
+2025-08-06 13:01:12,364 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-06 13:01:13,377 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-06 13:01:13,431 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-06 13:01:13,704 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-06 13:01:13,757 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-06 13:01:14,415 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-06 13:01:14,473 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-06 13:01:14,741 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
+2025-08-06 13:01:14,799 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
+2025-08-06 13:01:15,102 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-06 13:01:15,155 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-06 13:01:15,473 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
+2025-08-06 13:01:15,528 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
+2025-08-06 13:01:15,810 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
+2025-08-06 13:01:16,080 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
+2025-08-06 13:01:16,148 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
+2025-08-06 13:01:16,472 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
+2025-08-06 13:01:16,479 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-06 13:01:17,160 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+2025-08-06 13:01:17,600 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-06 13:01:17,906 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-06 13:01:18,203 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-06 13:01:18,205 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-06 13:01:19,834 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 503 58
+2025-08-06 13:01:22,972 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
+2025-08-06 13:01:23,036 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
+2025-08-06 13:01:23,333 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
+2025-08-06 13:01:23,699 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
+2025-08-06 13:01:23,765 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
+2025-08-06 13:01:24,049 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
+2025-08-06 13:01:24,103 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
+2025-08-06 13:01:24,411 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
+2025-08-06 13:01:24,685 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
+2025-08-06 13:01:24,994 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
+  warnings.warn("Api key is used with unsecure connection.")
+2025-08-06 13:01:25,536 - realtime_crawl - INFO - Starting realtime crawl service on port 8005...
+2025-08-06 13:01:25,536 - realtime_crawl - INFO - Environment variables loaded: QDRANT_URL=http://localhost:6333, SUPABASE_DB_HOST=db.qpfljbjbyuiymeqghvsz.supabase.co
+Loading embedding model...
+Embedding model loaded
+Connecting to Qdrant...
+Connected to Qdrant at http://localhost:6333
+ * Serving Flask app 'realtime_crawl_service'
+ * Debug mode: on
+2025-08-06 13:01:26,899 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8005
+ * Running on http://10.199.138.4:8005
+2025-08-06 13:01:26,899 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-06 13:01:26,899 - werkzeug - INFO -  * Restarting with stat
+2025-08-06 13:01:36,558 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-06 13:01:36,558 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
+2025-08-06 13:01:36,561 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-06 13:01:37,313 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-06 13:01:37,381 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-06 13:01:37,700 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-06 13:01:37,770 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-06 13:01:38,040 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-06 13:01:38,108 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-06 13:01:38,393 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
+2025-08-06 13:01:38,469 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
+2025-08-06 13:01:38,758 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-06 13:01:38,829 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-06 13:01:39,088 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
+2025-08-06 13:01:39,149 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
+2025-08-06 13:01:39,425 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
+2025-08-06 13:01:39,689 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
+2025-08-06 13:01:39,754 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
+2025-08-06 13:01:40,078 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
+2025-08-06 13:01:40,091 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-06 13:01:40,827 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+2025-08-06 13:01:41,269 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-06 13:01:41,591 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-06 13:01:41,883 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-06 13:01:41,884 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-06 13:01:43,442 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 503 58
+2025-08-06 13:01:47,205 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
+2025-08-06 13:01:47,281 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
+2025-08-06 13:01:47,684 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
+2025-08-06 13:01:48,063 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
+2025-08-06 13:01:48,222 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
+2025-08-06 13:01:48,555 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
+2025-08-06 13:01:48,618 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
+2025-08-06 13:01:48,922 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
+2025-08-06 13:01:49,230 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
+2025-08-06 13:01:49,532 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
+  warnings.warn("Api key is used with unsecure connection.")
+2025-08-06 13:01:50,254 - realtime_crawl - INFO - Starting realtime crawl service on port 8005...
+2025-08-06 13:01:50,254 - realtime_crawl - INFO - Environment variables loaded: QDRANT_URL=http://localhost:6333, SUPABASE_DB_HOST=db.qpfljbjbyuiymeqghvsz.supabase.co
+2025-08-06 13:01:50,259 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 13:01:50,275 - werkzeug - INFO -  * Debugger PIN: 600-581-873
+2025-08-06 13:06:01,382 - realtime_crawl - DEBUG - Request headers: {'Content-Length': '163', 'Host': 'localhost:8005', 'Content-Type': 'application/json', 'Authorization': 'Bearer your-secret-key'}
+2025-08-06 13:06:01,382 - realtime_crawl - DEBUG - Request body: {'job_id': '12a82e38-c924-49d1-8e24-7369c80c8bea', 'url': 'https://logiquad.com/', 'max_depth': 3, 'exclude_patterns': [], 'bot_id': '0493f005-d2dd-454c-8bb2-aece16bd007d'}
+2025-08-06 13:06:01,382 - realtime_crawl - INFO - Received crawl request: url=https://logiquad.com/, max_depth=3, bot_id=0493f005-d2dd-454c-8bb2-aece16bd007d, job_id=12a82e38-c924-49d1-8e24-7369c80c8bea
+2025-08-06 13:06:01,382 - realtime_crawl - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 13:06:01,860 - realtime_crawl - DEBUG - Database connection successful
+2025-08-06 13:06:02,215 - realtime_crawl - INFO - Found existing job in database: [UUID('12a82e38-c924-49d1-8e24-7369c80c8bea'), 'pending']
+2025-08-06 13:06:02,215 - realtime_crawl - INFO - Generated WebSocket session ID: fd3fb867-c7d4-4981-b15f-15778764420b
+2025-08-06 13:06:02,216 - realtime_crawl - INFO - Starting crawl thread for https://logiquad.com/
+2025-08-06 13:06:02,216 - realtime_crawl - INFO - Starting crawl thread for job 12a82e38-c924-49d1-8e24-7369c80c8bea, URL https://logiquad.com/
+2025-08-06 13:06:02,217 - werkzeug - INFO - 127.0.0.1 - - [06/Aug/2025 13:06:02] "POST /realtime-crawl HTTP/1.1" 200 -
+2025-08-06 13:06:02,217 - realtime_crawl - INFO - Starting crawl for https://logiquad.com/ with max_pages=3, bot_id=0493f005-d2dd-454c-8bb2-aece16bd007d, job_id=12a82e38-c924-49d1-8e24-7369c80c8bea
+2025-08-06 13:06:02,217 - realtime_crawl - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 13:06:02,592 - realtime_crawl - DEBUG - Database connection successful
+2025-08-06 13:06:02,592 - realtime_crawl - INFO - Updating job 12a82e38-c924-49d1-8e24-7369c80c8bea status to running
+2025-08-06 13:06:03,188 - realtime_crawl - INFO - Successfully updated job 12a82e38-c924-49d1-8e24-7369c80c8bea status to running
+2025-08-06 13:06:03,189 - realtime_crawl - INFO - Crawling: https://logiquad.com/
+2025-08-06 13:06:03,191 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): logiquad.com:443
+2025-08-06 13:06:03,905 - realtime_crawl - ERROR - Failed https://logiquad.com/: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+2025-08-06 13:06:03,917 - realtime_crawl - ERROR - Traceback (most recent call last):
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 419, in connect
+    self.sock = ssl_wrap_socket(
+                ^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\ssl_.py", line 458, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\ssl_.py", line 502, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1041, in _create
+    self.do_handshake()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1319, in do_handshake
+    self._sslobj.do_handshake()
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\adapters.py", line 486, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 802, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\retry.py", line 552, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\packages\six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 419, in connect
+    self.sock = ssl_wrap_socket(
+                ^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\ssl_.py", line 458, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\ssl_.py", line 502, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1041, in _create
+    self.do_handshake()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1319, in do_handshake
+    self._sslobj.do_handshake()
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Logiquad\ChatBot\ai_chatbot\realtime_crawl_service.py", line 144, in crawl_website_realtime
+    resp = requests.get(url, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\adapters.py", line 501, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+2025-08-06 13:06:03,918 - realtime_crawl - INFO - Crawl completed. Total pages: 0
+2025-08-06 13:06:03,918 - realtime_crawl - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 13:06:04,348 - realtime_crawl - DEBUG - Database connection successful
+2025-08-06 13:06:04,348 - realtime_crawl - INFO - Updating job 12a82e38-c924-49d1-8e24-7369c80c8bea status to completed with 0 pages
+2025-08-06 13:06:04,541 - realtime_crawl - ERROR - Failed to update job status: {'S': 'ERROR', 'V': 'ERROR', 'C': '42703', 'M': 'column "pages_crawled" of relation "crawl_jobs" does not exist', 'P': '237', 'F': 'analyze.c', 'L': '2528', 'R': 'transformUpdateTargetList'}
+2025-08-06 13:06:04,574 - realtime_crawl - ERROR - Traceback (most recent call last):
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\legacy.py", line 254, in execute
+    self._context = self._c.execute_unnamed(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\core.py", line 688, in execute_unnamed
+    self.handle_messages(context)
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\core.py", line 827, in handle_messages
+    raise context.error
+pg8000.exceptions.DatabaseError: {'S': 'ERROR', 'V': 'ERROR', 'C': '42703', 'M': 'column "pages_crawled" of relation "crawl_jobs" does not exist', 'P': '237', 'F': 'analyze.c', 'L': '2528', 'R': 'transformUpdateTargetList'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Logiquad\ChatBot\ai_chatbot\realtime_crawl_service.py", line 317, in crawl_website_realtime
+    cur.execute("""
+  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pg8000\legacy.py", line 281, in execute
+    raise cls(msg)
+pg8000.dbapi.ProgrammingError: {'S': 'ERROR', 'V': 'ERROR', 'C': '42703', 'M': 'column "pages_crawled" of relation "crawl_jobs" does not exist', 'P': '237', 'F': 'analyze.c', 'L': '2528', 'R': 'transformUpdateTargetList'}
+
+2025-08-06 13:06:04,821 - realtime_crawl - INFO - Crawl thread completed for job 12a82e38-c924-49d1-8e24-7369c80c8bea
+2025-08-06 13:14:52,496 - realtime_crawl - DEBUG - Request headers: {'Content-Length': '163', 'Host': 'localhost:8005', 'Content-Type': 'application/json', 'Authorization': 'Bearer your-secret-key'}
+2025-08-06 13:14:52,496 - realtime_crawl - DEBUG - Request body: {'job_id': '67bf24b7-4f3d-41b3-8cac-f7a9e25267ad', 'url': 'https://logiquad.com/', 'max_depth': 3, 'exclude_patterns': [], 'bot_id': '7be213aa-e377-47b2-bda1-d94831121bfa'}
+2025-08-06 13:14:52,498 - realtime_crawl - INFO - Received crawl request: url=https://logiquad.com/, max_depth=3, bot_id=7be213aa-e377-47b2-bda1-d94831121bfa, job_id=67bf24b7-4f3d-41b3-8cac-f7a9e25267ad
+2025-08-06 13:14:52,498 - realtime_crawl - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 13:14:53,027 - realtime_crawl - DEBUG - Database connection successful
+2025-08-06 13:14:53,369 - realtime_crawl - INFO - Found existing job in database: [UUID('67bf24b7-4f3d-41b3-8cac-f7a9e25267ad'), 'pending']
+2025-08-06 13:14:53,369 - realtime_crawl - INFO - Generated WebSocket session ID: ffad511f-7e6f-438d-94f2-2e42a2809910
+2025-08-06 13:14:53,369 - realtime_crawl - INFO - Starting crawl thread for https://logiquad.com/
+2025-08-06 13:14:53,370 - realtime_crawl - INFO - Starting crawl thread for job 67bf24b7-4f3d-41b3-8cac-f7a9e25267ad, URL https://logiquad.com/
+2025-08-06 13:14:53,370 - realtime_crawl - INFO - Starting crawl for https://logiquad.com/ with max_pages=3, bot_id=7be213aa-e377-47b2-bda1-d94831121bfa, job_id=67bf24b7-4f3d-41b3-8cac-f7a9e25267ad
+2025-08-06 13:14:53,370 - werkzeug - INFO - 127.0.0.1 - - [06/Aug/2025 13:14:53] "POST /realtime-crawl HTTP/1.1" 200 -
+2025-08-06 13:14:53,370 - realtime_crawl - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 13:14:53,740 - realtime_crawl - DEBUG - Database connection successful
+2025-08-06 13:14:53,741 - realtime_crawl - INFO - Updating job 67bf24b7-4f3d-41b3-8cac-f7a9e25267ad status to running
+2025-08-06 13:14:54,318 - realtime_crawl - INFO - Successfully updated job 67bf24b7-4f3d-41b3-8cac-f7a9e25267ad status to running
+2025-08-06 13:14:54,318 - realtime_crawl - INFO - Crawling: https://logiquad.com/
+2025-08-06 13:14:54,319 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): logiquad.com:443
+2025-08-06 13:14:59,156 - urllib3.connectionpool - DEBUG - https://logiquad.com:443 "GET / HTTP/1.1" 200 None
+2025-08-06 13:15:00,685 - realtime_crawl - DEBUG - Storing page in database: https://logiquad.com/, title=AI, Cloud, DevOps, Mobility & SaaS Application Devlopment Company, content_length=9500
+2025-08-06 13:15:00,685 - realtime_crawl - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 13:15:01,188 - realtime_crawl - DEBUG - Database connection successful
+2025-08-06 13:15:01,188 - realtime_crawl - DEBUG - Fetching user_id from crawl_job with job_id=67bf24b7-4f3d-41b3-8cac-f7a9e25267ad
+2025-08-06 13:15:01,536 - realtime_crawl - DEBUG - Raw job_result: [UUID('33f02f79-c8a7-42ac-8b8c-3022b19609cf')], type: <class 'list'>
+2025-08-06 13:15:01,536 - realtime_crawl - DEBUG - Found user_id=33f02f79-c8a7-42ac-8b8c-3022b19609cf for job_id=67bf24b7-4f3d-41b3-8cac-f7a9e25267ad
+2025-08-06 13:15:01,537 - realtime_crawl - DEBUG - Inserting page with user_id=33f02f79-c8a7-42ac-8b8c-3022b19609cf
+2025-08-06 13:15:01,808 - realtime_crawl - DEBUG - Database insert result: [UUID('27a679c4-7277-4c3d-8c40-120463390477')]
+2025-08-06 13:15:01,808 - realtime_crawl - DEBUG - Extracted page_id: 27a679c4-7277-4c3d-8c40-120463390477
+2025-08-06 13:15:02,064 - realtime_crawl - INFO - Successfully stored page in database with ID: 27a679c4-7277-4c3d-8c40-120463390477
+2025-08-06 13:15:02,065 - realtime_crawl - INFO - Starting embedding for page 27a679c4-7277-4c3d-8c40-120463390477, bot_id=7be213aa-e377-47b2-bda1-d94831121bfa, text_length=9500
+2025-08-06 13:15:02,065 - realtime_crawl - INFO - Split into 21 chunks
+2025-08-06 13:15:02,066 - realtime_crawl - INFO - Successfully crawled: https://logiquad.com/ (9500 chars)
+2025-08-06 13:15:02,066 - realtime_crawl - DEBUG - First chunk sample: AI, Cloud, DevOps, Mobility & SaaS Application Devlopment Company Skip to content Contact Us Superch...
+2025-08-06 13:15:02,066 - realtime_crawl - DEBUG - Connecting to database: host=db.qpfljbjbyuiymeqghvsz.supabase.co, db=postgres, user=postgres, port=5432
+2025-08-06 13:15:02,066 - realtime_crawl - INFO - Generating embeddings for 21 chunks...
+Loading embedding model...
+Embedding model loaded
+Connecting to Qdrant...
+Connected to Qdrant at http://localhost:6333
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]

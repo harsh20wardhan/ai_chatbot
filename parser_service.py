@@ -412,7 +412,7 @@ def parse():
     
     # Download file from Supabase Storage
     supabase_url = os.environ.get("SUPABASE_URL")
-    supabase_key = os.environ.get("SUPABASE_SERVICE_KEY")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
     bucket_name = "documents"
     
     # Create a temporary local file path

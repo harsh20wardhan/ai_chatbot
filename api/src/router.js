@@ -35,7 +35,37 @@ export class Router {
     const method = request.method;
     const path = url.pathname;
 
-    // Find matching route
+    // Create request context
+    const context = {
+      request,
+      env,
+      ctx,
+      url
+    };
+
+    // Apply global middlewares first, especially for OPTIONS requests
+    for (const middleware of this.middlewares) {
+      const result = await middleware(context);
+      if (result instanceof Response) return result;
+    }
+
+    // Special handling for OPTIONS requests - already handled by CORS middleware
+    if (method === 'OPTIONS') {
+      // If we got here, it means the CORS middleware didn't return a response
+      // Let's create a default OPTIONS response
+      return new Response(null, {
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Origin': request.headers.get('Origin') || '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Max-Age': '86400'
+        }
+      });
+    }
+
+    // Find matching route for non-OPTIONS requests
     const route = this.routes.find(route => {
       return route.method === method && this.matchPath(route.path, path);
     });
@@ -43,22 +73,12 @@ export class Router {
     if (!route) {
       return new Response('Not Found', { status: 404 });
     }
-
-    // Create request context
-    const context = {
-      request,
-      env,
-      ctx,
-      params: this.extractParams(route.path, path),
-      url
-    };
+    
+    // Add route params to context
+    context.params = this.extractParams(route.path, path);
 
     try {
-      // Apply global middlewares
-      for (const middleware of this.middlewares) {
-        const result = await middleware(context);
-        if (result instanceof Response) return result;
-      }
+      // Middlewares have already been applied
 
       // Apply route handlers
       let result;

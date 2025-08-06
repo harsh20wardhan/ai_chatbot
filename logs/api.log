@@ -3,7 +3,7 @@
 > wrangler dev
 
 
- ⛅️ wrangler 3.114.12 (update available 4.27.0)
+ ⛅️ wrangler 3.114.12 (update available 4.28.0)
 -----------------------------------------------
 
 [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mThe version of Wrangler you are using is now out-of-date.[0m
@@ -43,155 +43,318 @@ Your worker has access to the following bindings:
   - SUPABASE_DB_PORT: "(hidden)"
 [wrangler:inf] Ready on http://127.0.0.1:8787
 ⎔ Starting local server...
-[REALTIME_CRAWL] Starting realtime crawl request...
-[REALTIME_CRAWL] Request data: {
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
-  maxDepth: 2,
-  excludePatterns: [],
-  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
-}
-[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
-[REALTIME_CRAWL] Bot verified successfully
-[REALTIME_CRAWL] Creating crawl job in database...
-[REALTIME_CRAWL] Crawl job created successfully: 6f9f59c4-d8ca-40ba-9596-f219c969d784
-[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
-[REALTIME_CRAWL] Realtime crawler service started successfully: {
-  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
-  job_id: '6f9f59c4-d8ca-40ba-9596-f219c969d784',
-  max_depth: 2,
-  session_id: '98c63271-ec92-4a61-a595-e9754b44c735',
-  status: 'started',
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
-}
-[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2918ms)
-[REALTIME_CRAWL] Starting realtime crawl request...
-[REALTIME_CRAWL] Request data: {
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
-  maxDepth: 2,
-  excludePatterns: [],
-  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
-}
-[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
-[REALTIME_CRAWL] Bot verified successfully
-[REALTIME_CRAWL] Creating crawl job in database...
-[REALTIME_CRAWL] Crawl job created successfully: eb51a61f-04e8-4205-a197-a580cfc4e5e0
-[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
-[REALTIME_CRAWL] Realtime crawler service started successfully: {
-  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
-  job_id: 'eb51a61f-04e8-4205-a197-a580cfc4e5e0',
-  max_depth: 2,
-  session_id: 'c266c6a2-8a4a-4310-a2cf-7ad3171184a0',
-  status: 'started',
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
-}
-[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2034ms)
-[REALTIME_CRAWL] Starting realtime crawl request...
-[REALTIME_CRAWL] Request data: {
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
-  maxDepth: 2,
-  excludePatterns: [],
-  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
-}
-[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
-[REALTIME_CRAWL] Bot verified successfully
-[REALTIME_CRAWL] Creating crawl job in database...
-[REALTIME_CRAWL] Crawl job created successfully: 2bf9d922-ef7f-4607-8b81-b735d40b311d
-[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
-[REALTIME_CRAWL] Realtime crawler service started successfully: {
-  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
-  job_id: '2bf9d922-ef7f-4607-8b81-b735d40b311d',
-  max_depth: 2,
-  session_id: 'a2c04a44-784d-429c-896d-008210b0267d',
-  status: 'started',
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
-}
-[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2445ms)
-[REALTIME_CRAWL] Starting realtime crawl request...
-[REALTIME_CRAWL] Request data: {
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
-  maxDepth: 2,
-  excludePatterns: [],
-  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
-}
-[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
-[REALTIME_CRAWL] Bot verified successfully
-[REALTIME_CRAWL] Creating crawl job in database...
-[REALTIME_CRAWL] Crawl job created successfully: 9ece990b-17bf-4484-a414-3c1dc0952778
-[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
-[REALTIME_CRAWL] Realtime crawler service started successfully: {
-  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
-  job_id: '9ece990b-17bf-4484-a414-3c1dc0952778',
-  max_depth: 2,
-  session_id: 'f104479b-5d3d-4db2-962d-1b026c452674',
-  status: 'started',
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
-}
-[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2679ms)
-[REALTIME_CRAWL] Starting realtime crawl request...
-[REALTIME_CRAWL] Request data: {
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
-  maxDepth: 2,
-  excludePatterns: [],
-  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
-}
-[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
-[REALTIME_CRAWL] Bot verified successfully
-[REALTIME_CRAWL] Creating crawl job in database...
-[REALTIME_CRAWL] Crawl job created successfully: 603271b4-cee2-4322-9429-c358f8670213
-[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
-[REALTIME_CRAWL] Realtime crawler service started successfully: {
-  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
-  job_id: '603271b4-cee2-4322-9429-c358f8670213',
-  max_depth: 2,
-  session_id: 'aca77257-eecd-4756-8c90-24c9def669ae',
-  status: 'started',
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
-}
-[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (2695ms)
-[wrangler:inf] POST /api/realtime-crawl/start 401 Unauthorized (801ms)
-[wrangler:inf] POST /api/auth/login 200 OK (660ms)
-[wrangler:inf] POST /api/auth/login 200 OK (649ms)
-[REALTIME_CRAWL] Starting realtime crawl request...
-[REALTIME_CRAWL] Request data: {
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone',
-  maxDepth: 2,
-  excludePatterns: [],
-  botId: '40fffdbb-932b-4a2f-aa22-9b004cee27fa'
-}
-[REALTIME_CRAWL] Verifying bot ownership for botId: 40fffdbb-932b-4a2f-aa22-9b004cee27fa userId: 190aa024-6d06-400c-bbfd-90286f337365
-[REALTIME_CRAWL] Bot verified successfully
-[REALTIME_CRAWL] Creating crawl job in database...
-[REALTIME_CRAWL] Crawl job created successfully: dd27cd5b-7904-4722-bf76-b817a0005d91
-[REALTIME_CRAWL] Calling realtime crawler service at: http://localhost:8005
-[REALTIME_CRAWL] Realtime crawler service started successfully: {
-  bot_id: '40fffdbb-932b-4a2f-aa22-9b004cee27fa',
-  job_id: 'dd27cd5b-7904-4722-bf76-b817a0005d91',
-  max_depth: 2,
-  session_id: 'd373da8c-a877-4634-a402-df5c28abdd9f',
-  status: 'started',
-  url: 'https://webscraper.io/test-sites/e-commerce/allinone'
-}
-[wrangler:inf] POST /api/realtime-crawl/start 202 Accepted (1984ms)
+[wrangler:inf] GET /api/auth/user 200 OK (721ms)
+[wrangler:inf] GET /api/auth/user 200 OK (132ms)
+[wrangler:inf] GET /api/bots 200 OK (645ms)
+[wrangler:inf] GET /api/bots 200 OK (459ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (679ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (410ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (422ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (404ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (329ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (308ms)
+[wrangler:inf] GET /api/documents 200 OK (440ms)
+[wrangler:inf] GET /api/documents 200 OK (444ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (453ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (617ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (514ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (503ms)
+Attempting login for email: sagnikbhattacharjeephotos@gmail.com
+Login successful for user: 33f02f79-c8a7-42ac-8b8c-3022b19609cf
+[wrangler:inf] POST /api/auth/login 200 OK (490ms)
+[wrangler:inf] GET /api/auth/user 200 OK (226ms)
+[wrangler:inf] GET /api/bots 200 OK (310ms)
+[wrangler:inf] GET /api/bots 200 OK (426ms)
+[wrangler:inf] GET /api/bots 200 OK (309ms)
+[wrangler:inf] GET /api/bots 200 OK (288ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (313ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (299ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (324ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (296ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (285ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (328ms)
+[wrangler:inf] GET /api/documents 200 OK (457ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (454ms)
+[wrangler:inf] GET /api/documents 200 OK (557ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (395ms)
+[wrangler:inf] POST /api/documents/upload 500 Internal Server Error (5601ms)
+[wrangler:inf] GET /api/auth/user 200 OK (607ms)
+[wrangler:inf] GET /api/auth/user 200 OK (139ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (617ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (295ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (339ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (291ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (329ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (412ms)
+[wrangler:inf] GET /api/documents 200 OK (514ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (433ms)
+[wrangler:inf] GET /api/documents 200 OK (761ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (455ms)
+[wrangler:inf] GET /api/auth/user 200 OK (204ms)
+[wrangler:inf] GET /api/auth/user 200 OK (131ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (399ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (261ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (376ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (389ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (303ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (314ms)
+[wrangler:inf] GET /api/documents 200 OK (404ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (449ms)
+[wrangler:inf] GET /api/documents 200 OK (470ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (523ms)
+[wrangler:inf] POST /api/documents/upload 202 Accepted (39545ms)
+[wrangler:inf] GET /api/documents 200 OK (651ms)
+[wrangler:inf] GET /api/documents 200 OK (501ms)
+[wrangler:inf] GET /api/auth/user 200 OK (223ms)
+[wrangler:inf] GET /api/auth/user 200 OK (133ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (274ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (278ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (373ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (413ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (288ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (328ms)
+[wrangler:inf] GET /api/documents 200 OK (449ms)
+[wrangler:inf] GET /api/documents 200 OK (414ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (444ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (405ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (778ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (406ms)
+[wrangler:inf] OPTIONS /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 204 No Content (23ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 500 Internal Server Error (3ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (297ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 500 Internal Server Error (2ms)
+[wrangler:inf] POST /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 500 Internal Server Error (526ms)
+⎔ Reloading local server...
+⎔ Reloading local server...
+⎔ Reloading local server...
+⎔ Reloading local server...
+⎔ Reloading local server...
+[wrangler:inf] POST /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (1289ms)
+[wrangler:inf] GET /api/auth/user 200 OK (260ms)
+[wrangler:inf] GET /api/auth/user 200 OK (208ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (534ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (225ms)
+[wrangler:inf] OPTIONS /api/chat 204 No Content (6ms)
 [CHAT] Request received
-[CHAT] Request data: query="undefined...", botId=40fffdbb-932b-4a2f-aa22-9b004cee27fa, conversationId=undefined
+[CHAT] Request data: query="undefined...", botId=6a582832-e37c-43d2-b2e1-eaac0d4fad19, conversationId=null
 [CHAT] Error: Query is required
-[wrangler:inf] POST /api/chat 400 Bad Request (15ms)
+[wrangler:inf] POST /api/chat 400 Bad Request (16ms)
+[wrangler:inf] GET /api/auth/user 200 OK (1087ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (1095ms)
+[wrangler:inf] GET /api/auth/user 200 OK (180ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (214ms)
+[wrangler:inf] GET /api/auth/user 200 OK (170ms)
+[wrangler:inf] GET /api/auth/user 200 OK (162ms)
+[wrangler:inf] GET /api/bots/8eb7e5b9-a5fa-4f9d-a82b-8024c08dcec9 404 Not Found (599ms)
+[wrangler:inf] GET /api/auth/user 200 OK (211ms)
+[wrangler:inf] GET /api/auth/user 200 OK (401ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (904ms)
+[wrangler:inf] GET /api/bots/8eb7e5b9-a5fa-4f9d-a82b-8024c08dcec9 404 Not Found (676ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (237ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (327ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (184ms)
 [CHAT] Request received
-[CHAT] Request data: query="What products are available on...", botId=40fffdbb-932b-4a2f-aa22-9b004cee27fa, conversationId=undefined
+[CHAT] Request data: query="Hi, can you tell me what servi...", botId=6a582832-e37c-43d2-b2e1-eaac0d4fad19, conversationId=null
 [CHAT] Initializing Supabase with URL: https://qpfljbjbyuiymeqghvsz.supabase.co
-[CHAT] Checking if bot exists: 40fffdbb-932b-4a2f-aa22-9b004cee27fa
-[CHAT] Bot found: My Bot
+[CHAT] Checking if bot exists: 6a582832-e37c-43d2-b2e1-eaac0d4fad19
+[CHAT] Bot found: Logiquad Bot
 [CHAT] No conversation ID provided, creating new conversation
-[CHAT] New conversation created: 2a20f21f-be81-4f82-8f4d-18927b4be9cb
+[CHAT] New conversation created: 20045acc-84cc-4d40-b7fd-77fa670a2e80
 [CHAT] Storing user message in database
 [CHAT] User message stored successfully
 [CHAT] Calling RAG service at http://localhost:8004/chat
-[CHAT] RAG payload: {"query":"What products are available on the e-commerce website?","bot_id":"40fffdbb-932b-4a2f-aa22-9b004cee27fa","conversation_id":"2a20f21f-be81-4f82-8f4d-18927b4be9cb","message_history":[]}
+[CHAT] RAG payload: {"query":"Hi, can you tell me what services does logiquad offer?","bot_id":"6a582832-e37c-43d2-b2e1-eaac0d4fad19","conversation_id":"20045acc-84cc-4d40-b7fd-77fa670a2e80","message_history":[]}
 [CHAT] RAG service response status: 200
 [CHAT] Parsing RAG service response
-[CHAT] Answer received (first 50 chars): Based on the provided context, the following produ...
+[CHAT] Answer received (first 50 chars): LogiQuad Solutions offers a variety of IT consulti...
 [CHAT] Storing assistant message in database
 [CHAT] Assistant message stored successfully
 [CHAT] Sending successful response to client
-[wrangler:inf] POST /api/chat 200 OK (39056ms)
-[wrangler:inf] GET /favicon.ico 404 Not Found (8ms)
+[wrangler:inf] POST /api/chat 200 OK (25926ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (777ms)
+[CHAT] Request received
+[CHAT] Request data: query="Hi, can you tell me what servi...", botId=6a582832-e37c-43d2-b2e1-eaac0d4fad19, conversationId=null
+[CHAT] Initializing Supabase with URL: https://qpfljbjbyuiymeqghvsz.supabase.co
+[CHAT] Checking if bot exists: 6a582832-e37c-43d2-b2e1-eaac0d4fad19
+[CHAT] Bot found: Logiquad Bot
+[CHAT] No conversation ID provided, creating new conversation
+[CHAT] New conversation created: 351d9ca3-19b0-436b-bda9-ca395a438c26
+[CHAT] Storing user message in database
+[CHAT] User message stored successfully
+[CHAT] Calling RAG service at http://localhost:8004/chat
+[CHAT] RAG payload: {"query":"Hi, can you tell me what services does logiquad offer?","bot_id":"6a582832-e37c-43d2-b2e1-eaac0d4fad19","conversation_id":"351d9ca3-19b0-436b-bda9-ca395a438c26","message_history":[]}
+[CHAT] RAG service response status: 200
+[CHAT] Parsing RAG service response
+[CHAT] Answer received (first 50 chars): LogiQuad offers several IT consulting and services...
+[CHAT] Storing assistant message in database
+[CHAT] Assistant message stored successfully
+[CHAT] Sending successful response to client
+[wrangler:inf] POST /api/chat 200 OK (23344ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (621ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (910ms)
+[wrangler:inf] GET /api/auth/user 200 OK (781ms)
+[wrangler:inf] GET /api/auth/user 200 OK (255ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (1040ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (256ms)
+[wrangler:inf] GET /api/auth/user 200 OK (694ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (827ms)
+[wrangler:inf] GET /api/auth/user 200 OK (315ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (196ms)
+[wrangler:inf] OPTIONS /api/auth/user 204 No Content (12ms)
+[wrangler:inf] OPTIONS /api/auth/user 204 No Content (193ms)
+[wrangler:inf] GET /api/auth/user 401 Unauthorized (1088ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (1380ms)
+[wrangler:inf] GET /api/auth/user 401 Unauthorized (330ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (321ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (425ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (160ms)
+[wrangler:inf] OPTIONS /api/chat 204 No Content (4ms)
+[CHAT] Request received
+[CHAT] Request data: query="Hi...", botId=6a582832-e37c-43d2-b2e1-eaac0d4fad19, conversationId=null
+[CHAT] Initializing Supabase with URL: https://qpfljbjbyuiymeqghvsz.supabase.co
+[CHAT] Checking if bot exists: 6a582832-e37c-43d2-b2e1-eaac0d4fad19
+[CHAT] Bot found: Logiquad Bot
+[CHAT] No conversation ID provided, creating new conversation
+[CHAT] New conversation created: 6d251967-5ffe-41d1-9e05-341534fb71ce
+[CHAT] Storing user message in database
+[CHAT] User message stored successfully
+[CHAT] Calling RAG service at http://localhost:8004/chat
+[CHAT] RAG payload: {"query":"Hi","bot_id":"6a582832-e37c-43d2-b2e1-eaac0d4fad19","conversation_id":"6d251967-5ffe-41d1-9e05-341534fb71ce","message_history":[]}
+[CHAT] RAG service response status: 200
+[CHAT] Parsing RAG service response
+[CHAT] Answer received (first 50 chars): The answer to your question "What is 1 x 7?" is 7....
+[CHAT] Storing assistant message in database
+[CHAT] Assistant message stored successfully
+[CHAT] Sending successful response to client
+[wrangler:inf] POST /api/chat 200 OK (21734ms)
+[wrangler:inf] OPTIONS /api/auth/login 204 No Content (19ms)
+Attempting login for email: sagnikbhattacharjeephotos@gmail.com
+Login successful for user: 33f02f79-c8a7-42ac-8b8c-3022b19609cf
+[wrangler:inf] POST /api/auth/login 200 OK (1317ms)
+[wrangler:inf] OPTIONS /api/bots 204 No Content (5ms)
+[wrangler:inf] OPTIONS /api/bots 204 No Content (6ms)
+[wrangler:inf] GET /api/auth/user 200 OK (188ms)
+[wrangler:inf] GET /api/bots 200 OK (562ms)
+[wrangler:inf] GET /api/bots 200 OK (413ms)
+[wrangler:inf] GET /api/bots 200 OK (421ms)
+[wrangler:inf] GET /api/bots 200 OK (365ms)
+[wrangler:inf] OPTIONS /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 204 No Content (15ms)
+[wrangler:inf] OPTIONS /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 204 No Content (14ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (545ms)
+[wrangler:inf] OPTIONS /api/crawl/jobs 204 No Content (6ms)
+[wrangler:inf] OPTIONS /api/realtime-crawl/jobs 204 No Content (10ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (333ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (601ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (411ms)
+[wrangler:inf] OPTIONS /api/documents 204 No Content (11ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (428ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (375ms)
+[wrangler:inf] GET /api/documents 200 OK (511ms)
+[wrangler:inf] OPTIONS /api/chat/conversations 204 No Content (4ms)
+[wrangler:inf] GET /api/documents 200 OK (693ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (1092ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (827ms)
+[wrangler:inf] GET /api/bots 200 OK (444ms)
+[wrangler:inf] GET /api/bots 200 OK (342ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (365ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (261ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (389ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (139ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (299ms)
+[wrangler:inf] GET /api/auth/user 200 OK (311ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (227ms)
+[wrangler:inf] GET /api/auth/user 200 OK (240ms)
+[wrangler:inf] GET /api/bots 200 OK (639ms)
+[wrangler:inf] GET /api/bots 200 OK (425ms)
+[wrangler:inf] OPTIONS /api/auth/logout 204 No Content (3ms)
+[wrangler:inf] POST /api/auth/logout 200 OK (164ms)
+Attempting login for email: sagnikbhattacharjeephotos@gmail.com
+Login successful for user: 33f02f79-c8a7-42ac-8b8c-3022b19609cf
+[wrangler:inf] POST /api/auth/login 200 OK (343ms)
+[wrangler:inf] GET /api/bots 200 OK (314ms)
+[wrangler:inf] GET /api/auth/user 200 OK (344ms)
+[wrangler:inf] GET /api/bots 200 OK (333ms)
+[wrangler:inf] GET /api/bots 200 OK (519ms)
+[wrangler:inf] GET /api/bots 200 OK (380ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (984ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (334ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (412ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (542ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (424ms)
+[wrangler:inf] GET /api/documents 200 OK (630ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (756ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (554ms)
+[wrangler:inf] GET /api/documents 200 OK (1191ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (1454ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (512ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (442ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (399ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (197ms)
+[wrangler:inf] POST /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 400 Bad Request (685ms)
+[wrangler:inf] POST /api/auth/logout 200 OK (292ms)
+Attempting login for email: sagnikbhattacharjeephotos@gmail.com
+Login successful for user: 33f02f79-c8a7-42ac-8b8c-3022b19609cf
+[wrangler:inf] POST /api/auth/login 200 OK (471ms)
+[wrangler:inf] GET /api/auth/user 200 OK (309ms)
+[wrangler:inf] GET /api/bots 200 OK (489ms)
+[wrangler:inf] GET /api/bots 200 OK (317ms)
+[wrangler:inf] GET /api/bots 200 OK (511ms)
+[wrangler:inf] GET /api/bots 200 OK (315ms)
+[wrangler:inf] GET /api/bots 200 OK (640ms)
+[wrangler:inf] GET /api/bots 200 OK (585ms)
+[wrangler:inf] GET /api/bots 200 OK (350ms)
+[wrangler:inf] GET /api/bots 200 OK (352ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (317ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (393ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (579ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (510ms)
+[wrangler:inf] GET /api/crawl/jobs 200 OK (387ms)
+[wrangler:inf] GET /api/realtime-crawl/jobs 200 OK (417ms)
+[wrangler:inf] GET /api/documents 200 OK (514ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (562ms)
+[wrangler:inf] GET /api/documents 200 OK (695ms)
+[wrangler:inf] GET /api/chat/conversations 200 OK (498ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (752ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (218ms)
+[wrangler:inf] GET /api/bots/6a582832-e37c-43d2-b2e1-eaac0d4fad19 200 OK (347ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (249ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (739ms)
+[wrangler:inf] GET /api/auth/user 200 OK (778ms)
+[wrangler:inf] GET /api/auth/user 200 OK (168ms)
+[wrangler:inf] GET /api/widget/6a582832-e37c-43d2-b2e1-eaac0d4fad19/config 200 OK (540ms)
+[CHAT] Request received
+[CHAT] Request data: query="Hi There, Can you tell me what...", botId=6a582832-e37c-43d2-b2e1-eaac0d4fad19, conversationId=null
+[CHAT] Initializing Supabase with URL: https://qpfljbjbyuiymeqghvsz.supabase.co
+[CHAT] Checking if bot exists: 6a582832-e37c-43d2-b2e1-eaac0d4fad19
+[CHAT] Bot found: Logiquad Bot
+[CHAT] No conversation ID provided, creating new conversation
+[CHAT] New conversation created: c723a3b2-db99-43f6-835b-5dd9365bd6b7
+[CHAT] Storing user message in database
+[CHAT] User message stored successfully
+[CHAT] Calling RAG service at http://localhost:8004/chat
+[CHAT] RAG payload: {"query":"Hi There, Can you tell me what services does logiquad offer?","bot_id":"6a582832-e37c-43d2-b2e1-eaac0d4fad19","conversation_id":"c723a3b2-db99-43f6-835b-5dd9365bd6b7","message_history":[]}
+[CHAT] RAG service response status: 200
+[CHAT] Parsing RAG service response
+[CHAT] Answer received (first 50 chars): LogiQuad Solutions offers various IT consulting an...
+[CHAT] Storing assistant message in database
+[CHAT] Assistant message stored successfully
+[CHAT] Sending successful response to client
+[wrangler:inf] POST /api/chat 200 OK (26759ms)
+[CHAT] Request received
+[CHAT] Request data: query="Can you tell me the approach w...", botId=6a582832-e37c-43d2-b2e1-eaac0d4fad19, conversationId=c723a3b2-db99-43f6-835b-5dd9365bd6b7
+[CHAT] Initializing Supabase with URL: https://qpfljbjbyuiymeqghvsz.supabase.co
+[CHAT] Checking if bot exists: 6a582832-e37c-43d2-b2e1-eaac0d4fad19
+[CHAT] Bot found: Logiquad Bot
+[CHAT] Getting existing conversation: c723a3b2-db99-43f6-835b-5dd9365bd6b7
+[CHAT] Using existing conversation: c723a3b2-db99-43f6-835b-5dd9365bd6b7
+[CHAT] Storing user message in database
+[CHAT] User message stored successfully
+[CHAT] Calling RAG service at http://localhost:8004/chat
+[CHAT] RAG payload: {"query":"Can you tell me the approach we are going to take to build the chatbot according to the document we gave ?","bot_id":"6a582832-e37c-43d2-b2e1-eaac0d4fad19","conversation_id":"c723a3b2-db99-43f6-835b-5dd9365bd6b7","message_history":[]}
+[CHAT] RAG service response status: 200
+[CHAT] Parsing RAG service response
+[CHAT] Answer received (first 50 chars): The document outlines an approach for building an ...
+[CHAT] Storing assistant message in database
+[CHAT] Assistant message stored successfully
+[CHAT] Sending successful response to client
+[wrangler:inf] POST /api/chat 200 OK (32662ms)

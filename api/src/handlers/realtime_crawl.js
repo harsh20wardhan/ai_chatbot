@@ -437,4 +437,62 @@ export const deleteCrawledPage = async ({ params, user, env, corsHeaders }) => {
       }
     });
   }
+};
+
+// Get all realtime crawl jobs for a specific bot
+export const getRealtimeCrawlJobsByBot = async ({ request, user, env, corsHeaders }) => {
+  try {
+    const url = new URL(request.url);
+    const botId = url.searchParams.get('botId');
+    
+    if (!botId) {
+      return new Response(JSON.stringify({ error: 'Bot ID is required' }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          ...corsHeaders
+        }
+      });
+    }
+
+    const supabase = getSupabase(env);
+    
+    // Verify bot ownership and get crawl jobs
+    const { data: crawlJobs, error } = await supabase
+      .from('crawl_jobs')
+      .select('*')
+      .eq('bot_id', botId)
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false });
+      
+    if (error) {
+      console.log('[REALTIME_CRAWL] Error fetching crawl jobs:', error);
+      return new Response(JSON.stringify({ error: 'Failed to fetch crawl jobs' }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          ...corsHeaders
+        }
+      });
+    }
+
+    return new Response(JSON.stringify({ 
+      jobs: crawlJobs || []
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        ...corsHeaders
+      }
+    });
+  } catch (error) {
+    console.error('[REALTIME_CRAWL] Error in getRealtimeCrawlJobsByBot:', error);
+    return new Response(JSON.stringify({ error: 'Failed to fetch crawl jobs' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        ...corsHeaders
+      }
+    });
+  }
 }; 

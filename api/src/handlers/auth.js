@@ -54,6 +54,7 @@ export const register = async ({ request, env, corsHeaders }) => {
       options: {
         data: { name },
         emailRedirectTo: `${request.headers.get('origin') || 'http://localhost:8787'}/auth/callback`
+        // Note: emailConfirm: false doesn't work in Supabase - need to configure in dashboard
       }
     };
     
@@ -66,6 +67,22 @@ export const register = async ({ request, env, corsHeaders }) => {
     
     if (error) {
       console.error('Supabase Auth Error:', JSON.stringify(error));
+      
+      // Handle specific error cases
+      if (error.code === 'email_address_invalid') {
+        return new Response(JSON.stringify({ 
+          error: 'Please use a valid email address',
+          details: 'The email address format is not accepted',
+          code: error.code
+        }), {
+          status: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
+        });
+      }
+      
       return new Response(JSON.stringify({ 
         error: error.message,
         details: error.details || 'No additional details',
@@ -79,9 +96,30 @@ export const register = async ({ request, env, corsHeaders }) => {
       });
     }
     
+    // For new registrations, we need to sign them in to get a token
+    let token = null;
+    if (data.session) {
+      token = data.session.access_token;
+    } else {
+      // If no session was created during signup, try to sign them in
+      console.log('No session created during signup, attempting sign in...');
+      const signInResult = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      
+      if (!signInResult.error && signInResult.data.session) {
+        token = signInResult.data.session.access_token;
+        console.log('Successfully signed in after registration');
+      } else {
+        console.error('Failed to sign in after registration:', signInResult.error);
+      }
+    }
+    
     return new Response(JSON.stringify({ 
       message: 'Registration successful', 
-      user: data.user
+      user: data.user,
+      token: token
     }), {
       status: 201,
       headers: {
@@ -120,6 +158,8 @@ export const login = async ({ request, env, corsHeaders }) => {
       });
     }
     
+    console.log(`Attempting login for email: ${email}`);
+    
     const supabase = getPublicSupabase(env);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -127,7 +167,12 @@ export const login = async ({ request, env, corsHeaders }) => {
     });
     
     if (error) {
-      return new Response(JSON.stringify({ error: error.message }), {
+      console.error('Login error:', error);
+      return new Response(JSON.stringify({ 
+        error: error.message,
+        details: error.details || 'No additional details',
+        code: error.code || 'unknown'
+      }), {
         status: 401,
         headers: {
           'Content-Type': 'application/json',
@@ -136,10 +181,12 @@ export const login = async ({ request, env, corsHeaders }) => {
       });
     }
     
+    console.log('Login successful for user:', data.user.id);
+    
     return new Response(JSON.stringify({ 
       message: 'Login successful',
       user: data.user,
-      session: data.session
+      token: data.session.access_token
     }), {
       status: 200,
       headers: {
@@ -161,10 +208,24 @@ export const login = async ({ request, env, corsHeaders }) => {
 // User logout
 export const logout = async ({ request, env, corsHeaders }) => {
   try {
-    const { token } = await request.json();
+    // Get token from Authorization header
+    const authHeader = request.headers.get('Authorization');
+    let token = null;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.substring(7);
+    } else {
+      // Try to get token from request body as fallback
+      try {
+        const body = await request.json();
+        token = body.token;
+      } catch (e) {
+        // No body or invalid JSON
+      }
+    }
     
     if (!token) {
-      return new Response(JSON.stringify({ error: 'Token is required' }), {
+      return new Response(JSON.stringify({ error: 'Token is required in Authorization header or request body' }), {
         status: 400,
         headers: {
           'Content-Type': 'application/json',

@@ -91,6 +91,29 @@ def crawl_website_realtime(base_url, max_pages=20, exclude_patterns=None, sessio
     
     if exclude_patterns is None:
         exclude_patterns = []
+    
+    # Update job status to 'running'
+    if job_id:
+        try:
+            conn = get_db_connection()
+            try:
+                with conn.cursor() as cur:
+                    logger.info(f"Updating job {job_id} status to running")
+                    cur.execute("""
+                        UPDATE crawl_jobs 
+                        SET status = %s, 
+                            updated_at = CURRENT_TIMESTAMP
+                        WHERE id = %s
+                    """, ('running', job_id))
+                    conn.commit()
+                    logger.info(f"Successfully updated job {job_id} status to running")
+            except Exception as e:
+                logger.error(f"Failed to update job status to running: {e}")
+                conn.rollback()
+            finally:
+                conn.close()
+        except Exception as e:
+            logger.error(f"Database connection error while updating job status to running: {e}")
 
     def is_same_domain(url):
         return urlparse(url).netloc == urlparse(base_url).netloc
@@ -220,8 +243,8 @@ def crawl_website_realtime(base_url, max_pages=20, exclude_patterns=None, sessio
                             'pages_crawled': pages_crawled + 1
                         }, room=session_id)
                         
-                        # Start embedding process for this page
-                        threading.Thread(target=embed_page_realtime, args=(page_id, text, bot_id, session_id)).start()
+                        # Start embedding process for this page in background
+                        threading.Thread(target=embed_page_realtime, args=(page_id, text, bot_id, session_id), daemon=True).start()
                         
             except Exception as e:
                 logger.error(f"Database error for {url}: {e}")
@@ -242,6 +265,28 @@ def crawl_website_realtime(base_url, max_pages=20, exclude_patterns=None, sessio
             total_content_length += len(text)
             
             logger.info(f"Successfully crawled: {url} ({len(text)} chars)")
+            
+            # Update job progress periodically (every 5 pages or on the last page)
+            if job_id and (pages_crawled % 5 == 0 or len(to_visit) == 0):
+                try:
+                    conn = get_db_connection()
+                    try:
+                        with conn.cursor() as cur:
+                            cur.execute("""
+                                UPDATE crawl_jobs 
+                                SET pages_crawled = %s,
+                                    updated_at = CURRENT_TIMESTAMP
+                                WHERE id = %s
+                            """, (pages_crawled, job_id))
+                            conn.commit()
+                            logger.debug(f"Updated job {job_id} progress: {pages_crawled} pages crawled")
+                    except Exception as e:
+                        logger.error(f"Failed to update job progress: {e}")
+                        conn.rollback()
+                    finally:
+                        conn.close()
+                except Exception as e:
+                    logger.error(f"Database connection error while updating job progress: {e}")
 
             # Find new links
             for a in soup.find_all("a", href=True):
@@ -261,6 +306,32 @@ def crawl_website_realtime(base_url, max_pages=20, exclude_patterns=None, sessio
                 }, room=session_id)
     
     logger.info(f"Crawl completed. Total pages: {len(collected)}")
+    
+    # Update job status in database
+    if job_id:
+        try:
+            conn = get_db_connection()
+            try:
+                with conn.cursor() as cur:
+                    logger.info(f"Updating job {job_id} status to completed with {pages_crawled} pages")
+                    cur.execute("""
+                        UPDATE crawl_jobs 
+                        SET status = %s, 
+                            completed_at = CURRENT_TIMESTAMP,
+                            updated_at = CURRENT_TIMESTAMP,
+                            pages_crawled = %s
+                        WHERE id = %s
+                    """, ('completed', pages_crawled, job_id))
+                    conn.commit()
+                    logger.info(f"Successfully updated job {job_id} status to completed with {pages_crawled} pages")
+            except Exception as e:
+                logger.error(f"Failed to update job status: {e}")
+                logger.error(traceback.format_exc())
+                conn.rollback()
+            finally:
+                conn.close()
+        except Exception as e:
+            logger.error(f"Database connection error while updating job status: {e}")
     
     # Emit completion event
     if session_id:
@@ -555,6 +626,31 @@ def start_realtime_crawl():
         except Exception as e:
             logger.error(f"Crawl thread error: {e}")
             logger.error(traceback.format_exc())
+            
+            # Update job status to failed
+            try:
+                conn = get_db_connection()
+                try:
+                    with conn.cursor() as cur:
+                        logger.info(f"Updating job {job_id} status to failed due to error: {str(e)}")
+                        cur.execute("""
+                            UPDATE crawl_jobs 
+                            SET status = %s, 
+                                completed_at = CURRENT_TIMESTAMP,
+                                updated_at = CURRENT_TIMESTAMP,
+                                error = %s
+                            WHERE id = %s
+                        """, ('failed', str(e), job_id))
+                        conn.commit()
+                        logger.info(f"Successfully updated job {job_id} status to failed")
+                except Exception as db_e:
+                    logger.error(f"Failed to update job status to failed: {db_e}")
+                    conn.rollback()
+                finally:
+                    conn.close()
+            except Exception as db_e:
+                logger.error(f"Database connection error while updating job status to failed: {db_e}")
+            
             socketio.emit('crawl_error', {'error': str(e)}, room=session_id)
     
     logger.info(f"Starting crawl thread for {url}")

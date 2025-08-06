@@ -19,6 +19,7 @@ CREATE TABLE crawl_jobs (
   max_depth INTEGER NOT NULL DEFAULT 3,
   exclude_patterns TEXT[] DEFAULT '{}',
   status TEXT NOT NULL DEFAULT 'pending',
+  pages_crawled INTEGER DEFAULT 0,
   error TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ,
@@ -184,12 +185,14 @@ CREATE POLICY conversations_bot_policy ON conversations
 CREATE POLICY messages_conversation_policy ON messages
   USING (conversation_id IN (SELECT id FROM conversations WHERE bot_id IN (SELECT id FROM bots WHERE user_id = auth.uid())));
 
--- Create storage buckets
-INSERT INTO storage.buckets (id, name, public) VALUES ('documents', 'documents', false);
+-- Create storage bucket for documents (safe to run multiple times)
+INSERT INTO storage.buckets (id, name, public) VALUES ('documents', 'documents', false)
+ON CONFLICT (id) DO NOTHING;
 
 -- RLS policy for storage
 CREATE POLICY documents_storage_policy ON storage.objects
   FOR ALL USING (
+    bucket_id = 'documents' AND
     -- Extract user_id from storage path (format: {user_id}/{bot_id}/{filename})
     SPLIT_PART(name, '/', 1) = auth.uid()::text
   );
@@ -201,4 +204,8 @@ CREATE INDEX idx_embedding_chunks_crawled_page_id ON embedding_chunks(crawled_pa
 CREATE INDEX idx_embedding_chunks_bot_id ON embedding_chunks(bot_id);
 CREATE INDEX idx_realtime_crawl_sessions_session_token ON realtime_crawl_sessions(session_token);
 CREATE INDEX idx_document_chunks_document_id ON document_chunks(document_id);
-CREATE INDEX idx_document_chunks_bot_id ON document_chunks(bot_id); 
+CREATE INDEX idx_document_chunks_bot_id ON document_chunks(bot_id);
+
+-- Migration: Add pages_crawled column to existing crawl_jobs table
+-- (This is safe to run multiple times)
+ALTER TABLE crawl_jobs ADD COLUMN IF NOT EXISTS pages_crawled INTEGER DEFAULT 0; 
