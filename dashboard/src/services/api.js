@@ -216,30 +216,11 @@ export const chatApi = {
 // API methods for analytics
 export const analyticsApi = {
   // Get bot usage statistics
-  getBotStats: async (botId) => {
-    // This would be a real endpoint in a production environment
-    // For now, we'll return mock data
-    return {
-      totalMessages: 1250,
-      uniqueUsers: 78,
-      averageResponseTime: 1.2, // seconds
-      topQuestions: [
-        { question: "What are your business hours?", count: 45 },
-        { question: "How do I reset my password?", count: 32 },
-        { question: "What payment methods do you accept?", count: 28 },
-        { question: "How do I contact support?", count: 21 },
-        { question: "Do you offer refunds?", count: 17 }
-      ],
-      dailyUsage: [
-        { date: '2023-05-01', messages: 42 },
-        { date: '2023-05-02', messages: 38 },
-        { date: '2023-05-03', messages: 56 },
-        { date: '2023-05-04', messages: 61 },
-        { date: '2023-05-05', messages: 47 },
-        { date: '2023-05-06', messages: 28 },
-        { date: '2023-05-07', messages: 32 }
-      ]
-    };
+  getBotStats: async (botId, range = '7d') => {
+    const response = await api.get(`/analytics/bot-stats`, {
+      params: { botId, range },
+    });
+    return response.data;
   }
 };
 

@@ -360,7 +360,7 @@ export default function BotDetail() {
           >
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h4" component="h1">
+          <Typography variant="h3" component="h1" sx={{ fontWeight: 800 }}>
             {bot.name}
           </Typography>
         </Box>
@@ -369,9 +369,9 @@ export default function BotDetail() {
           {bot.description || 'No description'}
         </Typography>
         
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
           <Button
-            variant="outlined"
+            variant="contained"
             startIcon={<SettingsIcon />}
             onClick={() => navigate(`/bots/${botId}/widget`)}
           >

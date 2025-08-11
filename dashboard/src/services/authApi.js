@@ -63,3 +63,14 @@ export const authApi = {
 };
 
 export default authApi;
+ 
+// Password management
+export const passwordApi = {
+  changePassword: async (currentPassword, newPassword) => {
+    const response = await api.post('/auth/change-password', {
+      currentPassword,
+      newPassword,
+    });
+    return response.data;
+  },
+};

@@ -20,6 +20,7 @@ import {
   Alert,
   Chip,
   Divider,
+  Stack,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -172,16 +173,23 @@ export default function Bots() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4" component="h1">
-          Bots
-        </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => handleOpenDialog()}
-        >
-          Create Bot
-        </Button>
+        <Box>
+          <Typography variant="h3" component="h1" sx={{ mb: 0.5 }}>
+            Bots
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Manage, edit and configure your bots
+          </Typography>
+        </Box>
+        <Stack direction="row" spacing={1}>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => handleOpenDialog()}
+          >
+            Create Bot
+          </Button>
+        </Stack>
       </Box>
 
       {loading ? (
@@ -193,12 +201,12 @@ export default function Bots() {
           {bots.length > 0 ? (
             bots.map((bot) => (
               <Grid item xs={12} sm={6} md={4} key={bot.id}>
-                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
                   <CardMedia
                     component="div"
                     sx={{
                       height: 140,
-                      bgcolor: 'primary.main',
+                      background: (theme) => `linear-gradient(135deg, ${theme.palette.primary.main} 0%, #8b5cf6 100%)`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -209,7 +217,7 @@ export default function Bots() {
                     </Typography>
                   </CardMedia>
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h5" component="div" gutterBottom>
+                    <Typography variant="h6" component="div" gutterBottom sx={{ fontWeight: 700 }}>
                       {bot.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -237,10 +245,10 @@ export default function Bots() {
                     </Box>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => navigate(`/bots/${bot.id}`)}>
+                    <Button size="small" onClick={() => navigate(`/bots/${bot.id}`)} variant="text">
                       Manage
                     </Button>
-                    <Button size="small" onClick={() => navigate(`/bots/${bot.id}/widget`)}>
+                    <Button size="small" onClick={() => navigate(`/bots/${bot.id}/widget`)} variant="text">
                       Widget
                     </Button>
                     <Box sx={{ flexGrow: 1 }} />

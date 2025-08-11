@@ -33,7 +33,7 @@ import {
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 
-const drawerWidth = 240;
+const drawerWidth = 264;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -57,6 +57,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 const AppBarStyled = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
+  backgroundColor: theme.palette.background.paper,
+  color: theme.palette.text.primary,
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -130,11 +132,16 @@ export default function MainLayout() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{ mr: 2, ...(open && { display: 'none' }), borderRadius: 2 }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, fontWeight: 800, letterSpacing: '-0.02em' }}
+          >
             AI Chatbot Dashboard
           </Typography>
           
@@ -149,7 +156,7 @@ export default function MainLayout() {
                   onClick={handleMenu}
                   color="inherit"
                 >
-                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
+                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main', fontWeight: 700 }}>
                     {user.email?.charAt(0).toUpperCase() || 'U'}
                   </Avatar>
                 </IconButton>
@@ -193,6 +200,8 @@ export default function MainLayout() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            backgroundImage:
+              'radial-gradient(80% 80% at 0% 0%, rgba(99,102,241,0.05) 0%, rgba(99,102,241,0) 60%)',
           },
         }}
         variant={isMobile ? 'temporary' : 'persistent'}
@@ -220,9 +229,10 @@ export default function MainLayout() {
                     handleDrawerClose();
                   }
                 }}
+                sx={{ mx: 1, my: 0.5 }}
               >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
+                <ListItemIcon sx={{ color: 'inherit' }}>{item.icon}</ListItemIcon>
+                <ListItemText primaryTypographyProps={{ fontWeight: 600 }} primary={item.text} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -230,7 +240,14 @@ export default function MainLayout() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Outlet />
+        <Box sx={{
+          p: { xs: 1, sm: 2, md: 3 },
+          background:
+            'radial-gradient(1200px 200px at 50% -40px, rgba(99,102,241,0.08) 0%, rgba(99,102,241,0) 60%)',
+          borderRadius: 2,
+        }}>
+          <Outlet />
+        </Box>
       </Main>
     </Box>
   );

@@ -13,20 +13,9 @@ import {
   CircularProgress,
   Snackbar,
   Alert,
-  Card,
-  CardContent,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
   IconButton,
 } from '@mui/material';
-import {
-  Save as SaveIcon,
-  Delete as DeleteIcon,
-  Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon,
-} from '@mui/icons-material';
+import { Save as SaveIcon, Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function Settings() {
@@ -52,10 +41,7 @@ export default function Settings() {
     bot: true,
     security: true,
   });
-  const [apiKeys, setApiKeys] = useState([
-    { id: '1', name: 'Development', key: 'sk_test_123456789', created: '2023-05-01T12:00:00Z' },
-    { id: '2', name: 'Production', key: 'sk_live_987654321', created: '2023-05-02T14:30:00Z' },
-  ]);
+  // Removed static API keys section
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: '',
@@ -149,7 +135,7 @@ export default function Settings() {
     try {
       setLoading(true);
       
-      await updatePassword(passwordData.newPassword);
+      await updatePassword(passwordData.newPassword, passwordData.currentPassword);
       
       setPasswordData({
         currentPassword: '',
@@ -198,64 +184,7 @@ export default function Settings() {
     }
   };
   
-  const handleCreateApiKey = async () => {
-    try {
-      setLoading(true);
-      
-      // This would be a real API call in production
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const newKey = {
-        id: Date.now().toString(),
-        name: 'New Key',
-        key: `sk_${Math.random().toString(36).substring(2, 15)}`,
-        created: new Date().toISOString(),
-      };
-      
-      setApiKeys(prev => [...prev, newKey]);
-      
-      setSnackbar({
-        open: true,
-        message: 'API key created successfully',
-        severity: 'success',
-      });
-    } catch (error) {
-      console.error('Error creating API key:', error);
-      setSnackbar({
-        open: true,
-        message: 'Failed to create API key',
-        severity: 'error',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  const handleDeleteApiKey = async (id) => {
-    try {
-      setLoading(true);
-      
-      // This would be a real API call in production
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setApiKeys(prev => prev.filter(key => key.id !== id));
-      
-      setSnackbar({
-        open: true,
-        message: 'API key deleted successfully',
-        severity: 'success',
-      });
-    } catch (error) {
-      console.error('Error deleting API key:', error);
-      setSnackbar({
-        open: true,
-        message: 'Failed to delete API key',
-        severity: 'error',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Removed API key handlers
   
   const handleCloseSnackbar = () => {
     setSnackbar(prev => ({ ...prev, open: false }));
@@ -265,15 +194,20 @@ export default function Settings() {
     return new Date(dateString).toLocaleString();
   };
   
-  const maskApiKey = (key) => {
-    return `${key.substring(0, 7)}...${key.substring(key.length - 4)}`;
-  };
+  // Removed API key helpers
   
   return (
     <Box>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Settings
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Box>
+          <Typography variant="h3" component="h1" sx={{ mb: 0.5 }}>
+            Settings
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Manage your profile, password, and notifications
+          </Typography>
+        </Box>
+      </Box>
       
       <Grid container spacing={4}>
         {/* Profile Settings */}
@@ -479,60 +413,7 @@ export default function Settings() {
             </Button>
           </Paper>
           
-          {/* API Keys */}
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h5" gutterBottom>
-              API Keys
-            </Typography>
-            <Divider sx={{ mb: 3 }} />
-            
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              Manage your API keys for programmatic access to the platform.
-            </Typography>
-            
-            <Card variant="outlined" sx={{ mb: 3 }}>
-              <CardContent sx={{ p: 0 }}>
-                <List>
-                  {apiKeys.map((key) => (
-                    <React.Fragment key={key.id}>
-                      <ListItem>
-                        <ListItemText
-                          primary={key.name}
-                          secondary={
-                            <>
-                              <Typography component="span" variant="body2" color="text.primary">
-                                {maskApiKey(key.key)}
-                              </Typography>
-                              <br />
-                              Created: {formatDate(key.created)}
-                            </>
-                          }
-                        />
-                        <ListItemSecondaryAction>
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            onClick={() => handleDeleteApiKey(key.id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                      <Divider />
-                    </React.Fragment>
-                  ))}
-                </List>
-              </CardContent>
-            </Card>
-            
-            <Button
-              variant="outlined"
-              onClick={handleCreateApiKey}
-              disabled={loading}
-            >
-              {loading ? <CircularProgress size={24} /> : 'Create New API Key'}
-            </Button>
-          </Paper>
+          {/* Removed API Keys section */}
         </Grid>
       </Grid>
       

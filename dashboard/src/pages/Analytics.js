@@ -82,7 +82,7 @@ export default function Analytics() {
   const fetchBotStats = async () => {
     try {
       setLoading(true);
-      const statsData = await analyticsApi.getBotStats(selectedBot);
+      const statsData = await analyticsApi.getBotStats(selectedBot, timeRange);
       setStats(statsData);
     } catch (error) {
       console.error('Error fetching bot stats:', error);
@@ -151,9 +151,16 @@ export default function Analytics() {
 
   return (
     <Box>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Analytics
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Box>
+          <Typography variant="h3" component="h1" sx={{ mb: 0.5 }}>
+            Analytics
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Track usage and performance across bots
+          </Typography>
+        </Box>
+      </Box>
 
       <Box sx={{ mb: 4, display: 'flex', gap: 2 }}>
         <FormControl sx={{ minWidth: 200 }}>
@@ -194,7 +201,7 @@ export default function Analytics() {
         <Grid item xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography color="text.secondary" gutterBottom>
                 Total Messages
               </Typography>
               <Typography variant="h3">
@@ -207,7 +214,7 @@ export default function Analytics() {
         <Grid item xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography color="text.secondary" gutterBottom>
                 Unique Users
               </Typography>
               <Typography variant="h3">
@@ -220,7 +227,7 @@ export default function Analytics() {
         <Grid item xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography color="text.secondary" gutterBottom>
                 Avg. Response Time
               </Typography>
               <Typography variant="h3">
@@ -233,7 +240,7 @@ export default function Analytics() {
         <Grid item xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography color="text.secondary" gutterBottom>
                 Success Rate
               </Typography>
               <Typography variant="h3">

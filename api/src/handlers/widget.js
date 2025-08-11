@@ -85,7 +85,7 @@ export const updateWidgetConfig = async ({ request, params, user, env, corsHeade
       });
     }
     
-    // Validate widget configuration
+    // Validate widget configuration: accept extra keys but only persist the allowed subset
     const validKeys = [
       'theme', 
       'primary_color', 
@@ -95,20 +95,9 @@ export const updateWidgetConfig = async ({ request, params, user, env, corsHeade
       'show_sources'
     ];
     
-    const invalidKeys = Object.keys(updates).filter(key => !validKeys.includes(key));
-    
-    if (invalidKeys.length > 0) {
-      return new Response(JSON.stringify({ 
-        error: `Invalid configuration keys: ${invalidKeys.join(', ')}`,
-        valid_keys: validKeys
-      }), {
-        status: 400,
-        headers: {
-          'Content-Type': 'application/json',
-          ...corsHeaders
-        }
-      });
-    }
+    const filteredUpdates = Object.fromEntries(
+      Object.entries(updates).filter(([key]) => validKeys.includes(key))
+    );
     
     // Merge with existing settings
     const existingSettings = bot.settings || {};
@@ -118,7 +107,7 @@ export const updateWidgetConfig = async ({ request, params, user, env, corsHeade
       ...existingSettings,
       widget: {
         ...existingWidgetSettings,
-        ...updates
+        ...filteredUpdates
       }
     };
     

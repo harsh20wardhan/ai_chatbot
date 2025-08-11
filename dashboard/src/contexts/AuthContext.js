@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { authApi } from '../services/authApi';
+import { authApi, passwordApi } from '../services/authApi';
 
 const AuthContext = createContext();
 
@@ -135,15 +135,12 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Update password function - placeholder for now
-  const updatePassword = async (newPassword) => {
+  // Update password function using backend endpoint
+  const updatePassword = async (newPassword, currentPassword = '') => {
     try {
       setLoading(true);
       setError(null);
-      
-      // This would be implemented when we have the API endpoint
-      console.warn('Password update not implemented in the API yet');
-      
+      await passwordApi.changePassword(currentPassword, newPassword);
     } catch (error) {
       console.error('Error updating password:', error);
       setError(error.response?.data?.message || error.message);

@@ -14,8 +14,8 @@ import {
   ListItem,
   ListItemText,
   LinearProgress,
-  Link,
   Chip,
+  Stack,
 } from '@mui/material';
 import { botApi, analyticsApi } from '../services/api';
 
@@ -61,9 +61,24 @@ export default function Dashboard() {
 
   return (
     <Box>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Dashboard
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+        <Box>
+          <Typography variant="h3" component="h1" sx={{ mb: 0.5 }}>
+            Welcome back
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Overview of your bots and activity
+          </Typography>
+        </Box>
+        <Stack direction="row" spacing={1}>
+          <Button variant="contained" component={RouterLink} to="/bots">
+            Create Bot
+          </Button>
+          <Button variant="outlined" component={RouterLink} to="/analytics">
+            View Analytics
+          </Button>
+        </Stack>
+      </Box>
 
       {loading ? (
         <LinearProgress />
@@ -72,9 +87,9 @@ export default function Dashboard() {
           {/* Stats Cards */}
           <Grid container spacing={3} sx={{ mb: 4 }}>
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ position: 'relative', overflow: 'hidden' }}>
                 <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
+                  <Typography color="text.secondary" gutterBottom>
                     Total Bots
                   </Typography>
                   <Typography variant="h3">{stats.totalBots}</Typography>
@@ -83,9 +98,9 @@ export default function Dashboard() {
             </Grid>
             
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ position: 'relative', overflow: 'hidden' }}>
                 <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
+                  <Typography color="text.secondary" gutterBottom>
                     Active Bots
                   </Typography>
                   <Typography variant="h3">{stats.activeBots}</Typography>
@@ -94,9 +109,9 @@ export default function Dashboard() {
             </Grid>
             
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ position: 'relative', overflow: 'hidden' }}>
                 <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
+                  <Typography color="text.secondary" gutterBottom>
                     Total Messages
                   </Typography>
                   <Typography variant="h3">{stats.totalMessages}</Typography>
@@ -105,9 +120,9 @@ export default function Dashboard() {
             </Grid>
             
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ position: 'relative', overflow: 'hidden' }}>
                 <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
+                  <Typography color="text.secondary" gutterBottom>
                     Total Documents
                   </Typography>
                   <Typography variant="h3">{stats.totalDocuments}</Typography>
@@ -117,7 +132,7 @@ export default function Dashboard() {
           </Grid>
 
           {/* Recent Bots */}
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h4" sx={{ mb: 2 }}>
             Recent Bots
           </Typography>
           
@@ -125,12 +140,12 @@ export default function Dashboard() {
             {recentBots.length > 0 ? (
               recentBots.map((bot) => (
                 <Grid item xs={12} sm={6} md={4} key={bot.id}>
-                  <Card>
+                  <Card sx={{ height: '100%' }}>
                     <CardContent>
-                      <Typography variant="h6" component="div">
+                      <Typography variant="h6" component="div" sx={{ fontWeight: 700 }}>
                         {bot.name}
                       </Typography>
-                      <Typography color="textSecondary" sx={{ mb: 1.5 }}>
+                      <Typography color="text.secondary" sx={{ mb: 1.5 }}>
                         {bot.description || 'No description'}
                       </Typography>
                       <Divider sx={{ my: 1 }} />
@@ -154,6 +169,7 @@ export default function Dashboard() {
                         size="small" 
                         component={RouterLink} 
                         to={`/bots/${bot.id}`}
+                        variant="text"
                       >
                         Manage
                       </Button>
@@ -161,6 +177,7 @@ export default function Dashboard() {
                         size="small" 
                         component={RouterLink} 
                         to={`/bots/${bot.id}/widget`}
+                        variant="text"
                       >
                         Widget Config
                       </Button>
@@ -187,7 +204,7 @@ export default function Dashboard() {
           </Grid>
 
           {/* Quick Links */}
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h4" sx={{ mb: 2 }}>
             Quick Links
           </Typography>
           

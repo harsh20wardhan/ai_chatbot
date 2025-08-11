@@ -216,7 +216,7 @@ export default function WidgetConfig() {
         >
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h4" component="h1">
+        <Typography variant="h3" component="h1" sx={{ fontWeight: 800 }}>
           Widget Configuration: {bot.name}
         </Typography>
       </Box>
@@ -228,6 +228,12 @@ export default function WidgetConfig() {
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
+          sx={{
+            '& .MuiTabs-flexContainer': {
+              bgcolor: 'background.paper',
+            },
+            '& .MuiTab-root': { fontWeight: 600 },
+          }}
         >
           <Tab label="Appearance" />
           <Tab label="Behavior" />
@@ -268,7 +274,7 @@ export default function WidgetConfig() {
                       bgcolor: config.primary_color,
                       mr: 2,
                       cursor: 'pointer',
-                      border: '1px solid #ddd',
+                      border: '1px solid #e2e8f0',
                     }}
                     onClick={() => setColorPickerOpen(!colorPickerOpen)}
                   />
@@ -328,7 +334,8 @@ export default function WidgetConfig() {
               >
                 <Box
                   sx={{
-                    bgcolor: config.primary_color,
+                    // Gradient header uses selected primary color as base
+                    background: `linear-gradient(135deg, ${config.primary_color} 0%, #0ea5e9 100%)`,
                     color: '#ffffff',
                     p: 2,
                     display: 'flex',
@@ -371,7 +378,7 @@ export default function WidgetConfig() {
                   </Box>
                 </Box>
                 
-                <Box
+                 <Box
                   sx={{
                     p: 2,
                     borderTop: '1px solid',

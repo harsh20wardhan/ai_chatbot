@@ -13,6 +13,7 @@ import * as embeddingsHandler from './handlers/embeddings';
 import * as vectorsHandler from './handlers/vectors';
 import * as chatHandler from './handlers/chat';
 import * as adminHandler from './handlers/admin';
+import * as analyticsHandler from './handlers/analytics';
 import * as widgetHandler from './handlers/widget';
 
 const router = new Router();
@@ -148,6 +149,7 @@ router.post('/api/auth/register', authHandler.register);
 router.post('/api/auth/login', authHandler.login);
 router.post('/api/auth/logout', authHandler.logout);
 router.get('/api/auth/user', authMiddleware, authHandler.getUser);
+router.post('/api/auth/change-password', authMiddleware, authHandler.changePassword);
 
 // Bot management routes
 router.get('/api/bots', authMiddleware, botsHandler.getBots);
@@ -195,6 +197,9 @@ router.get('/api/chat/conversations/:conversationId', authMiddleware, chatHandle
 router.get('/api/admin/stats', authMiddleware, adminHandler.getStats);
 router.get('/api/admin/logs', authMiddleware, adminHandler.getLogs);
 router.get('/api/admin/jobs', authMiddleware, adminHandler.getJobs);
+
+// Analytics routes
+router.get('/api/analytics/bot-stats', authMiddleware, analyticsHandler.getBotStats);
 
 // Widget routes
 router.get('/api/widget/:botId/config', widgetHandler.getWidgetConfig);

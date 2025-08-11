@@ -1,111 +1,111 @@
-2025-08-06 14:03:26,169 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
-2025-08-06 14:03:26,169 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
-2025-08-06 14:03:26,173 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
-2025-08-06 14:03:26,817 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
-2025-08-06 14:03:26,856 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
-2025-08-06 14:03:27,126 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
-2025-08-06 14:03:27,159 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
-2025-08-06 14:03:27,427 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
-2025-08-06 14:03:27,455 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
-2025-08-06 14:03:27,726 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
-2025-08-06 14:03:27,763 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
-2025-08-06 14:03:28,031 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
-2025-08-06 14:03:28,074 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
-2025-08-06 14:03:28,343 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
-2025-08-06 14:03:28,374 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
-2025-08-06 14:03:28,652 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
-2025-08-06 14:03:28,950 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
-2025-08-06 14:03:28,993 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
-2025-08-06 14:03:29,312 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
-2025-08-06 14:03:29,318 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
-2025-08-06 14:03:30,107 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
-2025-08-06 14:03:30,447 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
-2025-08-06 14:03:31,174 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
-2025-08-06 14:03:31,485 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
-2025-08-06 14:03:31,488 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
-2025-08-06 14:03:33,191 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 200 47
-2025-08-06 14:03:33,195 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
-2025-08-06 14:03:34,285 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
-2025-08-06 14:03:34,314 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
-2025-08-06 14:03:34,904 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "GET /call/run/a6ae83dea1014aab9a2d83f8f4339013 HTTP/1.1" 200 None
-2025-08-06 14:03:35,078 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
-2025-08-06 14:03:35,200 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
-2025-08-06 14:03:35,502 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
-2025-08-06 14:03:35,788 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
-2025-08-06 14:03:35,913 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
-2025-08-06 14:03:35,944 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
-2025-08-06 14:03:36,058 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors.index.json HTTP/1.1" 404 0
-2025-08-06 14:03:36,225 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
-2025-08-06 14:03:36,254 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
-2025-08-06 14:03:36,326 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors HTTP/1.1" 302 0
-2025-08-06 14:03:36,552 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
-2025-08-06 14:03:36,838 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
-2025-08-06 14:03:37,117 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+2025-08-11 10:53:41,135 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-11 10:53:41,135 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
+2025-08-11 10:53:41,138 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-11 10:53:41,831 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-11 10:53:41,841 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-11 10:53:42,085 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-11 10:53:42,094 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-11 10:53:42,331 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-11 10:53:42,343 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-11 10:53:42,595 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
+2025-08-11 10:53:42,603 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
+2025-08-11 10:53:42,850 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-11 10:53:42,858 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-11 10:53:43,120 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
+2025-08-11 10:53:43,128 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
+2025-08-11 10:53:43,383 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
+2025-08-11 10:53:43,629 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
+2025-08-11 10:53:43,638 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
+2025-08-11 10:53:43,933 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
+2025-08-11 10:53:43,937 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-11 10:53:44,754 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+2025-08-11 10:53:45,154 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-11 10:53:45,436 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-11 10:53:45,918 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-11 10:53:45,923 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-11 10:53:47,725 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 200 47
+2025-08-11 10:53:47,792 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-11 10:53:49,402 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "GET /call/run/74995ac8603443bea3d507b498999998 HTTP/1.1" 200 None
+2025-08-11 10:53:49,663 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-11 10:53:49,954 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-11 10:53:50,243 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-11 10:53:50,490 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors.index.json HTTP/1.1" 404 0
+2025-08-11 10:53:50,925 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors HTTP/1.1" 302 0
+2025-08-11 10:53:53,771 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
+2025-08-11 10:53:53,780 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
+2025-08-11 10:53:54,379 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
+2025-08-11 10:53:54,859 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
+2025-08-11 10:53:54,867 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
+2025-08-11 10:53:55,204 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
+2025-08-11 10:53:55,210 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
+2025-08-11 10:53:55,467 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
+2025-08-11 10:53:55,712 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
+2025-08-11 10:53:55,985 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
 C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
   warnings.warn("Api key is used with unsecure connection.")
-2025-08-06 14:03:37,803 - realtime_crawl - INFO - Starting realtime crawl service on port 8005...
-2025-08-06 14:03:37,804 - realtime_crawl - INFO - Environment variables loaded: QDRANT_URL=http://localhost:6333, SUPABASE_DB_HOST=db.qpfljbjbyuiymeqghvsz.supabase.co
+2025-08-11 10:53:57,357 - realtime_crawl - INFO - Starting realtime crawl service on port 8005...
+2025-08-11 10:53:57,357 - realtime_crawl - INFO - Environment variables loaded: QDRANT_URL=http://localhost:6333, SUPABASE_DB_HOST=db.qpfljbjbyuiymeqghvsz.supabase.co
 Loading embedding model...
 Embedding model loaded
 Connecting to Qdrant...
 Connected to Qdrant at http://localhost:6333
  * Serving Flask app 'realtime_crawl_service'
  * Debug mode: on
-2025-08-06 14:03:39,078 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-08-11 10:53:57,369 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:8005
- * Running on http://10.241.130.4:8005
-2025-08-06 14:03:39,078 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
-2025-08-06 14:03:39,078 - werkzeug - INFO -  * Restarting with stat
-2025-08-06 14:03:51,831 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
-2025-08-06 14:03:51,831 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
-2025-08-06 14:03:51,835 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
-2025-08-06 14:03:52,490 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
-2025-08-06 14:03:52,537 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
-2025-08-06 14:03:52,809 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
-2025-08-06 14:03:52,833 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
-2025-08-06 14:03:53,106 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
-2025-08-06 14:03:53,142 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
-2025-08-06 14:03:53,421 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
-2025-08-06 14:03:53,454 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
-2025-08-06 14:03:53,751 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
-2025-08-06 14:03:53,802 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
-2025-08-06 14:03:54,079 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
-2025-08-06 14:03:54,118 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
-2025-08-06 14:03:54,505 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
-2025-08-06 14:03:54,774 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
-2025-08-06 14:03:54,816 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
-2025-08-06 14:03:55,129 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
-2025-08-06 14:03:55,133 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
-2025-08-06 14:03:56,584 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
-2025-08-06 14:03:57,112 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
-2025-08-06 14:03:57,412 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
-2025-08-06 14:03:57,696 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
-2025-08-06 14:03:57,698 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
-2025-08-06 14:03:59,195 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 200 47
-2025-08-06 14:03:59,200 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
-2025-08-06 14:04:00,946 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "GET /call/run/c8847dfdf6c54dc499292bee1a1afbba HTTP/1.1" 200 None
-2025-08-06 14:04:01,227 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
-2025-08-06 14:04:01,539 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
-2025-08-06 14:04:01,840 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
-2025-08-06 14:04:02,111 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors.index.json HTTP/1.1" 404 0
-2025-08-06 14:04:02,392 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors HTTP/1.1" 302 0
-2025-08-06 14:04:04,168 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
-2025-08-06 14:04:04,223 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
-2025-08-06 14:04:04,568 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
-2025-08-06 14:04:04,929 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
-2025-08-06 14:04:04,979 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
-2025-08-06 14:04:05,260 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
-2025-08-06 14:04:05,300 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
-2025-08-06 14:04:05,587 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
-2025-08-06 14:04:05,866 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
-2025-08-06 14:04:06,183 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+ * Running on http://192.168.1.37:8005
+2025-08-11 10:53:57,369 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-11 10:53:57,369 - werkzeug - INFO -  * Restarting with stat
+2025-08-11 10:54:08,794 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-11 10:54:08,794 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
+2025-08-11 10:54:08,798 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-11 10:54:09,428 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-11 10:54:09,438 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-11 10:54:09,687 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-11 10:54:09,695 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-11 10:54:09,947 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-08-11 10:54:09,958 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-08-11 10:54:10,211 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
+2025-08-11 10:54:10,219 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
+2025-08-11 10:54:10,474 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
+2025-08-11 10:54:10,482 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
+2025-08-11 10:54:10,726 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
+2025-08-11 10:54:10,733 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
+2025-08-11 10:54:10,981 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
+2025-08-11 10:54:11,231 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
+2025-08-11 10:54:11,240 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
+2025-08-11 10:54:11,541 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
+2025-08-11 10:54:11,545 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-11 10:54:12,194 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
+2025-08-11 10:54:12,480 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-11 10:54:12,740 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-11 10:54:13,004 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-11 10:54:13,007 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-11 10:54:14,335 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 200 47
+2025-08-11 10:54:14,337 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2025-08-11 10:54:15,626 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "GET /call/run/4cababd7fc6143339b636829af257a28 HTTP/1.1" 200 None
+2025-08-11 10:54:15,891 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
+2025-08-11 10:54:16,161 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
+2025-08-11 10:54:16,437 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
+2025-08-11 10:54:16,682 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors.index.json HTTP/1.1" 404 0
+2025-08-11 10:54:16,978 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors HTTP/1.1" 302 0
+2025-08-11 10:54:19,269 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
+2025-08-11 10:54:19,282 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
+2025-08-11 10:54:19,565 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
+2025-08-11 10:54:19,894 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
+2025-08-11 10:54:19,903 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
+2025-08-11 10:54:20,396 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
+2025-08-11 10:54:20,404 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
+2025-08-11 10:54:20,676 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
+2025-08-11 10:54:20,935 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
+2025-08-11 10:54:21,203 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
 C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
   warnings.warn("Api key is used with unsecure connection.")
-2025-08-06 14:04:07,008 - realtime_crawl - INFO - Starting realtime crawl service on port 8005...
-2025-08-06 14:04:07,008 - realtime_crawl - INFO - Environment variables loaded: QDRANT_URL=http://localhost:6333, SUPABASE_DB_HOST=db.qpfljbjbyuiymeqghvsz.supabase.co
-2025-08-06 14:04:07,012 - werkzeug - WARNING -  * Debugger is active!
-2025-08-06 14:04:07,032 - werkzeug - INFO -  * Debugger PIN: 600-581-873
+2025-08-11 10:54:21,637 - realtime_crawl - INFO - Starting realtime crawl service on port 8005...
+2025-08-11 10:54:21,637 - realtime_crawl - INFO - Environment variables loaded: QDRANT_URL=http://localhost:6333, SUPABASE_DB_HOST=db.qpfljbjbyuiymeqghvsz.supabase.co
+2025-08-11 10:54:21,640 - werkzeug - WARNING -  * Debugger is active!
+2025-08-11 10:54:21,652 - werkzeug - INFO -  * Debugger PIN: 130-378-968
 ymeqghvsz.supabase.co
-2025-08-06 14:04:07,012 - werkzeug - WARNING -  * Debugger is active!
-2025-08-06 14:04:07,032 - werkzeug - INFO -  * Debugger PIN: 600-581-873
+2025-08-11 10:54:21,640 - werkzeug - WARNING -  * Debugger is active!
+2025-08-11 10:54:21,652 - werkzeug - INFO -  * Debugger PIN: 130-378-968

@@ -24,7 +24,58 @@ export const getBots = async ({ user, env, corsHeaders }) => {
       });
     }
     
-    return new Response(JSON.stringify({ bots: data }), {
+    // Enrich with dynamic counts for messages and documents
+    const botIds = (data || []).map((b) => b.id);
+    let messagesCountByBot = {};
+    let documentsCountByBot = {};
+
+    if (botIds.length > 0) {
+      // Fetch conversations for these bots
+      const { data: conversations, error: convError } = await supabase
+        .from('conversations')
+        .select('id, bot_id')
+        .in('bot_id', botIds);
+
+      if (!convError && conversations && conversations.length > 0) {
+        const convIds = conversations.map((c) => c.id);
+        const convIdToBotId = new Map(conversations.map((c) => [c.id, c.bot_id]));
+
+        // Fetch messages for those conversations (count on client side)
+        const { data: messages, error: msgError } = await supabase
+          .from('messages')
+          .select('conversation_id')
+          .in('conversation_id', convIds);
+
+        if (!msgError && messages) {
+          for (const m of messages) {
+            const botId = convIdToBotId.get(m.conversation_id);
+            if (!botId) continue;
+            messagesCountByBot[botId] = (messagesCountByBot[botId] || 0) + 1;
+          }
+        }
+      }
+
+      // Fetch documents for these bots (if schema stores bot_id on documents)
+      const { data: documents, error: docError } = await supabase
+        .from('documents')
+        .select('bot_id')
+        .in('bot_id', botIds);
+
+      if (!docError && documents) {
+        for (const d of documents) {
+          const botId = d.bot_id;
+          documentsCountByBot[botId] = (documentsCountByBot[botId] || 0) + 1;
+        }
+      }
+    }
+
+    const enriched = (data || []).map((b) => ({
+      ...b,
+      messages_count: messagesCountByBot[b.id] || 0,
+      documents_count: documentsCountByBot[b.id] || 0,
+    }));
+
+    return new Response(JSON.stringify({ bots: enriched }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

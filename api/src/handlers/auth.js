@@ -310,3 +310,54 @@ export const healthCheck = async ({ corsHeaders }) => {
     });
   }
 }; 
+
+// Change password for authenticated user
+export const changePassword = async ({ request, user, env, corsHeaders }) => {
+  try {
+    const { currentPassword, newPassword } = await request.json();
+
+    if (!newPassword) {
+      return new Response(JSON.stringify({ error: 'New password is required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
+    // Optionally verify current password if provided
+    if (currentPassword) {
+      const publicClient = getPublicSupabase(env);
+      const { error: verifyError } = await publicClient.auth.signInWithPassword({
+        email: user.email,
+        password: currentPassword,
+      });
+      if (verifyError) {
+        return new Response(JSON.stringify({ error: 'Current password is incorrect' }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        });
+      }
+    }
+
+    const adminClient = getAdminSupabase(env);
+    const { error } = await adminClient.auth.admin.updateUserById(user.id, {
+      password: newPassword,
+    });
+
+    if (error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
+    return new Response(JSON.stringify({ message: 'Password updated successfully' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Failed to update password' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    });
+  }
+};
