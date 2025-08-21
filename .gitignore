@@ -46,4 +46,8 @@ vector_db/qdrant_data/
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Logs
+*.log
+*.pid

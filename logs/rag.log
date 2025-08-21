@@ -1,202 +1,190 @@
-C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
-  warnings.warn("Api key is used with unsecure connection.")
-Loading embedding model...
-Embedding model loaded
+2025-08-21 15:58:46,747 - [RAG] - DEBUG - Changing event name from creating-client-class.iot-data to creating-client-class.iot-data-plane
+2025-08-21 15:58:46,754 - [RAG] - DEBUG - Changing event name from before-call.apigateway to before-call.api-gateway
+2025-08-21 15:58:46,757 - [RAG] - DEBUG - Changing event name from request-created.machinelearning.Predict to request-created.machine-learning.Predict
+2025-08-21 15:58:46,760 - [RAG] - DEBUG - Changing event name from before-parameter-build.autoscaling.CreateLaunchConfiguration to before-parameter-build.auto-scaling.CreateLaunchConfiguration
+2025-08-21 15:58:46,761 - [RAG] - DEBUG - Changing event name from before-parameter-build.route53 to before-parameter-build.route-53
+2025-08-21 15:58:46,762 - [RAG] - DEBUG - Changing event name from request-created.cloudsearchdomain.Search to request-created.cloudsearch-domain.Search
+2025-08-21 15:58:46,764 - [RAG] - DEBUG - Changing event name from docs.*.autoscaling.CreateLaunchConfiguration.complete-section to docs.*.auto-scaling.CreateLaunchConfiguration.complete-section
+2025-08-21 15:58:46,771 - [RAG] - DEBUG - Changing event name from before-parameter-build.logs.CreateExportTask to before-parameter-build.cloudwatch-logs.CreateExportTask
+2025-08-21 15:58:46,771 - [RAG] - DEBUG - Changing event name from docs.*.logs.CreateExportTask.complete-section to docs.*.cloudwatch-logs.CreateExportTask.complete-section
+2025-08-21 15:58:46,772 - [RAG] - DEBUG - Changing event name from before-parameter-build.cloudsearchdomain.Search to before-parameter-build.cloudsearch-domain.Search
+2025-08-21 15:58:46,772 - [RAG] - DEBUG - Changing event name from docs.*.cloudsearchdomain.Search.complete-section to docs.*.cloudsearch-domain.Search.complete-section
+2025-08-21 15:58:47,564 - [RAG] - DEBUG - IMDS ENDPOINT: http://169.254.169.254/
+2025-08-21 15:58:47,568 - [RAG] - DEBUG - Looking for credentials via: env
+2025-08-21 15:58:47,568 - [RAG] - INFO - Found credentials in environment variables.
+2025-08-21 15:58:47,571 - [RAG] - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\endpoints.json
+2025-08-21 15:58:47,618 - [RAG] - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\sdk-default-configuration.json
+2025-08-21 15:58:47,618 - [RAG] - DEBUG - Event choose-service-name: calling handler <function handle_service_name_alias at 0x000001FA20948EA0>
+2025-08-21 15:58:47,940 - [RAG] - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\bedrock-runtime\2023-09-30\service-2.json.gz
+2025-08-21 15:58:48,192 - [RAG] - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\bedrock-runtime\2023-09-30\endpoint-rule-set-1.json.gz
+2025-08-21 15:58:48,195 - [RAG] - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\partitions.json
+2025-08-21 15:58:48,196 - [RAG] - DEBUG - Event creating-client-class.bedrock-runtime: calling handler <function remove_bedrock_runtime_invoke_model_with_bidirectional_stream at 0x000001FA2097CD60>
+2025-08-21 15:58:48,196 - [RAG] - DEBUG - Event creating-client-class.bedrock-runtime: calling handler <function add_generate_presigned_url at 0x000001FA208B4A40>
+2025-08-21 15:58:48,197 - [RAG] - DEBUG - Looking for endpoint for bedrock-runtime via: environment_service
+2025-08-21 15:58:48,197 - [RAG] - DEBUG - Looking for endpoint for bedrock-runtime via: environment_global
+2025-08-21 15:58:48,200 - [RAG] - DEBUG - Looking for endpoint for bedrock-runtime via: config_service
+2025-08-21 15:58:48,200 - [RAG] - DEBUG - Looking for endpoint for bedrock-runtime via: config_global
+2025-08-21 15:58:48,200 - [RAG] - DEBUG - No configured endpoint found.
+2025-08-21 15:58:48,200 - [RAG] - DEBUG - Creating a regex based endpoint for bedrock-runtime, us-west-2
+2025-08-21 15:58:48,204 - [RAG] - DEBUG - Setting bedrock-runtime timeout as (60, 60)
+2025-08-21 15:58:48,208 - [RAG] - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\_retry.json
+2025-08-21 15:58:48,209 - [RAG] - DEBUG - Registering retry handlers for service: bedrock-runtime
+Bedrock embedding model configured.
 Connecting to Qdrant...
-Connected to Qdrant at http://localhost:6333
-Configuring Ollama connection...
-OLLAMA_URL: http://localhost:11434/api/generate
-OLLAMA_MODEL: mistral:7b
-Checking if model mistral:7b is available...
-Error checking model availability: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: //api/tags (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622E120>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+Connected to Qdrant at https://5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io
+Bedrock LLM model configured.
 Starting RAG service on port 8004...
  * Serving Flask app 'rag_service'
  * Debug mode: off
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-08-21 15:58:50,016 - [RAG] - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:8004
- * Running on http://192.168.1.37:8004
-Press CTRL+C to quit
-
-[RAG] === Starting new chat request ===
-[RAG] Processing chat query for bot b9e5f375-8afb-4245-9ddf-b6ffe6ad3634, conversation 4e6d810e-8518-4486-8e94-6136427c8833
-[RAG] Query: 'Hey logi...'
-[RAG] Message history: 0 messages
+ * Running on http://192.168.1.4:8004
+2025-08-21 15:58:50,016 - [RAG] - INFO - [33mPress CTRL+C to quit[0m
+2025-08-21 16:40:10,181 - [RAG] - INFO - === Starting new chat request ===
+2025-08-21 16:40:10,197 - [RAG] - INFO - Processing chat query for bot c4ec7004-b139-472c-aa1f-efce30430216, conversation cf3cc6d2-7ca3-4402-94ef-853b4643093f
+2025-08-21 16:40:10,197 - [RAG] - INFO - Query: 'Tell me about the services the LogiQuad offers....'
+2025-08-21 16:40:10,197 - [RAG] - INFO - Message history: 0 messages
 [RAG] Embedding user query...
-[RAG] Query embedded in 8.04 seconds
-[RAG] Searching Qdrant collection 'b9e5f375-8afb-4245-9ddf-b6ffe6ad3634' for relevant documents...
-[RAG] Error searching Qdrant: Unexpected Response: 500 (Internal Server Error)
-Raw response content:
-b'{"status":{"error":"Service internal error: 1 of 1 read operations failed:\\n  Service internal error: task 137 panicked with message \\"called `Result::unwrap()` on an `Err` value: OutputTooSmall {  ...'
-[RAG] Context assembled: 0 characters
+2025-08-21 16:40:10,222 - [RAG] - DEBUG - Event before-parameter-build.bedrock-runtime.InvokeModel: calling handler <function generate_idempotent_uuid at 0x000001FA2094AA20>
+2025-08-21 16:40:10,224 - [RAG] - DEBUG - Event before-parameter-build.bedrock-runtime.InvokeModel: calling handler <function _handle_request_validation_mode_member at 0x000001FA2097D580>
+2025-08-21 16:40:10,226 - [RAG] - DEBUG - Calling endpoint provider with parameters: {'Region': 'us-west-2', 'UseDualStack': False, 'UseFIPS': False}
+2025-08-21 16:40:10,232 - [RAG] - DEBUG - Endpoint provider result: https://bedrock-runtime.us-west-2.amazonaws.com
+2025-08-21 16:40:10,239 - [RAG] - DEBUG - Event before-call.bedrock-runtime.InvokeModel: calling handler <function add_recursion_detection_header at 0x000001FA209498A0>
+2025-08-21 16:40:10,239 - [RAG] - DEBUG - Event before-call.bedrock-runtime.InvokeModel: calling handler <function inject_api_version_header_if_needed at 0x000001FA2097C540>
+2025-08-21 16:40:10,241 - [RAG] - DEBUG - Making request for OperationModel(name=InvokeModel) with params: {'url_path': '/model/amazon.titan-embed-text-v2%3A0/invoke', 'query_string': {}, 'method': 'POST', 'headers': {'Accept': 'application/json', 'Content-Type': 'application/json', 'User-Agent': 'Boto3/1.40.3 md/Botocore#1.40.3 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.12.10 md/pyimpl#CPython m/D,b,Z cfg/retry-mode#legacy Botocore/1.40.3'}, 'body': b'{"inputText": "Tell me about the services the LogiQuad offers."}', 'url': 'https://bedrock-runtime.us-west-2.amazonaws.com/model/amazon.titan-embed-text-v2%3A0/invoke', 'context': {'client_region': 'us-west-2', 'client_config': <botocore.config.Config object at 0x000001FA31B69B80>, 'has_streaming_input': True, 'auth_type': None, 'unsigned_payload': None, 'auth_options': ['aws.auth#sigv4', 'smithy.api#httpBearerAuth']}}
+2025-08-21 16:40:10,245 - [RAG] - DEBUG - Event request-created.bedrock-runtime.InvokeModel: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x000001FA32466270>>
+2025-08-21 16:40:10,245 - [RAG] - DEBUG - Event choose-signer.bedrock-runtime.InvokeModel: calling handler <function set_operation_specific_signer at 0x000001FA2094A7A0>
+2025-08-21 16:40:10,245 - [RAG] - DEBUG - Event choose-signer.bedrock-runtime.InvokeModel: calling handler <function _set_auth_scheme_preference_signer at 0x000001FA2097D6C0>
+2025-08-21 16:40:10,265 - [RAG] - DEBUG - Calculating signature using v4 auth.
+2025-08-21 16:40:10,265 - [RAG] - DEBUG - CanonicalRequest:
+POST
+/model/amazon.titan-embed-text-v2%253A0/invoke
+
+accept:application/json
+content-type:application/json
+host:bedrock-runtime.us-west-2.amazonaws.com
+x-amz-date:20250821T111010Z
+
+accept;content-type;host;x-amz-date
+93359a87105e1ba91b5a2a016e868ef784cccd15e64d4e0c0ca218f0cdc67856
+2025-08-21 16:40:10,265 - [RAG] - DEBUG - StringToSign:
+AWS4-HMAC-SHA256
+20250821T111010Z
+20250821/us-west-2/bedrock/aws4_request
+f5252118a18306cbd7029a5fbc842b9fbb1e04b2b63fbfadf8304150cad3d1b3
+2025-08-21 16:40:10,268 - [RAG] - DEBUG - Signature:
+2d550fcd77d92e828648dd0a123e5606c39d9d4629d8dea372e5bf7e47c8db22
+2025-08-21 16:40:10,268 - [RAG] - DEBUG - Event request-created.bedrock-runtime.InvokeModel: calling handler <bound method UserAgentString.rebuild_and_replace_user_agent_handler of <botocore.useragent.UserAgentString object at 0x000001FA324669F0>>
+2025-08-21 16:40:10,269 - [RAG] - DEBUG - Event request-created.bedrock-runtime.InvokeModel: calling handler <function add_retry_headers at 0x000001FA2097CE00>
+2025-08-21 16:40:10,270 - [RAG] - DEBUG - Sending http request: <AWSPreparedRequest stream_output=True, method=POST, url=https://bedrock-runtime.us-west-2.amazonaws.com/model/amazon.titan-embed-text-v2%3A0/invoke, headers={'Accept': b'application/json', 'Content-Type': b'application/json', 'User-Agent': b'Boto3/1.40.3 md/Botocore#1.40.3 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.12.10 md/pyimpl#CPython m/D,b,Z cfg/retry-mode#legacy Botocore/1.40.3', 'X-Amz-Date': b'20250821T111010Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAZMSRGNMNUHOS7LR7/20250821/us-west-2/bedrock/aws4_request, SignedHeaders=accept;content-type;host;x-amz-date, Signature=2d550fcd77d92e828648dd0a123e5606c39d9d4629d8dea372e5bf7e47c8db22', 'amz-sdk-invocation-id': b'15e3db18-af3e-44e4-b10a-dd6a3e4a8398', 'amz-sdk-request': b'attempt=1', 'Content-Length': '64'}>
+2025-08-21 16:40:10,276 - [RAG] - DEBUG - Certificate path: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\certifi\cacert.pem
+2025-08-21 16:40:10,277 - [RAG] - DEBUG - Starting new HTTPS connection (1): bedrock-runtime.us-west-2.amazonaws.com:443
+2025-08-21 16:40:13,017 - [RAG] - DEBUG - https://bedrock-runtime.us-west-2.amazonaws.com:443 "POST /model/amazon.titan-embed-text-v2%3A0/invoke HTTP/1.1" 200 43383
+2025-08-21 16:40:13,031 - [RAG] - DEBUG - Response headers: {'Date': 'Thu, 21 Aug 2025 11:10:12 GMT', 'Content-Type': 'application/json', 'Content-Length': '43383', 'Connection': 'keep-alive', 'x-amzn-RequestId': '666b31d7-ff68-4c99-88fc-37baf28a28ff', 'X-Amzn-Bedrock-Invocation-Latency': '79', 'X-Amzn-Bedrock-Input-Token-Count': '12'}
+2025-08-21 16:40:13,032 - [RAG] - DEBUG - Response body:
+<botocore.response.StreamingBody object at 0x000001FA327254E0>
+2025-08-21 16:40:13,034 - [RAG] - DEBUG - Event needs-retry.bedrock-runtime.InvokeModel: calling handler <botocore.retryhandler.RetryHandler object at 0x000001FA32467350>
+2025-08-21 16:40:13,035 - [RAG] - DEBUG - No retry needed.
+[RAG] Query embedded in 3.06 seconds
+2025-08-21 16:40:13,260 - [RAG] - INFO - Searching Qdrant collection 'c4ec7004-b139-472c-aa1f-efce30430216' for relevant documents...
+2025-08-21 16:40:13,260 - [RAG] - INFO - Query embedding length: 1024
+2025-08-21 16:40:13,274 - [RAG] - DEBUG - connect_tcp.started host='5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io' port=6333 local_address=None timeout=5.0 socket_options=None
+2025-08-21 16:40:14,245 - [RAG] - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FA32725340>
+2025-08-21 16:40:14,245 - [RAG] - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001FA32714D50> server_hostname='5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io' timeout=5.0
+2025-08-21 16:40:14,514 - [RAG] - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FA32725490>
+2025-08-21 16:40:14,516 - [RAG] - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-21 16:40:14,518 - [RAG] - DEBUG - send_request_headers.complete
+2025-08-21 16:40:14,518 - [RAG] - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-21 16:40:14,518 - [RAG] - DEBUG - send_request_body.complete
+2025-08-21 16:40:14,518 - [RAG] - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-21 16:40:14,785 - [RAG] - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Encoding', b'gzip'), (b'Content-Type', b'application/json'), (b'Date', b'Thu, 21 Aug 2025 11:10:14 GMT'), (b'Vary', b'accept-encoding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'Transfer-Encoding', b'chunked')])
+2025-08-21 16:40:14,787 - [RAG] - INFO - HTTP Request: GET https://5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io:6333/collections "HTTP/1.1 200 OK"
+2025-08-21 16:40:14,789 - [RAG] - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-21 16:40:14,790 - [RAG] - DEBUG - receive_response_body.complete
+2025-08-21 16:40:14,790 - [RAG] - DEBUG - response_closed.started
+2025-08-21 16:40:14,790 - [RAG] - DEBUG - response_closed.complete
+2025-08-21 16:40:14,813 - [RAG] - INFO - Available collections: ['91f5f239-9082-4c03-bc0e-97fbf9fc4454', 'c4ec7004-b139-472c-aa1f-efce30430216']
+2025-08-21 16:40:14,814 - [RAG] - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-21 16:40:14,815 - [RAG] - DEBUG - send_request_headers.complete
+2025-08-21 16:40:14,815 - [RAG] - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-21 16:40:14,815 - [RAG] - DEBUG - send_request_body.complete
+2025-08-21 16:40:14,815 - [RAG] - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-21 16:40:15,079 - [RAG] - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Encoding', b'gzip'), (b'Content-Type', b'application/json'), (b'Date', b'Thu, 21 Aug 2025 11:10:14 GMT'), (b'Vary', b'accept-encoding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'Transfer-Encoding', b'chunked')])
+2025-08-21 16:40:15,080 - [RAG] - INFO - HTTP Request: GET https://5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io:6333/collections/c4ec7004-b139-472c-aa1f-efce30430216 "HTTP/1.1 200 OK"
+2025-08-21 16:40:15,080 - [RAG] - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-21 16:40:15,081 - [RAG] - DEBUG - receive_response_body.complete
+2025-08-21 16:40:15,081 - [RAG] - DEBUG - response_closed.started
+2025-08-21 16:40:15,081 - [RAG] - DEBUG - response_closed.complete
+2025-08-21 16:40:15,089 - [RAG] - ERROR - Error accessing collection info: 4 validation errors for ParsingModel[InlineResponse2005] (for parse_as_type)
+obj -> result -> vectors_count
+  field required (type=value_error.missing)
+obj -> result -> config -> optimizer_config -> max_optimization_threads
+  none is not an allowed value (type=type_error.none.not_allowed)
+obj -> result -> config -> wal_config -> wal_retain_closed
+  extra fields not permitted (type=value_error.extra)
+obj -> result -> config -> strict_mode_config
+  extra fields not permitted (type=value_error.extra)
+2025-08-21 16:40:15,102 - [RAG] - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-08-21 16:40:15,103 - [RAG] - DEBUG - send_request_headers.complete
+2025-08-21 16:40:15,103 - [RAG] - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-08-21 16:40:15,103 - [RAG] - DEBUG - send_request_body.complete
+2025-08-21 16:40:15,103 - [RAG] - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-08-21 16:40:15,634 - [RAG] - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Encoding', b'gzip'), (b'Content-Type', b'application/json'), (b'Date', b'Thu, 21 Aug 2025 11:10:15 GMT'), (b'Vary', b'accept-encoding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'Transfer-Encoding', b'chunked')])
+2025-08-21 16:40:15,634 - [RAG] - INFO - HTTP Request: POST https://5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io:6333/collections/c4ec7004-b139-472c-aa1f-efce30430216/points/search "HTTP/1.1 200 OK"
+2025-08-21 16:40:15,634 - [RAG] - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-08-21 16:40:15,635 - [RAG] - DEBUG - receive_response_body.complete
+2025-08-21 16:40:15,636 - [RAG] - DEBUG - response_closed.started
+2025-08-21 16:40:15,636 - [RAG] - DEBUG - response_closed.complete
+2025-08-21 16:40:15,639 - [RAG] - INFO - Direct search found 5 results
+[RAG] Context assembled: 2508 characters
 [RAG] Chat history formatted: 0 characters
-[RAG] Prompt built: 230 characters
-[RAG] Calling Ollama at http://localhost:11434/api/generate with model mistral:7b...
-[RAG] Ollama health check failed: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/tags (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622DDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-[RAG] Is Ollama running? Please ensure it's started with: ollama serve
-[RAG] Error calling LLM: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622E9F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-[RAG] Error type: ConnectionError
-[RAG] Traceback: Traceback (most recent call last):
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 174, in _new_conn
-    conn = connection.create_connection(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\connection.py", line 95, in create_connection
-    raise err
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\connection.py", line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+[RAG] Prompt built: 2777 characters
+[RAG] Calling Bedrock with model openai.gpt-oss-20b-1:0...
+2025-08-21 16:40:15,639 - [RAG] - DEBUG - Event before-parameter-build.bedrock-runtime.InvokeModel: calling handler <function generate_idempotent_uuid at 0x000001FA2094AA20>
+2025-08-21 16:40:15,639 - [RAG] - DEBUG - Event before-parameter-build.bedrock-runtime.InvokeModel: calling handler <function _handle_request_validation_mode_member at 0x000001FA2097D580>
+2025-08-21 16:40:15,639 - [RAG] - DEBUG - Calling endpoint provider with parameters: {'Region': 'us-west-2', 'UseDualStack': False, 'UseFIPS': False}
+2025-08-21 16:40:15,640 - [RAG] - DEBUG - Endpoint provider result: https://bedrock-runtime.us-west-2.amazonaws.com
+2025-08-21 16:40:15,640 - [RAG] - DEBUG - Event before-call.bedrock-runtime.InvokeModel: calling handler <function add_recursion_detection_header at 0x000001FA209498A0>
+2025-08-21 16:40:15,640 - [RAG] - DEBUG - Event before-call.bedrock-runtime.InvokeModel: calling handler <function inject_api_version_header_if_needed at 0x000001FA2097C540>
+2025-08-21 16:40:15,640 - [RAG] - DEBUG - Making request for OperationModel(name=InvokeModel) with params: {'url_path': '/model/openai.gpt-oss-20b-1%3A0/invoke', 'query_string': {}, 'method': 'POST', 'headers': {'Accept': 'application/json', 'Content-Type': 'application/json', 'User-Agent': 'Boto3/1.40.3 md/Botocore#1.40.3 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.12.10 md/pyimpl#CPython m/D,b,Z cfg/retry-mode#legacy Botocore/1.40.3'}, 'body': b'{"messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Answer the user\'s question based on the following context. If you cannot find the answer in the context, say that you don\'t know but provide your best guess based on general knowledge.\\n\\nContext:\\ngiQuad. Cloud Consulting Services Get all probable cloud services under one roof at LogiQuad \\u2013 from migration from on-prem to cloud to cloud native development to infrastructure management and a lot more! Enterprise Application Development Design, develop and deliver enterprise applications across devices, keeping the brand voice intact and catering to business\\u2019s as well as customers\\u2019 interest at one go. Mobile App Development Make your mark in the digital space with best-in-class analytics and \\n\\nu back How can we help you scale? We\\u2019re excited to hear from you, and brew your digital success together! What is 6 x 5 ? Answer for 6 x 5 LogiQuad Solutions is an IT consulting and services company with more than a decade of rich experience working with enterprises. Lead by experienced professionals, LogiQuad provides consultation, development, and support on latest of technology. Quick Links Home About Us Products Services Hire US Case Studies Blogs Careers Contact Us Blog Categories Contact U\\n\\nrness the best of cloud, devops, application & mobility expertise under one roof Find out more Contact us DevOps Consulting Service Avail 40x faster software delivery and 30x less operational costs with LogiQuad\\u2019s DevOps services! Find out more Contact us Cloud Consulting Services 60% of businesses worldwide are trusting the cloud with their data. Hop on the bandwagon & say hi to uninterrupted uptime! Find out more Contact us Enterprise Application Development 935.2 Bn \\u2013 that\\u2019s the global revenu\\n\\nou request. I really like their attention to detail and their responsiveness. Looking forward to a continued relationship. Sandu Rajapakse Software Development Project Manager, Oscar Intelligence Internal stakeholders are exceedingly satisfied with LogiQuad Solutions\\u2019 work and performance. They\\u2019ve exceeded expectations and delivered beyond the scope. Moreover, the team is responsive, prompt, and well-organized. They have a deep understanding of cloud computing and integrations and manage the pro\\n\\n one of the best things that I have found! This team is super professional and has extensive knowledge and skills. They are hard-working and treat a project as their own. Communication and speaking skills are top-notch and I would not hesitate in putting them in front of anyone. Himanshu Bhatia Founder & CEO, Hue Digital The LogiQuad team has been great to work with. They understand the requirements well and have the skills needed to execute as you request. I really like their attention to detai\\n\\n\\nUser Question: Tell me about the services the LogiQuad offers.\\n\\nAnswer:"}], "max_completion_tokens": 2000, "temperature": 0.7, "top_p": 0.9}', 'url': 'https://bedrock-runtime.us-west-2.amazonaws.com/model/openai.gpt-oss-20b-1%3A0/invoke', 'context': {'client_region': 'us-west-2', 'client_config': <botocore.config.Config object at 0x000001FA31B69B80>, 'has_streaming_input': True, 'auth_type': None, 'unsigned_payload': None, 'auth_options': ['aws.auth#sigv4', 'smithy.api#httpBearerAuth']}}
+2025-08-21 16:40:15,642 - [RAG] - DEBUG - Event request-created.bedrock-runtime.InvokeModel: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x000001FA32466270>>
+2025-08-21 16:40:15,642 - [RAG] - DEBUG - Event choose-signer.bedrock-runtime.InvokeModel: calling handler <function set_operation_specific_signer at 0x000001FA2094A7A0>
+2025-08-21 16:40:15,642 - [RAG] - DEBUG - Event choose-signer.bedrock-runtime.InvokeModel: calling handler <function _set_auth_scheme_preference_signer at 0x000001FA2097D6C0>
+2025-08-21 16:40:15,643 - [RAG] - DEBUG - Calculating signature using v4 auth.
+2025-08-21 16:40:15,643 - [RAG] - DEBUG - CanonicalRequest:
+POST
+/model/openai.gpt-oss-20b-1%253A0/invoke
 
-During handling of the above exception, another exception occurred:
+accept:application/json
+content-type:application/json
+host:bedrock-runtime.us-west-2.amazonaws.com
+x-amz-date:20250821T111015Z
 
-Traceback (most recent call last):
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 716, in urlopen
-    httplib_response = self._make_request(
-                       ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 416, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 244, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1338, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1384, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1333, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1093, in _send_output
-    self.send(msg)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1037, in send
-    self.connect()
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 205, in connect
-    conn = self._new_conn()
-           ^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001DD4622E9F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\adapters.py", line 486, in send
-    resp = conn.urlopen(
-           ^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 802, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\retry.py", line 594, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622E9F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Logiquad\ChatBot\ai_chatbot\rag_service.py", line 158, in chat
-    response = requests.post(
-               ^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\api.py", line 115, in post
-    return request("post", url, data=data, json=json, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\api.py", line 59, in request
-    return session.request(method=method, url=url, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\sessions.py", line 589, in request
-    resp = self.send(prep, **send_kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\sessions.py", line 703, in send
-    r = adapter.send(request, **kwargs)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\adapters.py", line 519, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622E9F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-127.0.0.1 - - [11/Aug/2025 16:33:50] "POST /chat HTTP/1.1" 200 -
-
-
-[RAG] === Starting new chat request ===
-[RAG] Processing chat query for bot 538ce61d-3248-46bd-a1d8-11161b46989f, conversation 40e7ea9e-0a05-4346-ad56-2385f80af74f
-[RAG] Query: 'Hi...'
-[RAG] Message history: 0 messages
-[RAG] Embedding user query...
-[RAG] Query embedded in 9.62 seconds
-[RAG] Searching Qdrant collection '538ce61d-3248-46bd-a1d8-11161b46989f' for relevant documents...
-[RAG] Qdrant search completed in 0.43 seconds
-[RAG] Found 0 relevant chunks
-[RAG] Warning: No relevant documents found in vector database
-[RAG] Context assembled: 0 characters
-[RAG] Chat history formatted: 0 characters
-[RAG] Prompt built: 224 characters
-[RAG] Calling Ollama at http://localhost:11434/api/generate with model mistral:7b...
-[RAG] Ollama health check failed: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/tags (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622E7B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-[RAG] Is Ollama running? Please ensure it's started with: ollama serve
-[RAG] Error calling LLM: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622DDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-[RAG] Error type: ConnectionError
-[RAG] Traceback: Traceback (most recent call last):
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 174, in _new_conn
-    conn = connection.create_connection(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\connection.py", line 95, in create_connection
-    raise err
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\connection.py", line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 716, in urlopen
-    httplib_response = self._make_request(
-                       ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 416, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 244, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1338, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1384, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1333, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1093, in _send_output
-    self.send(msg)
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1037, in send
-    self.connect()
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 205, in connect
-    conn = self._new_conn()
-           ^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connection.py", line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001DD4622DDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\adapters.py", line 486, in send
-    resp = conn.urlopen(
-           ^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\connectionpool.py", line 802, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\urllib3\util\retry.py", line 594, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622DDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Logiquad\ChatBot\ai_chatbot\rag_service.py", line 158, in chat
-    response = requests.post(
-               ^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\api.py", line 115, in post
-    return request("post", url, data=data, json=json, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\api.py", line 59, in request
-    return session.request(method=method, url=url, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\sessions.py", line 589, in request
-    resp = self.send(prep, **send_kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\sessions.py", line 703, in send
-    r = adapter.send(request, **kwargs)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\requests\adapters.py", line 519, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD4622DDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-127.0.0.1 - - [11/Aug/2025 17:01:42] "POST /chat HTTP/1.1" 200 -
+accept;content-type;host;x-amz-date
+b256b38649d255c8f5544d91d6b73db831957cc1137b81bb8b207b20b40c4357
+2025-08-21 16:40:15,643 - [RAG] - DEBUG - StringToSign:
+AWS4-HMAC-SHA256
+20250821T111015Z
+20250821/us-west-2/bedrock/aws4_request
+b277e41aa2bcf58297bae1c02681d091b9f96ee2c8e794c386dea9a6bf42aa39
+2025-08-21 16:40:15,643 - [RAG] - DEBUG - Signature:
+38338f44e268a07a516dbc16ef0a81107afd6361991281b78e04265bc7e17a9c
+2025-08-21 16:40:15,643 - [RAG] - DEBUG - Event request-created.bedrock-runtime.InvokeModel: calling handler <bound method UserAgentString.rebuild_and_replace_user_agent_handler of <botocore.useragent.UserAgentString object at 0x000001FA324669F0>>
+2025-08-21 16:40:15,643 - [RAG] - DEBUG - Event request-created.bedrock-runtime.InvokeModel: calling handler <function add_retry_headers at 0x000001FA2097CE00>
+2025-08-21 16:40:15,644 - [RAG] - DEBUG - Sending http request: <AWSPreparedRequest stream_output=True, method=POST, url=https://bedrock-runtime.us-west-2.amazonaws.com/model/openai.gpt-oss-20b-1%3A0/invoke, headers={'Accept': b'application/json', 'Content-Type': b'application/json', 'User-Agent': b'Boto3/1.40.3 md/Botocore#1.40.3 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.12.10 md/pyimpl#CPython m/D,b,Z cfg/retry-mode#legacy Botocore/1.40.3', 'X-Amz-Date': b'20250821T111015Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAZMSRGNMNUHOS7LR7/20250821/us-west-2/bedrock/aws4_request, SignedHeaders=accept;content-type;host;x-amz-date, Signature=38338f44e268a07a516dbc16ef0a81107afd6361991281b78e04265bc7e17a9c', 'amz-sdk-invocation-id': b'51a4425b-7f35-49cf-8628-5aaed7a5dff4', 'amz-sdk-request': b'attempt=1', 'Content-Length': '3013'}>
+2025-08-21 16:40:15,645 - [RAG] - DEBUG - Certificate path: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\certifi\cacert.pem
+2025-08-21 16:40:17,908 - [RAG] - DEBUG - https://bedrock-runtime.us-west-2.amazonaws.com:443 "POST /model/openai.gpt-oss-20b-1%3A0/invoke HTTP/1.1" 200 2813
+2025-08-21 16:40:17,909 - [RAG] - DEBUG - Response headers: {'Date': 'Thu, 21 Aug 2025 11:10:17 GMT', 'Content-Type': 'application/json', 'Content-Length': '2813', 'Connection': 'keep-alive', 'x-amzn-RequestId': '5948ff47-8ddd-4252-98c7-c6ca662f659b', 'X-Amzn-Bedrock-Invocation-Latency': '1979', 'X-Amzn-Bedrock-Output-Token-Count': '469', 'X-Amzn-Bedrock-Input-Token-Count': '581'}
+2025-08-21 16:40:17,909 - [RAG] - DEBUG - Response body:
+<botocore.response.StreamingBody object at 0x000001FA327277C0>
+2025-08-21 16:40:17,910 - [RAG] - DEBUG - Event needs-retry.bedrock-runtime.InvokeModel: calling handler <botocore.retryhandler.RetryHandler object at 0x000001FA32467350>
+2025-08-21 16:40:17,910 - [RAG] - DEBUG - No retry needed.
+[RAG] Bedrock response received in 2.27 seconds
+[RAG] Generated answer (2425 chars): <reasoning>We need to answer: "Tell me about the services the LogiQuad offers." We have context abou...
+[RAG] Tokens used: 745
+[RAG] Request completed successfully
+2025-08-21 16:40:18,694 - [RAG] - DEBUG - Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-08-21 16:40:18,711 - [RAG] - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-08-21 16:40:18,727 - [RAG] - DEBUG - Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2025-08-21 16:40:19,851 - [RAG] - INFO - 127.0.0.1 - - [21/Aug/2025 16:40:19] "POST /chat HTTP/1.1" 200 -

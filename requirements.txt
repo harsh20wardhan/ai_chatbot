@@ -27,3 +27,7 @@ requests==2.31.0
 # Utility
 tqdm==4.66.1
 uuid==1.30
+
+# Rendering and sanitization for AI answers
+markdown==3.5.2
+bleach==6.1.0

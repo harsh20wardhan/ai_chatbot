@@ -144,7 +144,7 @@ export const createCollection = async ({ request, user, env, corsHeaders }) => {
         },
         body: JSON.stringify({
           vectors: {
-            size: 768, // Size for InstructorXL embeddings
+            size: 1024, // Changed from 768 to 1024 for Amazon Titan embeddings
             distance: 'Cosine'
           }
         })

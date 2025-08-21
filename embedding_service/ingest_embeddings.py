@@ -8,7 +8,8 @@ collection_name = "chatbot_embeddings"
 if not client.collection_exists(collection_name):
     client.create_collection(
         collection_name=collection_name,
-        vectors_config=VectorParams(size=768, distance=Distance.COSINE),
+        vectors_config=VectorParams(size=1024, distance=Distance.COSINE),
+
     )
 else:
     print(f"Collection '{collection_name}' already exists.")

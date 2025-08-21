@@ -1,62 +1,45 @@
-2025-08-11 10:53:40,778 - parser_service - INFO - Loading embedding model...
-2025-08-11 10:53:40,781 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
-2025-08-11 10:53:40,781 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: hkunlp/instructor-xl
-2025-08-11 10:53:40,784 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
-2025-08-11 10:53:42,094 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
-2025-08-11 10:53:42,102 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
-2025-08-11 10:53:42,356 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
-2025-08-11 10:53:42,364 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
-2025-08-11 10:53:42,609 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
-2025-08-11 10:53:42,618 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config_sentence_transformers.json HTTP/1.1" 200 0
-2025-08-11 10:53:43,709 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/README.md HTTP/1.1" 307 0
-2025-08-11 10:53:43,719 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/README.md HTTP/1.1" 200 0
-2025-08-11 10:53:43,981 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/modules.json HTTP/1.1" 307 0
-2025-08-11 10:53:43,995 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/modules.json HTTP/1.1" 200 0
-2025-08-11 10:53:44,245 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
-2025-08-11 10:53:44,253 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/sentence_bert_config.json HTTP/1.1" 200 0
-2025-08-11 10:53:44,499 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/adapter_config.json HTTP/1.1" 404 0
-2025-08-11 10:53:44,751 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/config.json HTTP/1.1" 307 0
-2025-08-11 10:53:44,760 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/config.json HTTP/1.1" 200 0
-2025-08-11 10:53:45,106 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/model.safetensors HTTP/1.1" 404 0
-2025-08-11 10:53:45,120 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
-2025-08-11 10:53:45,934 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
-2025-08-11 10:53:46,210 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
-2025-08-11 10:53:46,522 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
-2025-08-11 10:53:46,791 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
-2025-08-11 10:53:46,792 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
-2025-08-11 10:53:48,136 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 200 47
-2025-08-11 10:53:48,140 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): safetensors-convert.hf.space:443
-2025-08-11 10:53:49,880 - urllib3.connectionpool - DEBUG - https://safetensors-convert.hf.space:443 "GET /call/run/7f692a66c0384cc29dc8f306c3ed5156 HTTP/1.1" 200 None
-2025-08-11 10:53:50,140 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/main HTTP/1.1" 200 5557
-2025-08-11 10:53:50,419 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/discussions?p=0 HTTP/1.1" 200 20808
-2025-08-11 10:53:50,925 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/commits/refs%2Fpr%2F6 HTTP/1.1" 200 5866
-2025-08-11 10:53:51,169 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors.index.json HTTP/1.1" 404 0
-2025-08-11 10:53:51,548 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/refs%2Fpr%2F6/model.safetensors HTTP/1.1" 302 0
-2025-08-11 10:53:55,434 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
-2025-08-11 10:53:55,442 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/tokenizer_config.json HTTP/1.1" 200 0
-2025-08-11 10:53:55,703 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
-2025-08-11 10:53:56,060 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
-2025-08-11 10:53:56,070 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
-2025-08-11 10:53:56,752 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/config.json HTTP/1.1" 307 0
-2025-08-11 10:53:56,762 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/hkunlp/instructor-xl/ce48b213095e647a6c3536364b9fa00daf57f436/2_Dense%2Fconfig.json HTTP/1.1" 200 0
-2025-08-11 10:53:57,032 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/model.safetensors HTTP/1.1" 404 0
-2025-08-11 10:53:57,280 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "HEAD /hkunlp/instructor-xl/resolve/main/2_Dense/pytorch_model.bin HTTP/1.1" 302 0
-2025-08-11 10:53:57,578 - urllib3.connectionpool - DEBUG - https://huggingface.co:443 "GET /api/models/hkunlp/instructor-xl HTTP/1.1" 200 142174
-2025-08-11 10:53:57,598 - parser_service - INFO - Embedding model loaded
-2025-08-11 10:53:57,598 - parser_service - INFO - Connecting to Qdrant...
-C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\qdrant_client\qdrant_remote.py:116: UserWarning: Api key is used with unsecure connection.
-  warnings.warn("Api key is used with unsecure connection.")
-2025-08-11 10:53:58,111 - parser_service - INFO - Connected to Qdrant at http://localhost:6333
-2025-08-11 10:53:58,112 - parser_service - INFO - Starting parser service on port 8002...
+2025-08-21 15:58:45,873 - parser_service - INFO - Initializing Bedrock client...
+2025-08-21 15:58:45,875 - botocore.hooks - DEBUG - Changing event name from creating-client-class.iot-data to creating-client-class.iot-data-plane
+2025-08-21 15:58:45,879 - botocore.hooks - DEBUG - Changing event name from before-call.apigateway to before-call.api-gateway
+2025-08-21 15:58:45,880 - botocore.hooks - DEBUG - Changing event name from request-created.machinelearning.Predict to request-created.machine-learning.Predict
+2025-08-21 15:58:45,883 - botocore.hooks - DEBUG - Changing event name from before-parameter-build.autoscaling.CreateLaunchConfiguration to before-parameter-build.auto-scaling.CreateLaunchConfiguration
+2025-08-21 15:58:45,883 - botocore.hooks - DEBUG - Changing event name from before-parameter-build.route53 to before-parameter-build.route-53
+2025-08-21 15:58:45,884 - botocore.hooks - DEBUG - Changing event name from request-created.cloudsearchdomain.Search to request-created.cloudsearch-domain.Search
+2025-08-21 15:58:45,886 - botocore.hooks - DEBUG - Changing event name from docs.*.autoscaling.CreateLaunchConfiguration.complete-section to docs.*.auto-scaling.CreateLaunchConfiguration.complete-section
+2025-08-21 15:58:45,890 - botocore.hooks - DEBUG - Changing event name from before-parameter-build.logs.CreateExportTask to before-parameter-build.cloudwatch-logs.CreateExportTask
+2025-08-21 15:58:45,890 - botocore.hooks - DEBUG - Changing event name from docs.*.logs.CreateExportTask.complete-section to docs.*.cloudwatch-logs.CreateExportTask.complete-section
+2025-08-21 15:58:45,891 - botocore.hooks - DEBUG - Changing event name from before-parameter-build.cloudsearchdomain.Search to before-parameter-build.cloudsearch-domain.Search
+2025-08-21 15:58:45,891 - botocore.hooks - DEBUG - Changing event name from docs.*.cloudsearchdomain.Search.complete-section to docs.*.cloudsearch-domain.Search.complete-section
+2025-08-21 15:58:46,153 - botocore.loaders - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\endpoints.json
+2025-08-21 15:58:46,197 - botocore.loaders - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\sdk-default-configuration.json
+2025-08-21 15:58:46,198 - botocore.hooks - DEBUG - Event choose-service-name: calling handler <function handle_service_name_alias at 0x00000235B42D6CA0>
+2025-08-21 15:58:46,446 - botocore.loaders - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\bedrock-runtime\2023-09-30\service-2.json.gz
+2025-08-21 15:58:46,800 - botocore.loaders - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\bedrock-runtime\2023-09-30\endpoint-rule-set-1.json.gz
+2025-08-21 15:58:46,802 - botocore.loaders - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\partitions.json
+2025-08-21 15:58:46,804 - botocore.hooks - DEBUG - Event creating-client-class.bedrock-runtime: calling handler <function remove_bedrock_runtime_invoke_model_with_bidirectional_stream at 0x00000235B4306B60>
+2025-08-21 15:58:46,805 - botocore.hooks - DEBUG - Event creating-client-class.bedrock-runtime: calling handler <function add_generate_presigned_url at 0x00000235B42518A0>
+2025-08-21 15:58:46,806 - botocore.configprovider - DEBUG - Looking for endpoint for bedrock-runtime via: environment_service
+2025-08-21 15:58:46,806 - botocore.configprovider - DEBUG - Looking for endpoint for bedrock-runtime via: environment_global
+2025-08-21 15:58:46,806 - botocore.configprovider - DEBUG - Looking for endpoint for bedrock-runtime via: config_service
+2025-08-21 15:58:46,806 - botocore.configprovider - DEBUG - Looking for endpoint for bedrock-runtime via: config_global
+2025-08-21 15:58:46,806 - botocore.configprovider - DEBUG - No configured endpoint found.
+2025-08-21 15:58:46,807 - botocore.regions - DEBUG - Creating a regex based endpoint for bedrock-runtime, us-west-2
+2025-08-21 15:58:46,812 - botocore.endpoint - DEBUG - Setting bedrock-runtime timeout as (60, 60)
+2025-08-21 15:58:46,822 - botocore.loaders - DEBUG - Loading JSON file: C:\Users\sagni\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\botocore\data\_retry.json
+2025-08-21 15:58:46,824 - botocore.client - DEBUG - Registering retry handlers for service: bedrock-runtime
+2025-08-21 15:58:46,826 - parser_service - INFO - Bedrock client initialized
+2025-08-21 15:58:46,826 - parser_service - INFO - Connecting to Qdrant...
+2025-08-21 15:58:48,781 - parser_service - INFO - Connected to Qdrant at https://5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io
+2025-08-21 15:58:48,783 - parser_service - INFO - Starting parser service on port 8002...
  * Serving Flask app 'parser_service'
  * Debug mode: off
-2025-08-11 10:53:58,120 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-08-21 15:58:48,849 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:8002
- * Running on http://192.168.1.37:8002
-2025-08-11 10:53:58,120 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+ * Running on http://192.168.1.4:8002
+2025-08-21 15:58:48,850 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
 elopment server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:8002
- * Running on http://192.168.1.37:8002
-2025-08-11 10:53:58,120 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+ * Running on http://192.168.1.4:8002
+2025-08-21 15:58:48,850 - werkzeug - INFO - [33mPress CTRL+C to quit[0m

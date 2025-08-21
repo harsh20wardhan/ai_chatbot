@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import os
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
+import boto3
 from qdrant_client import QdrantClient
 import uuid
 import json
@@ -12,14 +12,19 @@ load_dotenv()
 app = Flask(__name__)
 API_KEY = os.environ.get("EMBEDDINGS_SERVICE_KEY", "your-embedding-secret-key")
 
-# Initialize embedding model and Qdrant client
-print("Loading embedding model...")
-embed_model = SentenceTransformer("hkunlp/instructor-xl")
-print("Embedding model loaded")
+# Initialize Bedrock client for embeddings (same as RAG service)
+print("Initializing Bedrock client...")
+bedrock_runtime = boto3.client(
+    'bedrock-runtime',
+    region_name='us-west-2',
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+)
+print("Bedrock client initialized")
 
 print("Connecting to Qdrant...")
-qdrant_url = os.environ.get("QDRANT_URL", "http://localhost:6333")
-qdrant_api_key = os.environ.get("QDRANT_API_KEY", "")
+qdrant_url = os.environ.get("QDRANT_URL", "https://5eb98ed2-2314-4049-b417-a580896bc274.us-west-2-0.aws.cloud.qdrant.io")
+qdrant_api_key = os.environ.get("QDRANT_API_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.IztgMmNayZiIyrgLKs467JRudqlennsRarB7tv7VCIo")
 client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
 print(f"Connected to Qdrant at {qdrant_url}")
 
@@ -31,6 +36,23 @@ def chunk_text(text, chunk_size=500, overlap=50):
         if len(chunk) >= chunk_size // 2:  # Only keep chunks that are reasonably sized
             chunks.append(chunk)
     return chunks
+
+def generate_embeddings(texts):
+    """Generate embeddings using Amazon Titan (1024 dimensions)"""
+    embeddings = []
+    for text in texts:
+        try:
+            response = bedrock_runtime.invoke_model(
+                modelId="amazon.titan-embed-text-v2:0",
+                body=json.dumps({"inputText": text})
+            )
+            response_body = json.loads(response['body'].read())
+            embedding = response_body['embedding']
+            embeddings.append(embedding)
+        except Exception as e:
+            print(f"Error generating embedding: {e}")
+            raise e
+    return embeddings
 
 @app.route("/embed", methods=["POST"])
 def embed():
@@ -56,9 +78,9 @@ def embed():
         chunks = chunk_text(text)
         print(f"Document {doc_id}: split into {len(chunks)} chunks")
         
-        # Embed chunks
-        embeddings = embed_model.encode(chunks)
-        print(f"Generated {len(embeddings)} embeddings")
+        # Generate embeddings using Bedrock (1024 dimensions)
+        embeddings = generate_embeddings(chunks)
+        print(f"Generated {len(embeddings)} embeddings with {len(embeddings[0])} dimensions")
         
         # Prepare points for Qdrant
         points = []
@@ -66,7 +88,7 @@ def embed():
             point_id = str(uuid.uuid4())
             points.append({
                 "id": point_id,
-                "vector": embedding.tolist(),
+                "vector": embedding,  # No need for .tolist() since it's already a list
                 "payload": {
                     "document_id": doc_id,
                     "chunk_index": i,
@@ -75,7 +97,7 @@ def embed():
                 }
             })
         
-        # Ensure collection exists
+        # Ensure collection exists with 1024 dimensions
         try:
             collections = client.get_collections()
             collection_names = [c.name for c in collections.collections]
@@ -83,9 +105,9 @@ def embed():
             if bot_id not in collection_names:
                 client.create_collection(
                     collection_name=bot_id,
-                    vectors_config={"size": len(embeddings[0]), "distance": "Cosine"}
+                    vectors_config={"size": 1024, "distance": "Cosine"}  # Fixed to 1024 dimensions
                 )
-                print(f"Created collection {bot_id}")
+                print(f"Created collection {bot_id} with 1024 dimensions")
         except Exception as e:
             print(f"Error checking/creating collection: {e}")
             return jsonify({"error": f"Failed to create collection: {str(e)}"}), 500
@@ -157,4 +179,4 @@ def delete_all_embeddings():
 
 if __name__ == "__main__":
     print(f"Starting embedding service on port 8003...")
-    app.run(host="0.0.0.0", port=8003) 
+    app.run(host="0.0.0.0", port=8003)

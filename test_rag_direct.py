@@ -9,7 +9,7 @@ def test_rag_direct():
     }
     data = {
         "query": "What services do you offer?",
-        "bot_id": "40fffdbb-932b-4a2f-aa22-9b004cee27fa",
+        "bot_id": "7644b70e-1c67-4df6-8518-af6fbe37a21e",  # Updated to correct bot ID
         "conversation_id": "test-conv-123"
     }
     
@@ -38,4 +38,4 @@ def test_rag_direct():
         print(f"Error: {e}")
 
 if __name__ == "__main__":
-    test_rag_direct() 
+    test_rag_direct()

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const MessageContainer = styled.div`
   display: flex;
@@ -72,6 +74,94 @@ const SourceLink = styled.a`
   }
 `;
 
+// Filter out thinking and reasoning tags from AI responses
+const filterAIResponse = (content) => {
+  if (!content || typeof content !== 'string') {
+    return content;
+  }
+  
+  // Remove <thinking>...</thinking> blocks
+  content = content.replace(/<thinking[^>]*>[\s\S]*?<\/thinking>/gi, '');
+  
+  // Remove <reasoning>...</reasoning> blocks
+  content = content.replace(/<reasoning[^>]*>[\s\S]*?<\/reasoning>/gi, '');
+  
+  // Clean up any extra whitespace or line breaks left behind
+  content = content.replace(/\n\s*\n/g, '\n').trim();
+  
+  return content;
+};
+
+const MarkdownContent = styled.div`
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0.5em 0 0.3em 0;
+    font-weight: 600;
+  }
+  
+  p {
+    margin: 0.5em 0;
+    line-height: 1.4;
+  }
+  
+  ul, ol {
+    margin: 0.5em 0;
+    padding-left: 1.5em;
+  }
+  
+  li {
+    margin: 0.2em 0;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0.5em 0;
+    font-size: 0.9em;
+  }
+  
+  th, td {
+    border: 1px solid ${({ theme }) => theme === 'dark' ? '#555' : '#ddd'};
+    padding: 0.5em;
+    text-align: left;
+  }
+  
+  th {
+    background-color: ${({ theme }) => theme === 'dark' ? '#444' : '#f5f5f5'};
+    font-weight: 600;
+  }
+  
+  code {
+    background-color: ${({ theme }) => theme === 'dark' ? '#333' : '#f0f0f0'};
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+  
+  pre {
+    background-color: ${({ theme }) => theme === 'dark' ? '#333' : '#f0f0f0'};
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 0.5em 0;
+  }
+  
+  blockquote {
+    border-left: 4px solid ${({ theme, primaryColor }) => theme === 'dark' ? '#555' : primaryColor};
+    margin: 0.5em 0;
+    padding-left: 1em;
+    font-style: italic;
+  }
+  
+  strong {
+    font-weight: 600;
+  }
+  
+  em {
+    font-style: italic;
+  }
+`;
+
 export default function Message({ message, showSources, theme, primaryColor }) {
   const [showSourcesList, setShowSourcesList] = useState(false);
   
@@ -88,6 +178,11 @@ export default function Message({ message, showSources, theme, primaryColor }) {
   
   const hasSources = message.sources && message.sources.length > 0;
   
+  // Filter the message content if it's from the AI
+  const displayContent = message.role === 'assistant' || message.role === 'bot' 
+    ? filterAIResponse(message.content) 
+    : message.content;
+  
   return (
     <MessageContainer role={message.role}>
       <MessageBubble 
@@ -95,7 +190,21 @@ export default function Message({ message, showSources, theme, primaryColor }) {
         theme={theme}
         primaryColor={primaryColor}
       >
-        {message.content}
+        {message.role === 'user' ? (
+          displayContent
+        ) : (
+          <MarkdownContent theme={theme} primaryColor={primaryColor}>
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]}
+              components={{
+                // Customize link rendering to open in new tab
+                a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />
+              }}
+            >
+              {displayContent}
+            </ReactMarkdown>
+          </MarkdownContent>
+        )}
         
         {showSources && hasSources && (
           <SourcesContainer theme={theme}>

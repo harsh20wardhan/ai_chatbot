@@ -12,7 +12,7 @@ import uuid
 import pandas as pd
 import io
 from pathlib import Path
-from sentence_transformers import SentenceTransformer
+import boto3
 from qdrant_client import QdrantClient
 
 # Set up logging
@@ -32,16 +32,38 @@ load_dotenv()
 app = Flask(__name__)
 API_KEY = os.environ.get("PARSER_SERVICE_KEY", "your-parser-secret-key")
 
-# Initialize embedding model and Qdrant client
-logger.info("Loading embedding model...")
-embed_model = SentenceTransformer("hkunlp/instructor-xl")
-logger.info("Embedding model loaded")
+# Initialize Bedrock client for embeddings (1024 dimensions)
+logger.info("Initializing Bedrock client...")
+bedrock_runtime = boto3.client(
+    'bedrock-runtime',
+    region_name='us-west-2',
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+)
+logger.info("Bedrock client initialized")
 
 logger.info("Connecting to Qdrant...")
 qdrant_url = os.environ.get("QDRANT_URL", "http://localhost:6333")
 qdrant_api_key = os.environ.get("QDRANT_API_KEY", "")
 client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
 logger.info(f"Connected to Qdrant at {qdrant_url}")
+
+def generate_embeddings(texts):
+    """Generate embeddings using Amazon Titan (1024 dimensions)"""
+    embeddings = []
+    for text in texts:
+        try:
+            response = bedrock_runtime.invoke_model(
+                modelId="amazon.titan-embed-text-v2:0",
+                body=json.dumps({"inputText": text})
+            )
+            response_body = json.loads(response['body'].read())
+            embedding = response_body['embedding']
+            embeddings.append(embedding)
+        except Exception as e:
+            logger.error(f"Error generating embedding: {e}")
+            raise e
+    return embeddings
 
 # Database connection
 def get_db_connection():
@@ -237,33 +259,21 @@ def store_document_chunks(document_id, bot_id, user_id, chunks):
 def embed_and_store_chunks(document_id, bot_id, user_id, chunks, chunk_ids):
     """Embed chunks and store in Qdrant"""
     try:
-        # Generate embeddings
-        embeddings = embed_model.encode(chunks)
-        logger.info(f"Generated {len(embeddings)} embeddings for document {document_id}")
+        # Generate embeddings using Bedrock (1024 dimensions)
+        embeddings = generate_embeddings(chunks)
+        logger.info(f"Generated {len(embeddings)} embeddings for document {document_id} with {len(embeddings[0])} dimensions")
         
-        # Ensure collection exists
+        # Ensure collection exists with 1024 dimensions
         try:
             collections = client.get_collections()
             collection_names = [c.name for c in collections.collections]
             
             if bot_id not in collection_names:
-                # Handle both list and numpy array types
-                try:
-                    if len(embeddings) > 0:
-                        vector_size = len(embeddings[0])
-                        logger.debug(f"Detected vector size: {vector_size}")
-                    else:
-                        vector_size = 768  # Default size
-                        logger.debug(f"Using default vector size: {vector_size}")
-                except (TypeError, ValueError):
-                    vector_size = 768  # Default size
-                    logger.debug(f"Error detecting vector size, using default: {vector_size}")
-                
                 client.create_collection(
                     collection_name=bot_id,
-                    vectors_config={"size": vector_size, "distance": "Cosine"}
+                    vectors_config={"size": 1024, "distance": "Cosine"}  # Fixed to 1024 dimensions
                 )
-                logger.info(f"Created collection {bot_id}")
+                logger.info(f"Created collection {bot_id} with 1024 dimensions")
         except Exception as e:
             logger.error(f"Error checking/creating collection: {e}")
             logger.error(traceback.format_exc())
@@ -275,7 +285,7 @@ def embed_and_store_chunks(document_id, bot_id, user_id, chunks, chunk_ids):
             point_id = str(uuid.uuid4())
             points.append({
                 "id": point_id,
-                "vector": embedding.tolist(),
+                "vector": embedding,  # Already a list from Bedrock
                 "payload": {
                     "document_id": document_id,
                     "chunk_id": chunk_id,
@@ -495,4 +505,4 @@ if __name__ == "__main__":
     os.makedirs('temp_files', exist_ok=True)
     
     logger.info(f"Starting parser service on port 8002...")
-    app.run(host="0.0.0.0", port=8002) 
+    app.run(host="0.0.0.0", port=8002)

@@ -150,6 +150,7 @@ export const createBot = async ({ request, user, env, corsHeaders }) => {
     }
     
     const supabase = getSupabase(env);
+    console.log(`Attempting to insert bot: name=${name}, description=${description}, website_url=${website_url}, user_id=${user.id}`);
     const { data, error } = await supabase
       .from('bots')
       .insert([
@@ -165,6 +166,7 @@ export const createBot = async ({ request, user, env, corsHeaders }) => {
       .single();
       
     if (error) {
+      console.error(`Error inserting bot into Supabase: ${error.message}`);
       return new Response(JSON.stringify({ error: error.message }), {
         status: 400,
         headers: {
@@ -173,10 +175,11 @@ export const createBot = async ({ request, user, env, corsHeaders }) => {
         }
       });
     }
+    console.log(`Successfully inserted bot into Supabase with ID: ${data.id}`);
     
     // Create a collection in Qdrant for this bot
     try {
-      console.log(`Creating Qdrant collection for bot ${data.id} at ${env.QDRANT_URL}/collections/${data.id}`);
+      console.log(`Attempting to create Qdrant collection for bot ${data.id} at ${env.QDRANT_URL}/collections/${data.id}`);
       
       const response = await fetch(`${env.QDRANT_URL}/collections/${data.id}`, {
         method: 'PUT',
@@ -186,7 +189,7 @@ export const createBot = async ({ request, user, env, corsHeaders }) => {
         },
         body: JSON.stringify({
           vectors: {
-            size: 768, // Size for InstructorXL embeddings
+            size: 1024, // Changed from 768 to 1024 for Amazon Titan embeddings
             distance: 'Cosine'
           }
         })
@@ -374,4 +377,4 @@ export const deleteBot = async ({ params, user, env, corsHeaders }) => {
       }
     });
   }
-}; 
+};

@@ -10,15 +10,8 @@ echo "========================================"
 echo "      AI CHATBOT - SERVICE STARTUP      "
 echo "========================================"
 
-# Check for Docker
-if ! command -v docker &> /dev/null; then
-  echo "[QDRANT] WARNING: Docker not found. Qdrant will not be started."
-else
-  echo "[QDRANT] Starting Qdrant vector database..."
-  (cd vector_db && docker-compose up -d)
-  echo "[QDRANT] Qdrant started at http://localhost:6333"
-fi
-sleep 2
+# Qdrant Cloud is now used instead of local Docker container
+echo "[QDRANT] Using Qdrant Cloud - no local container needed"
 
 echo
 echo "========================================"
@@ -29,22 +22,27 @@ echo "========================================"
 python -c "import flask" 2>/dev/null || echo "[WARNING] Python 'flask' module not found. Run: pip install -r requirements.txt"
 
 python crawler_service.py > logs/crawler.log 2>&1 &
+echo $! > logs/crawler.pid
 echo "[Crawler Service]         logs/crawler.log (port 8001)"
 sleep 1
 
 python parser_service.py > logs/parser.log 2>&1 &
+echo $! > logs/parser.pid
 echo "[Parser Service]          logs/parser.log (port 8002)"
 sleep 1
 
 python embedding_service.py > logs/embedding.log 2>&1 &
+echo $! > logs/embedding.pid
 echo "[Embedding Service]       logs/embedding.log (port 8003)"
 sleep 1
 
 python rag_service.py > logs/rag.log 2>&1 &
+echo $! > logs/rag.pid
 echo "[RAG Service]             logs/rag.log (port 8004)"
 sleep 1
 
 python realtime_crawl_service.py > logs/realtime_crawl.log 2>&1 &
+echo $! > logs/realtime_crawl.pid
 echo "[Realtime Crawl Service]  logs/realtime_crawl.log (port 8005)"
 sleep 1
 

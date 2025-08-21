@@ -109,7 +109,7 @@ router.post('/api/test/bot', async ({ request, env, corsHeaders }) => {
         },
         body: JSON.stringify({
           vectors: {
-            size: 768,
+            size: 1024, // Changed from 768 to 1024 for Amazon Titan embeddings
             distance: 'Cosine'
           }
         })
@@ -210,4 +210,4 @@ export default {
   async fetch(request, env, ctx) {
     return router.handle(request, env, ctx);
   }
-}; 
+};

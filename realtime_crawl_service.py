@@ -17,6 +17,7 @@ import asyncio
 import websockets
 import logging
 import traceback
+import numpy as np
 
 # Set up logging
 logging.basicConfig(
@@ -38,10 +39,37 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 API_KEY = os.environ.get("REALTIME_CRAWL_SERVICE_KEY", "your-realtime-crawl-secret-key")
 
-# Initialize embedding model and Qdrant client
-print("Loading embedding model...")
-embed_model = SentenceTransformer("hkunlp/instructor-xl")
-print("Embedding model loaded")
+# Initialize Bedrock client for embeddings
+print("Initializing Bedrock client...")
+import boto3
+
+bedrock_runtime = boto3.client(
+    'bedrock-runtime',
+    region_name='us-west-2',
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+)
+
+def generate_embeddings(texts):
+    """Generate embeddings using Amazon Titan (1024 dimensions)"""
+    embeddings = []
+    for text in texts:
+        try:
+            response = bedrock_runtime.invoke_model(
+                modelId="amazon.titan-embed-text-v2:0",
+                body=json.dumps({"inputText": text})
+            )
+            response_body = json.loads(response['body'].read())
+            embedding = response_body.get('embedding') or response_body.get("output", {}).get("embedding")
+            if not embedding:
+                raise ValueError(f"Unexpected embedding response: {response_body}")
+            embeddings.append(np.array(embedding))
+        except Exception as e:
+            logger.error(f"Error generating embedding: {e}")
+            raise e
+    return embeddings
+
+print("Bedrock client initialized")
 
 print("Connecting to Qdrant...")
 qdrant_url = os.environ.get("QDRANT_URL", "http://localhost:6333")
@@ -354,7 +382,7 @@ def embed_page_realtime(page_id, text, bot_id, session_id=None):
                 'content_length': len(text)
             }, room=session_id)
         
-        # Split text into chunks
+        # Split text into chunks FIRST
         chunks = chunk_text(text)
         logger.info(f"Split into {len(chunks)} chunks")
         
@@ -369,10 +397,10 @@ def embed_page_realtime(page_id, text, bot_id, session_id=None):
                 'status': 'chunking_completed'
             }, room=session_id)
         
-        # Generate embeddings
+        # Generate embeddings AFTER chunks are defined
         logger.info(f"Generating embeddings for {len(chunks)} chunks...")
-        embeddings = embed_model.encode(chunks)
-        logger.info(f"Generated {len(embeddings)} embeddings, first embedding shape: {embeddings[0].shape if len(embeddings) > 0 else 'N/A'}")
+        embeddings = generate_embeddings(chunks)
+        logger.info(f"Generated {len(embeddings)} embeddings, first embedding shape: {len(embeddings[0]) if len(embeddings) > 0 else 'N/A'}")
         
         if session_id:
             socketio.emit('embedding_progress', {
@@ -396,10 +424,10 @@ def embed_page_realtime(page_id, text, bot_id, session_id=None):
                         vector_size = len(embeddings[0])
                         logger.debug(f"Detected vector size: {vector_size}")
                     else:
-                        vector_size = 768  # Default size
+                        vector_size = 1024  # Default size for Bedrock
                         logger.debug(f"Using default vector size: {vector_size}")
                 except (TypeError, ValueError):
-                    vector_size = 768  # Default size
+                    vector_size = 1024  # Default size for Bedrock
                     logger.debug(f"Error detecting vector size, using default: {vector_size}")
                 logger.debug(f"Creating collection with vector size: {vector_size}")
                 
@@ -873,4 +901,4 @@ if __name__ == "__main__":
     
     logger.info(f"Starting realtime crawl service on port 8005...")
     logger.info(f"Environment variables loaded: QDRANT_URL={qdrant_url}, SUPABASE_DB_HOST={os.environ.get('SUPABASE_DB_HOST')}")
-    socketio.run(app, host="0.0.0.0", port=8005, debug=True) 
+    socketio.run(app, host="0.0.0.0", port=8005, debug=True)

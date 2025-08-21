@@ -162,6 +162,41 @@
     document.body.insertAdjacentHTML('beforeend', widgetHTML);
   }
   
+  // Simple markdown parser for vanilla JS
+  function parseMarkdown(text) {
+    if (!text || typeof text !== 'string') return text;
+    
+    // Convert markdown to HTML
+    let html = text
+      // Headers
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      // Bold
+      .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+      // Italic
+      .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+      // Code blocks
+      .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
+      // Inline code
+      .replace(/`([^`]+)`/gim, '<code>$1</code>')
+      // Line breaks
+      .replace(/\n/gim, '<br>');
+    
+    // Handle tables
+    html = html.replace(/\|(.+)\|/g, (match, content) => {
+      const cells = content.split('|').map(cell => cell.trim());
+      const isHeader = html.indexOf(match) === html.indexOf('|');
+      const tag = isHeader ? 'th' : 'td';
+      return `<tr>${cells.map(cell => `<${tag}>${cell}</${tag}>`).join('')}</tr>`;
+    });
+    
+    // Wrap table rows in table
+    html = html.replace(/(<tr>.*<\/tr>)/gims, '<table style="border-collapse: collapse; width: 100%; margin: 0.5em 0;">$1</table>');
+    
+    return html;
+  }
+  
   // Add message to chat
   function addMessage(content, sender, sources = []) {
     const messagesContainer = document.getElementById('ai-chatbot-messages');
@@ -189,6 +224,40 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       word-wrap: break-word;
     `;
+    
+    // Use innerHTML for AI messages to render markdown, textContent for user messages
+    if (sender === 'user') {
+      messageBubble.textContent = content;
+    } else {
+      const parsedContent = parseMarkdown(content);
+      messageBubble.innerHTML = parsedContent;
+      
+      // Add CSS for table styling
+      const tables = messageBubble.querySelectorAll('table');
+      tables.forEach(table => {
+        table.style.cssText = `
+          border-collapse: collapse;
+          width: 100%;
+          margin: 0.5em 0;
+          font-size: 0.9em;
+        `;
+        
+        const cells = table.querySelectorAll('th, td');
+        cells.forEach(cell => {
+          cell.style.cssText = `
+            border: 1px solid ${config.theme === 'dark' ? '#555' : '#ddd'};
+            padding: 0.5em;
+            text-align: left;
+          `;
+        });
+        
+        const headers = table.querySelectorAll('th');
+        headers.forEach(header => {
+          header.style.backgroundColor = config.theme === 'dark' ? '#444' : '#f5f5f5';
+          header.style.fontWeight = '600';
+        });
+      });
+    }
     
     messageBubble.textContent = content;
     messageDiv.appendChild(messageBubble);
@@ -238,6 +307,24 @@
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
   
+  // Filter out thinking and reasoning tags from AI responses
+  function filterAIResponse(content) {
+    if (!content || typeof content !== 'string') {
+      return content;
+    }
+    
+    // Remove <thinking>...</thinking> blocks
+    content = content.replace(/<thinking[^>]*>[\s\S]*?<\/thinking>/gi, '');
+    
+    // Remove <reasoning>...</reasoning> blocks
+    content = content.replace(/<reasoning[^>]*>[\s\S]*?<\/reasoning>/gi, '');
+    
+    // Clean up any extra whitespace or line breaks left behind
+    content = content.replace(/\n\s*\n/g, '\n').trim();
+    
+    return content;
+  }
+
   // Send message to API
   async function sendMessage(message) {
     try {
@@ -260,8 +347,11 @@
       
       const data = await response.json();
       
+      // Filter the AI response before displaying
+      const filteredAnswer = filterAIResponse(data.answer);
+      
       // Add bot response
-      addMessage(data.answer, 'bot', data.sources);
+      addMessage(filteredAnswer, 'bot', data.sources);
       
       // Update conversation ID
       if (data.conversation_id) {
@@ -370,4 +460,4 @@
   } else {
     init();
   }
-})(); 
+})();
