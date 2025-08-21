@@ -1,20 +1,21 @@
-import { Router } from './router';
-import { corsMiddleware } from './middleware/cors';
-import { authMiddleware } from './middleware/auth';
+// All imports have been updated with the .js extension
+import { Router } from './router.js';
+import { corsMiddleware } from './middleware/cors.js';
+import { authMiddleware } from './middleware/auth.js';
 import { createClient } from '@supabase/supabase-js';
 
 // Import handlers
-import * as authHandler from './handlers/auth';
-import * as botsHandler from './handlers/bots';
-import * as crawlHandler from './handlers/crawl';
-import * as realtimeCrawlHandler from './handlers/realtime_crawl';
-import * as documentsHandler from './handlers/documents';
-import * as embeddingsHandler from './handlers/embeddings';
-import * as vectorsHandler from './handlers/vectors';
-import * as chatHandler from './handlers/chat';
-import * as adminHandler from './handlers/admin';
-import * as analyticsHandler from './handlers/analytics';
-import * as widgetHandler from './handlers/widget';
+import * as authHandler from './handlers/auth.js';
+import * as botsHandler from './handlers/bots.js';
+import * as crawlHandler from './handlers/crawl.js';
+import * as realtimeCrawlHandler from './handlers/realtime_crawl.js';
+import * as documentsHandler from './handlers/documents.js';
+import * as embeddingsHandler from './handlers/embeddings.js';
+import * as vectorsHandler from './handlers/vectors.js';
+import * as chatHandler from './handlers/chat.js';
+import * as adminHandler from './handlers/admin.js';
+import * as analyticsHandler from './handlers/analytics.js';
+import * as widgetHandler from './handlers/widget.js';
 
 const router = new Router();
 
