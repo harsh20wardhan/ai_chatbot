@@ -1,2 +1,0 @@
-This is a sample paragraph for testing the embeddings service. 
-It should contain actual content that the chatbot will use.
