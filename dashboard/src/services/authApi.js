@@ -8,7 +8,7 @@ export const authApi = {
       const response = await api.post('/auth/register', {
         email,
         password,
-        name
+        confirm_password: password // Backend expects confirm_password
       });
       return response.data;
     } catch (error) {

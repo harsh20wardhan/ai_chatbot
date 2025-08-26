@@ -23,9 +23,10 @@ export function AuthProvider({ children }) {
         if (token) {
           try {
             const userData = await authApi.getCurrentUser();
-            setUser(userData.user);
+            setUser(userData);  // The backend returns the user directly, not nested in userData.user
           } catch (err) {
             // If the token is invalid, clear it
+            console.error('Failed to get current user:', err);
             localStorage.removeItem('auth_token');
             setToken(null);
             setUser(null);
@@ -50,9 +51,9 @@ export function AuthProvider({ children }) {
       
       const response = await authApi.register(email, password, name);
       
-      if (response.token) {
-        localStorage.setItem('auth_token', response.token);
-        setToken(response.token);
+      if (response.access_token) {
+        localStorage.setItem('auth_token', response.access_token);
+        setToken(response.access_token);
         setUser(response.user);
       }
       
@@ -74,9 +75,9 @@ export function AuthProvider({ children }) {
       
       const response = await authApi.login(email, password);
       
-      if (response.token) {
-        localStorage.setItem('auth_token', response.token);
-        setToken(response.token);
+      if (response.access_token) {
+        localStorage.setItem('auth_token', response.access_token);
+        setToken(response.access_token);
         setUser(response.user);
       }
       

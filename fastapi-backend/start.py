@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""
+FastAPI Backend Startup Script
+
+Simple script to start the FastAPI backend with proper configuration.
+"""
+
+import uvicorn
+import sys
+import os
+
+# Add the current directory to Python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+if __name__ == "__main__":
+    # Start the FastAPI application
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,  # Enable auto-reload for development
+        log_level="info",
+        access_log=True
+    )

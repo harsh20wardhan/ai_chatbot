@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance with base URL
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8787/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -45,15 +45,6 @@ api.interceptors.response.use(
       console.error('Error data:', error.response.data);
       console.error('Error status:', error.response.status);
       console.error('Error headers:', error.response.headers);
-      
-      // Handle authentication errors
-      if (error.response.status === 401) {
-        console.log('Authentication failed - clearing token and redirecting to login');
-        localStorage.removeItem('auth_token');
-        // Redirect to login page
-        window.location.href = '/login';
-        return Promise.reject(error);
-      }
     } else if (error.request) {
       // The request was made but no response was received
       console.error('Error request:', error.request);
@@ -109,7 +100,7 @@ export const widgetApi = {
   
   // Update widget configuration
   updateWidgetConfig: async (botId, configData) => {
-    const response = await api.put(`/widget/${botId}/config`, configData);
+    const response = await api.post(`/widget/${botId}/config`, configData);
     return response.data.config;
   },
 };
@@ -128,7 +119,7 @@ export const documentApi = {
     formData.append('file', file);
     formData.append('botId', botId);
     
-    const response = await api.post('/documents', formData, {
+    const response = await api.post('/documents/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -148,11 +139,11 @@ export const documentApi = {
 export const crawlApi = {
   // Start a crawl job
   startCrawl: async (botId, url, maxDepth = 3, excludePatterns = []) => {
-    const response = await api.post('/crawl', {
-      bot_id: botId,
+    const response = await api.post('/crawl/website', {
+      botId: botId,
       url,
-      max_pages: maxDepth,
-      exclude_patterns: excludePatterns,
+      maxDepth: maxDepth,
+      excludePatterns: excludePatterns,
     });
     
     return response.data;
@@ -172,11 +163,11 @@ export const crawlApi = {
   
   // Start a realtime crawl job
   startRealtimeCrawl: async (botId, url, maxDepth = 3, excludePatterns = []) => {
-    const response = await api.post('/crawl/realtime', {
-      bot_id: botId,
+    const response = await api.post('/realtime-crawl/start', {
+      botId: botId,
       url,
-      max_pages: maxDepth,
-      exclude_patterns: excludePatterns,
+      maxDepth: maxDepth,
+      excludePatterns: excludePatterns,
     });
     
     return response.data;
@@ -200,7 +191,7 @@ export const chatApi = {
   // Send a message to the bot
   sendMessage: async (botId, message, conversationId = null, useRag = true) => {
     const response = await api.post('/chat', {
-      bot_id: botId,
+      botId: botId,
       query: message, // Changed from 'message' to 'query' to match backend
       conversationId: conversationId,
       useRag: useRag,

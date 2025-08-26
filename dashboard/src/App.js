@@ -52,6 +52,7 @@ function App() {
         </ProtectedRoute>
       }>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/bots" element={<Bots />} />
         <Route path="/bots/:botId" element={<BotDetail />} />
         <Route path="/bots/:botId/widget" element={<WidgetConfig />} />
@@ -61,9 +62,6 @@ function App() {
       
       {/* Public widget preview route (no auth required) */}
       <Route path="/widget-preview/:botId" element={<WidgetPreview />} />
-      
-      {/* Redirect root to dashboard */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       
       {/* 404 route */}
       <Route path="*" element={<NotFound />} />
