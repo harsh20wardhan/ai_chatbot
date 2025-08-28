@@ -36,7 +36,15 @@ export default function Login() {
       navigate('/');
     } catch (error) {
       console.error('Login error:', error);
-      setError(error.message || 'Failed to sign in');
+      let errorMessage = 'Failed to sign in';
+      
+      if (error.response?.data?.detail) {
+        errorMessage = error.response.data.detail;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

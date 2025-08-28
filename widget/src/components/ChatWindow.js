@@ -151,7 +151,7 @@ export default function ChatWindow({ loading, error }) {
       addMessage({
         role: 'assistant',
         content: response.message,
-        sources: response.sources,
+        // Sources removed - sources will not be displayed
       });
     } catch (error) {
       console.error('Error sending message:', error);
@@ -209,7 +209,6 @@ export default function ChatWindow({ loading, error }) {
         <MessageList 
           messages={messages} 
           isTyping={isTyping} 
-          showSources={config.showSources}
           theme={config.theme}
           primaryColor={config.primaryColor}
           messagesEndRef={messagesEndRef}

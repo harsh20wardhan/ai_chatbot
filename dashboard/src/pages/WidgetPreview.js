@@ -517,27 +517,7 @@ export default function WidgetPreview() {
                         {message.content}
                       </Typography>
                       
-                      {/* Sources */}
-                      {message.sources && message.sources.length > 0 && (
-                        <Box sx={{ mt: 1, pt: 1, borderTop: `1px solid ${config?.theme === 'dark' ? '#4b5563' : '#e5e7eb'}` }}>
-                          <Typography variant="caption" sx={{ opacity: 0.7, mb: 0.5, display: 'block' }}>
-                            Sources:
-                          </Typography>
-                          {message.sources.map((source, index) => {
-                            const words = (source.text || source.title || '').split(' ');
-                            const shortText = words.slice(0, 3).join(' ') + (words.length > 3 ? '...' : '');
-                            
-                            return (
-                              <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 0.5 }}>
-                                <LinkIcon sx={{ fontSize: 12 }} />
-                                <Typography variant="caption">
-                                  {shortText}
-                                </Typography>
-                              </Box>
-                            );
-                          })}
-                        </Box>
-                      )}
+                      {/* Sources display removed - sources will not be shown */}
                     </Box>
                   </Box>
                 ))
@@ -555,9 +535,6 @@ export default function WidgetPreview() {
                     gap: 1,
                   }}>
                     <CircularProgress size={16} />
-                    <Typography variant="body2" sx={{ opacity: 0.7 }}>
-                      Thinking...
-                    </Typography>
                   </Box>
                 </Box>
               )}

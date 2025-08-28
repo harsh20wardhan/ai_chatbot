@@ -441,16 +441,7 @@ export default function WidgetConfig() {
                 sx={{ mb: 3 }}
               />
               
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={config.show_sources}
-                    onChange={handleSwitchChange}
-                    name="show_sources"
-                  />
-                }
-                label="Show sources in responses"
-              />
+              {/* Remove the sources switch - sources will not be shown */}
             </Grid>
             
             <Grid item xs={12} md={6}>

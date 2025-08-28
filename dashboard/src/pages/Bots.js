@@ -28,9 +28,11 @@ import {
   Edit as EditIcon,
 } from '@mui/icons-material';
 import { botApi } from '../services/api';
+import { useAuth } from '../contexts/AuthContext'; // Fixed import path
 
 export default function Bots() {
   const navigate = useNavigate();
+  const { user } = useAuth(); // Get user from auth context
   
   const [bots, setBots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,16 +51,33 @@ export default function Bots() {
   });
 
   useEffect(() => {
-    fetchBots();
-  }, []);
+    // Debug: Check if user is authenticated
+    console.log('Bots component - User:', user);
+    console.log('Bots component - User ID:', user?.id);
+    
+    if (user) {
+      fetchBots();
+    } else {
+      console.warn('No user found in auth context');
+      setLoading(false);
+    }
+  }, [user]);
 
   const fetchBots = async () => {
     try {
       setLoading(true);
+      
+      // Debug: Check authentication
+      const token = localStorage.getItem('auth_token');
+      console.log('Fetching bots with token:', token ? token.substring(0, 20) + '...' : 'No token');
+      
       const data = await botApi.getBots();
+      console.log('Bots data received:', data);
       setBots(data);
     } catch (error) {
       console.error('Error fetching bots:', error);
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
       setSnackbar({
         open: true,
         message: 'Failed to load bots',
@@ -101,6 +120,44 @@ export default function Bots() {
   const handleCloseDeleteDialog = () => {
     setDeleteDialog(false);
     setSelectedBot(null);
+  };
+
+  const handleTestAuth = async () => {
+    try {
+      const result = await botApi.testAuth();
+      console.log('Auth test result:', result);
+      setSnackbar({
+        open: true,
+        message: `Auth test successful: ${result.user_email}`,
+        severity: 'success',
+      });
+    } catch (error) {
+      console.error('Auth test failed:', error);
+      setSnackbar({
+        open: true,
+        message: 'Auth test failed',
+        severity: 'error',
+      });
+    }
+  };
+
+  const handleDebugBots = async () => {
+    try {
+      const result = await botApi.debugAllBots();
+      console.log('Debug result:', result);
+      setSnackbar({
+        open: true,
+        message: `Debug: ${result.total_bots_in_db} total bots, ${result.user_bots_count} user bots`,
+        severity: 'info',
+      });
+    } catch (error) {
+      console.error('Debug failed:', error);
+      setSnackbar({
+        open: true,
+        message: 'Debug failed',
+        severity: 'error',
+      });
+    }
   };
 
   const handleInputChange = (e) => {
@@ -173,15 +230,24 @@ export default function Bots() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Box>
-          <Typography variant="h3" component="h1" sx={{ mb: 0.5 }}>
-            Bots
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Manage, edit and configure your bots
-          </Typography>
-        </Box>
-        <Stack direction="row" spacing={1}>
+        <Typography variant="h4" component="h1">
+          My Bots
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <Button
+            variant="outlined"
+            onClick={handleTestAuth}
+            size="small"
+          >
+            Test Auth
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={handleDebugBots}
+            size="small"
+          >
+            Debug Bots
+          </Button>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
@@ -189,7 +255,7 @@ export default function Bots() {
           >
             Create Bot
           </Button>
-        </Stack>
+        </Box>
       </Box>
 
       {loading ? (

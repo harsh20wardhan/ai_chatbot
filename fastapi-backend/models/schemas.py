@@ -62,6 +62,7 @@ class AuthResponse(BaseModel):
     token_type: str = "bearer"
     expires_in: int
     user: Dict[str, Any]
+    message: Optional[str] = None
 
 class UserResponse(BaseModel):
     """User information response model"""

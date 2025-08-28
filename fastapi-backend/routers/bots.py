@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 import logging
 from typing import Optional
 import httpx
+from datetime import datetime
 
 from config.database import get_db_connection, get_db_transaction, get_qdrant_client
 from config.settings import settings
@@ -23,6 +24,80 @@ from utils.helpers import current_timestamp, generate_uuid
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+@router.get("/debug/all-bots", response_model=dict)
+async def debug_all_bots(
+    http_request: Request,
+    current_user: AuthenticatedUser = Depends(get_current_user)
+):
+    """
+    Debug endpoint to see all bots in the database.
+    This should only be used for debugging purposes.
+    """
+    try:
+        async with get_db_connection() as conn:
+            # Get all bots (no user filtering for debugging)
+            all_bots = await conn.fetch("""
+                SELECT id, name, description, website_url, user_id, created_at, updated_at
+                FROM bots
+                ORDER BY created_at DESC
+            """)
+            
+            # Get current user's bots
+            user_bots = await conn.fetch("""
+                SELECT id, name, description, website_url, user_id, created_at, updated_at
+                FROM bots
+                WHERE user_id = $1
+                ORDER BY created_at DESC
+            """, current_user.id)
+            
+            return {
+                "message": "Debug info",
+                "current_user_id": str(current_user.id),
+                "current_user_email": current_user.email,
+                "total_bots_in_db": len(all_bots),
+                "user_bots_count": len(user_bots),
+                "all_bots": [
+                    {
+                        "id": str(bot['id']),
+                        "name": bot['name'],
+                        "user_id": str(bot['user_id']),
+                        "created_at": bot['created_at'].isoformat() if bot['created_at'] else None
+                    }
+                    for bot in all_bots
+                ],
+                "user_bots": [
+                    {
+                        "id": str(bot['id']),
+                        "name": bot['name'],
+                        "user_id": str(bot['user_id']),
+                        "created_at": bot['created_at'].isoformat() if bot['created_at'] else None
+                    }
+                    for bot in user_bots
+                ]
+            }
+            
+    except Exception as e:
+        logger.error(f"Debug endpoint error: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Debug endpoint error: {str(e)}"
+        )
+
+@router.get("/test-auth", response_model=dict)
+async def test_auth(
+    http_request: Request,
+    current_user: AuthenticatedUser = Depends(get_current_user)
+):
+    """
+    Test endpoint to verify authentication is working correctly.
+    """
+    return {
+        "message": "Authentication working",
+        "user_id": str(current_user.id),
+        "user_email": current_user.email,
+        "timestamp": datetime.utcnow().isoformat()
+    }
 
 @router.get("", response_model=BotListResponse)
 async def get_bots(
@@ -44,8 +119,26 @@ async def get_bots(
         correlation_id=correlation_id
     )
     
+    # Debug: Log user information
+    logger.info(f"Current user: {current_user}")
+    logger.info(f"User ID: {current_user.id}")
+    logger.info(f"User email: {current_user.email}")
+    
     try:
         async with get_db_connection() as conn:
+            # Get all bots for the user
+            logger.info(f"Fetching bots for user_id: {current_user.id}")
+            
+            # First, let's check if the user exists in the auth.users table
+            user_check = await conn.fetchrow("""
+                SELECT id, email FROM auth.users WHERE id = $1
+            """, current_user.id)
+            
+            if user_check:
+                logger.info(f"User found in auth.users: {user_check['email']}")
+            else:
+                logger.warning(f"User {current_user.id} not found in auth.users table")
+            
             # Get all bots for the user
             bot_rows = await conn.fetch("""
                 SELECT id, name, description, website_url, user_id, created_at, updated_at
@@ -53,6 +146,12 @@ async def get_bots(
                 WHERE user_id = $1
                 ORDER BY created_at DESC
             """, current_user.id)
+            
+            logger.info(f"Found {len(bot_rows)} bots for user {current_user.id}")
+            
+            # Debug: Log all bots found
+            for bot in bot_rows:
+                logger.info(f"Bot: {bot['name']} (ID: {bot['id']}, User: {bot['user_id']})")
             
             bots = []
             bot_ids = [row['id'] for row in bot_rows]

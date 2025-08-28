@@ -42,14 +42,12 @@ const EmptyState = styled.div`
 const TypingIndicator = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 8px;
-  padding: 8px 16px;
+  justify-content: center;
+  margin: 16px auto;
+  padding: 12px 20px;
   border-radius: 18px;
-  max-width: 80%;
-  align-self: flex-start;
   background-color: ${({ theme }) => theme === 'dark' ? '#333' : '#f0f0f0'};
-  color: ${({ theme }) => theme === 'dark' ? '#fff' : '#000'};
-  font-size: 14px;
+  width: fit-content;
 `;
 
 const Dot = styled.span`
@@ -76,7 +74,6 @@ const Dot = styled.span`
 export default function MessageList({ 
   messages, 
   isTyping, 
-  showSources,
   theme,
   primaryColor,
   messagesEndRef 
@@ -92,7 +89,6 @@ export default function MessageList({
           <Message
             key={message.id || index}
             message={message}
-            showSources={showSources}
             theme={theme}
             primaryColor={primaryColor}
           />

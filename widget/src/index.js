@@ -15,7 +15,7 @@ class AIChatbotWidget {
       position: 'bottom-right',
       welcomeMessage: null,
       placeholderText: null,
-      showSources: true,
+      // Sources display disabled - sources will not be shown
     };
   }
 

@@ -71,7 +71,7 @@ export function WidgetProvider({ children, initialConfig }) {
       role: message.role,
       content: message.content,
       timestamp: new Date(),
-      sources: message.sources,
+      // Sources removed - sources will not be stored or displayed
     }]);
   };
 

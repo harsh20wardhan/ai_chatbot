@@ -209,99 +209,37 @@
     
     const messageDiv = document.createElement('div');
     messageDiv.style.cssText = `
-      margin-bottom: 16px;
       display: flex;
       justify-content: ${sender === 'user' ? 'flex-end' : 'flex-start'};
+      margin-bottom: 12px;
     `;
     
     const messageBubble = document.createElement('div');
     messageBubble.style.cssText = `
-      max-width: 80%;
+      max-width: 70%;
       padding: 12px 16px;
-      border-radius: 12px;
-      background: ${sender === 'user' ? config.primaryColor : (config.theme === 'dark' ? '#444' : '#ffffff')};
-      color: ${sender === 'user' ? 'white' : (config.theme === 'dark' ? 'white' : 'black')};
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 18px;
+      background-color: ${sender === 'user' 
+        ? (config.primaryColor || '#2563eb')
+        : (config.theme === 'dark' ? '#374151' : '#f3f4f6')
+      };
+      color: ${sender === 'user' ? 'white' : (config.theme === 'dark' ? 'white' : '#1f2937')};
+      font-size: 14px;
+      line-height: 1.4;
       word-wrap: break-word;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     `;
     
-    // Use innerHTML for AI messages to render markdown, textContent for user messages
-    if (sender === 'user') {
-      messageBubble.textContent = content;
+    // Parse markdown content
+    if (sender === 'assistant') {
+      messageBubble.innerHTML = parseMarkdown(content);
     } else {
-      const parsedContent = parseMarkdown(content);
-      messageBubble.innerHTML = parsedContent;
-      
-      // Add CSS for table styling
-      const tables = messageBubble.querySelectorAll('table');
-      tables.forEach(table => {
-        table.style.cssText = `
-          border-collapse: collapse;
-          width: 100%;
-          margin: 0.5em 0;
-          font-size: 0.9em;
-        `;
-        
-        const cells = table.querySelectorAll('th, td');
-        cells.forEach(cell => {
-          cell.style.cssText = `
-            border: 1px solid ${config.theme === 'dark' ? '#555' : '#ddd'};
-            padding: 0.5em;
-            text-align: left;
-          `;
-        });
-        
-        const headers = table.querySelectorAll('th');
-        headers.forEach(header => {
-          header.style.backgroundColor = config.theme === 'dark' ? '#444' : '#f5f5f5';
-          header.style.fontWeight = '600';
-        });
-      });
+      messageBubble.textContent = content;
     }
     
-    messageBubble.textContent = content;
     messageDiv.appendChild(messageBubble);
     
-    // Add sources if available
-    if (sources && sources.length > 0 && config.showSources) {
-      const sourcesDiv = document.createElement('div');
-      sourcesDiv.style.cssText = `
-        margin-top: 8px;
-        padding-top: 8px;
-        border-top: 1px solid ${config.theme === 'dark' ? '#555' : '#eee'};
-        font-size: 12px;
-        color: ${config.theme === 'dark' ? '#aaa' : '#666'};
-      `;
-      
-      const sourcesTitle = document.createElement('div');
-      sourcesTitle.textContent = 'Sources:';
-      sourcesTitle.style.marginBottom = '4px';
-      sourcesDiv.appendChild(sourcesTitle);
-      
-      sources.forEach((source, index) => {
-        const sourceDiv = document.createElement('div');
-        sourceDiv.style.cssText = `
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          margin-bottom: 2px;
-        `;
-        
-        const linkIcon = document.createElement('span');
-        linkIcon.textContent = '🔗';
-        linkIcon.style.fontSize = '10px';
-        
-        const sourceText = document.createElement('span');
-        const words = (source.text || source.title || '').split(' ');
-        sourceText.textContent = words.slice(0, 3).join(' ') + (words.length > 3 ? '...' : '');
-        
-        sourceDiv.appendChild(linkIcon);
-        sourceDiv.appendChild(sourceText);
-        sourcesDiv.appendChild(sourceDiv);
-      });
-      
-      messageBubble.appendChild(sourcesDiv);
-    }
+    // Sources display removed - sources will not be shown
     
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -35,44 +35,7 @@ const MessageTime = styled.div`
   align-self: ${({ role }) => role === 'user' ? 'flex-end' : 'flex-start'};
 `;
 
-const SourcesContainer = styled.div`
-  margin-top: 8px;
-  font-size: 12px;
-  color: ${({ theme }) => theme === 'dark' ? '#aaa' : '#666'};
-`;
 
-const SourcesToggle = styled.button`
-  background: none;
-  border: none;
-  color: ${({ theme, primaryColor }) => theme === 'dark' ? '#fff' : primaryColor};
-  font-size: 12px;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  text-decoration: underline;
-  
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-const SourcesList = styled.ul`
-  margin: 8px 0 0;
-  padding-left: 20px;
-`;
-
-const SourceItem = styled.li`
-  margin-bottom: 4px;
-`;
-
-const SourceLink = styled.a`
-  color: ${({ theme, primaryColor }) => theme === 'dark' ? '#fff' : primaryColor};
-  text-decoration: none;
-  
-  &:hover {
-    text-decoration: underline;
-  }
-`;
 
 // Filter out thinking and reasoning tags from AI responses
 const filterAIResponse = (content) => {
@@ -162,8 +125,7 @@ const MarkdownContent = styled.div`
   }
 `;
 
-export default function Message({ message, showSources, theme, primaryColor }) {
-  const [showSourcesList, setShowSourcesList] = useState(false);
+export default function Message({ message, theme, primaryColor }) {
   
   const formatTime = (timestamp) => {
     if (!timestamp) return '';
@@ -172,11 +134,7 @@ export default function Message({ message, showSources, theme, primaryColor }) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
   
-  const toggleSources = () => {
-    setShowSourcesList(!showSourcesList);
-  };
-  
-  const hasSources = message.sources && message.sources.length > 0;
+
   
   // Filter the message content if it's from the AI
   const displayContent = message.role === 'assistant' || message.role === 'bot' 
@@ -206,35 +164,7 @@ export default function Message({ message, showSources, theme, primaryColor }) {
           </MarkdownContent>
         )}
         
-        {showSources && hasSources && (
-          <SourcesContainer theme={theme}>
-            <SourcesToggle 
-              onClick={toggleSources}
-              theme={theme}
-              primaryColor={primaryColor}
-            >
-              {showSourcesList ? 'Hide sources' : 'Show sources'}
-            </SourcesToggle>
-            
-            {showSourcesList && (
-              <SourcesList>
-                {message.sources.map((source, index) => (
-                  <SourceItem key={index}>
-                    <SourceLink 
-                      href={source.url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      theme={theme}
-                      primaryColor={primaryColor}
-                    >
-                      {source.title || source.url}
-                    </SourceLink>
-                  </SourceItem>
-                ))}
-              </SourcesList>
-            )}
-          </SourcesContainer>
-        )}
+
       </MessageBubble>
       
       <MessageTime 

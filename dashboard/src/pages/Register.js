@@ -20,6 +20,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   
   const handleSubmit = async (e) => {
@@ -42,13 +43,54 @@ export default function Register() {
     
     try {
       setError('');
+      setSuccess('');
       setLoading(true);
       
-      await signUp(email, password, name);
-      navigate('/');
+      const response = await signUp(email, password, name);
+      
+      if (response.access_token) {
+        // User is automatically signed in
+        setSuccess('Account created successfully! Redirecting...');
+        setTimeout(() => navigate('/'), 1500);
+      } else if (response.message) {
+        // Email confirmation required or other message
+        setSuccess(response.message);
+        // Don't navigate, let user read the message
+      } else {
+        // Fallback success message
+        setSuccess('Account created successfully! You can now sign in.');
+      }
     } catch (error) {
       console.error('Registration error:', error);
       setError(error.message || 'Failed to create an account');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendConfirmation = async () => {
+    try {
+      setLoading(true);
+      
+      // Call the resend confirmation endpoint
+      const response = await fetch('/api/auth/resend-confirmation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setSuccess(data.message || 'Confirmation email resent successfully!');
+      } else {
+        setError(data.detail || 'Failed to resend confirmation email');
+      }
+    } catch (error) {
+      console.error('Resend confirmation error:', error);
+      setError('Failed to resend confirmation email');
     } finally {
       setLoading(false);
     }
@@ -63,6 +105,24 @@ export default function Register() {
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
+        </Alert>
+      )}
+      
+      {success && (
+        <Alert severity="success" sx={{ mb: 2 }}>
+          {success}
+          {success.includes('confirmation email') && (
+            <Box sx={{ mt: 1 }}>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={handleResendConfirmation}
+                disabled={loading}
+              >
+                Resend Confirmation Email
+              </Button>
+            </Box>
+          )}
         </Alert>
       )}
       

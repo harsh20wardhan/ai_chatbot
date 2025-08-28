@@ -17,9 +17,51 @@ from models.schemas import (
     AuthResponse, UserResponse, SuccessResponse, ErrorResponse
 )
 from utils.logging import log_service_call, log_service_result
+from config.settings import settings
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+@router.post("/resend-confirmation", response_model=SuccessResponse)
+async def resend_confirmation_email(request: Request, http_request: Request):
+    """
+    Resend email confirmation for a user.
+    """
+    try:
+        data = await request.json()
+        email = data.get('email')
+        
+        if not email:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email is required"
+            )
+        
+        # Get Supabase client
+        supabase = get_supabase_client()
+        
+        # Resend confirmation email
+        resend_response = supabase.auth.resend({
+            "type": "signup",
+            "email": email
+        })
+        
+        if hasattr(resend_response, 'error') and resend_response.error:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Failed to resend confirmation email: {resend_response.error.message}"
+            )
+        
+        return SuccessResponse(message="Confirmation email sent successfully. Please check your inbox.")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Resend confirmation error: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to resend confirmation email"
+        )
 
 @router.post("/register", response_model=AuthResponse)
 async def register(request: RegisterRequest, http_request: Request):
@@ -52,14 +94,28 @@ async def register(request: RegisterRequest, http_request: Request):
         logger.info(f"Attempting registration for email: {request.email}")
         
         # Sign up user with Supabase
+        logger.info(f"Starting Supabase signup for email: {request.email}")
+        
+        # Check if we're in development mode and should disable email confirmation
+        try:
+            dev_mode = settings.ENVIRONMENT.lower() == "development"
+            logger.info(f"Environment: {settings.ENVIRONMENT}, Dev mode: {dev_mode}")
+        except AttributeError:
+            # Fallback if ENVIRONMENT is not set
+            dev_mode = True  # Default to development mode
+            logger.info(f"Environment not set, defaulting to dev mode: {dev_mode}")
+        
         signup_response = supabase.auth.sign_up({
             "email": request.email,
             "password": request.password,
             "options": {
                 "data": {},
-                "email_redirect_to": f"{http_request.headers.get('origin', 'http://localhost:8000')}/auth/callback"
+                "email_redirect_to": f"{http_request.headers.get('origin', 'http://localhost:8000')}/auth/callback",
+                "email_confirm": not dev_mode  # Disable email confirmation in development
             }
         })
+        
+        logger.info(f"Signup response received: user={signup_response.user is not None}, session={signup_response.session is not None}")
         
         if signup_response.user is None:
             error_msg = "Registration failed"
@@ -72,27 +128,115 @@ async def register(request: RegisterRequest, http_request: Request):
                 detail=error_msg
             )
         
-        # Try to get session token
-        token = None
-        expires_in = 3600  # Default 1 hour
+        # Check if user was created successfully
+        user_id = signup_response.user.id
+        logger.info(f"User created successfully with ID: {user_id}")
         
-        if signup_response.session:
+        # Try to manually confirm the user's email using admin client
+        try:
+            admin_supabase = get_supabase_admin_client()
+            logger.info(f"Attempting to confirm email for user ID: {user_id}")
+            
+            # Try to confirm the user's email by setting email_confirmed_at
+            from datetime import datetime
+            current_time = datetime.utcnow()
+            
+            update_response = admin_supabase.auth.admin.update_user_by_id(
+                user_id,
+                {
+                    "email_confirmed_at": current_time.isoformat(),
+                    "confirmed_at": current_time.isoformat()
+                }
+            )
+            
+            if hasattr(update_response, 'error') and update_response.error:
+                logger.error(f"Admin email confirmation failed: {update_response.error.message}")
+                raise Exception(f"Admin confirmation failed: {update_response.error.message}")
+            
+            logger.info(f"User email manually confirmed for ID: {user_id}")
+            
+            # Wait a moment for the confirmation to propagate
+            import asyncio
+            await asyncio.sleep(1)
+            
+            # Verify that the email confirmation actually worked
+            try:
+                verify_response = admin_supabase.auth.admin.get_user_by_id(user_id)
+                if verify_response.user and verify_response.user.email_confirmed_at:
+                    logger.info(f"Email confirmation verified for user {user_id}")
+                else:
+                    logger.warning(f"Email confirmation verification failed for user {user_id}")
+                    raise Exception("Email confirmation verification failed")
+            except Exception as verify_error:
+                logger.warning(f"Failed to verify email confirmation: {verify_error}")
+                raise verify_error
+            
+            # Try to sign in immediately after confirmation
+            try:
+                logger.info("Attempting sign-in after manual email confirmation")
+                signin_response = supabase.auth.sign_in_with_password({
+                    "email": request.email,
+                    "password": request.password
+                })
+                
+                if signin_response.user and signin_response.session:
+                    token = signin_response.session.access_token
+                    expires_in = signin_response.session.expires_in or 3600
+                    logger.info("User successfully signed in after email confirmation")
+                else:
+                    logger.warning("Sign-in failed after email confirmation")
+                    if hasattr(signin_response, 'error') and signin_response.error:
+                        logger.warning(f"Sign-in error: {signin_response.error.message}")
+                    token = None
+            except Exception as signin_error:
+                logger.warning(f"Sign-in attempt after confirmation failed: {signin_error}")
+                token = None
+                
+        except Exception as confirm_error:
+            logger.warning(f"Failed to manually confirm email: {confirm_error}")
+            # Try alternative approach - resend confirmation email
+            try:
+                logger.info("Attempting to resend confirmation email")
+                resend_response = supabase.auth.resend({
+                    "type": "signup",
+                    "email": request.email
+                })
+                if hasattr(resend_response, 'error') and resend_response.error:
+                    logger.warning(f"Failed to resend confirmation email: {resend_response.error.message}")
+                else:
+                    logger.info("Confirmation email resent successfully")
+            except Exception as resend_error:
+                logger.warning(f"Failed to resend confirmation email: {resend_error}")
+            
+            # Even if email confirmation fails, try to create a temporary session
+            # This allows users to use the system while waiting for email confirmation
+            try:
+                logger.info("Attempting to create temporary session despite email confirmation failure")
+                temp_signin_response = supabase.auth.sign_in_with_password({
+                    "email": request.email,
+                    "password": request.password
+                })
+                
+                if temp_signin_response.user and temp_signin_response.session:
+                    token = temp_signin_response.session.access_token
+                    expires_in = temp_signin_response.session.expires_in or 3600
+                    logger.info("Temporary session created successfully")
+                else:
+                    logger.warning("Temporary session creation failed")
+                    token = None
+            except Exception as temp_error:
+                logger.warning(f"Temporary session creation failed: {temp_error}")
+                token = None
+        
+        # Fallback: Check if original signup response had a session
+        if not token and signup_response.session:
             token = signup_response.session.access_token
             expires_in = signup_response.session.expires_in or 3600
-        else:
-            # If no session was created during signup, try to sign them in
-            logger.info("No session created during signup, attempting sign in...")
-            signin_response = supabase.auth.sign_in_with_password({
-                "email": request.email,
-                "password": request.password
-            })
-            
-            if signin_response.session:
-                token = signin_response.session.access_token
-                expires_in = signin_response.session.expires_in or 3600
-                logger.info("Successfully signed in after registration")
-            else:
-                logger.warning("Failed to sign in after registration")
+            logger.info("Using original signup session token")
+        
+        # If still no token, set default values
+        if not token:
+            expires_in = 3600  # Default 1 hour
         
         log_service_result(
             logger,
@@ -103,12 +247,24 @@ async def register(request: RegisterRequest, http_request: Request):
             correlation_id=correlation_id
         )
         
-        return AuthResponse(
-            access_token=token or "",
-            token_type="bearer",
-            expires_in=expires_in,
-            user=signup_response.user.model_dump()
-        )
+        # Return response based on whether session was created
+        if token:
+            # User is signed in
+            return AuthResponse(
+                access_token=token,
+                token_type="bearer",
+                expires_in=expires_in,
+                user=signup_response.user.model_dump()
+            )
+        else:
+            # Email confirmation required
+            return AuthResponse(
+                access_token="",
+                token_type="bearer",
+                expires_in=0,
+                user=signup_response.user.model_dump(),
+                message="Registration successful! A confirmation email has been sent to your email address. Please check your inbox and click the confirmation link to activate your account. If you don't see the email, check your spam folder."
+            )
         
     except HTTPException:
         raise
@@ -161,6 +317,11 @@ async def login(request: LoginRequest, http_request: Request):
             error_msg = "Invalid email or password"
             if hasattr(signin_response, 'error') and signin_response.error:
                 error_msg = signin_response.error.message
+                # Provide more helpful error messages
+                if "Invalid login credentials" in error_msg:
+                    error_msg = "Invalid email or password. If you just registered, please try logging in again."
+                elif "Email not confirmed" in error_msg:
+                    error_msg = "Please check your email and confirm your account before signing in."
             
             logger.warning(f"Login failed for {request.email}: {error_msg}")
             raise HTTPException(

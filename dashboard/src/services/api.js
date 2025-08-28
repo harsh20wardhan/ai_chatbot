@@ -21,6 +21,9 @@ api.interceptors.request.use(
     
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log('API Request with token:', token.substring(0, 20) + '...');
+    } else {
+      console.warn('API Request without token');
     }
     
     return config;
@@ -70,8 +73,26 @@ api.interceptors.response.use(
 export const botApi = {
   // Get all bots
   getBots: async () => {
+    console.log('Fetching bots...');
     const response = await api.get('/bots');
+    console.log('Bots response:', response.data);
     return response.data.bots;
+  },
+  
+  // Test authentication
+  testAuth: async () => {
+    console.log('Testing authentication...');
+    const response = await api.get('/bots/test-auth');
+    console.log('Auth test response:', response.data);
+    return response.data;
+  },
+  
+  // Debug endpoint to see all bots
+  debugAllBots: async () => {
+    console.log('Calling debug endpoint...');
+    const response = await api.get('/bots/debug/all-bots');
+    console.log('Debug response:', response.data);
+    return response.data;
   },
   
   // Get a specific bot
