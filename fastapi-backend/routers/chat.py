@@ -54,7 +54,7 @@ async def process_chat(
         
         async with get_db_connection() as conn:
             bot_row = await conn.fetchrow("""
-                SELECT id, name, user_id
+                SELECT id, name, user_id, custom_prompt
                 FROM bots 
                 WHERE id = $1
             """, request.bot_id)
@@ -92,7 +92,8 @@ async def process_chat(
             query=request.query,
             bot_id=request.bot_id,
             conversation_id=conversation_id,
-            message_history=[msg.dict() for msg in request.message_history]
+            message_history=[msg.dict() for msg in request.message_history],
+            custom_prompt=bot_row['custom_prompt'] if bot_row else None
         )
         
         # Store assistant's response in database

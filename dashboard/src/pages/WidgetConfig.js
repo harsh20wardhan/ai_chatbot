@@ -166,7 +166,7 @@ export default function WidgetConfig() {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(o)) return;
     js = d.createElement(s); js.id = o;
-    js.src = '${window.location.origin}/widget/ai-chatbot-widget.js';
+            js.src = '${window.location.origin}/widget/ai-chatbot-widget.js?v=' + Date.now();
     js.async = 1;
     js.dataset.botId = '${botId}';
     fjs.parentNode.insertBefore(js, fjs);

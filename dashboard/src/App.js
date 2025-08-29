@@ -18,6 +18,7 @@ import WidgetPreview from './pages/WidgetPreview';
 import Analytics from './pages/Analytics';
 import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
+import Landing from './pages/Landing';
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -31,6 +32,23 @@ const ProtectedRoute = ({ children }) => {
   // Redirect to login if not authenticated
   if (!user) {
     return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+};
+
+// Public route component that redirects authenticated users to dashboard
+const PublicRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  
+  // Show loading state if auth is still being checked
+  if (loading) {
+    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</Box>;
+  }
+  
+  // Redirect authenticated users to dashboard
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
   }
   
   return children;
@@ -51,7 +69,6 @@ function App() {
           <MainLayout />
         </ProtectedRoute>
       }>
-        <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/bots" element={<Bots />} />
         <Route path="/bots/:botId" element={<BotDetail />} />
@@ -62,6 +79,13 @@ function App() {
       
       {/* Public widget preview route (no auth required) */}
       <Route path="/widget-preview/:botId" element={<WidgetPreview />} />
+      
+      {/* Landing page routes (no auth required) */}
+      <Route path="/" element={<PublicRoute><Landing /></PublicRoute>} />
+      <Route path="/home" element={<PublicRoute><Landing /></PublicRoute>} />
+      <Route path="/pricing" element={<PublicRoute><Landing /></PublicRoute>} />
+      <Route path="/contact" element={<PublicRoute><Landing /></PublicRoute>} />
+      <Route path="/landing" element={<PublicRoute><Landing /></PublicRoute>} />
       
       {/* 404 route */}
       <Route path="*" element={<NotFound />} />

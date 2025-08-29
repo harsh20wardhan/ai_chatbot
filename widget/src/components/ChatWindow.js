@@ -6,9 +6,9 @@ import ChatInput from './ChatInput';
 import { sendMessage } from '../services/api';
 
 const Container = styled.div`
-  width: 350px;
+  width: ${({ width }) => width}px;
   max-width: calc(100vw - 40px);
-  height: 500px;
+  height: ${({ height }) => height}px;
   max-height: calc(100vh - 100px);
   background-color: ${({ theme }) => theme === 'dark' ? '#1e1e1e' : '#ffffff'};
   color: ${({ theme }) => theme === 'dark' ? '#ffffff' : '#000000'};
@@ -19,6 +19,7 @@ const Container = styled.div`
   overflow: hidden;
   transition: all 0.3s ease;
   animation: slideIn 0.3s forwards;
+  position: relative;
   
   @keyframes slideIn {
     from {
@@ -29,6 +30,20 @@ const Container = styled.div`
       opacity: 1;
       transform: translateY(0);
     }
+  }
+`;
+
+const ResizeHandle = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  cursor: se-resize;
+  background: linear-gradient(-45deg, transparent 30%, ${({ theme, primaryColor }) => theme === 'dark' ? '#666' : primaryColor} 30%, ${({ theme, primaryColor }) => theme === 'dark' ? '#666' : primaryColor} 40%, transparent 40%);
+  
+  &:hover {
+    background: linear-gradient(-45deg, transparent 30%, ${({ theme, primaryColor }) => theme === 'dark' ? '#888' : primaryColor} 30%, ${({ theme, primaryColor }) => theme === 'dark' ? '#888' : primaryColor} 40%, transparent 40%);
   }
 `;
 
@@ -111,6 +126,11 @@ export default function ChatWindow({ loading, error }) {
   } = useWidget();
   
   const messagesEndRef = useRef(null);
+  const [dimensions, setDimensions] = React.useState({ width: 350, height: 500 });
+  const isResizing = useRef(false);
+  const startPos = useRef({ x: 0, y: 0 });
+  const startSize = useRef({ width: 0, height: 0 });
+  const audioRef = useRef(null);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -118,6 +138,79 @@ export default function ChatWindow({ loading, error }) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
+
+  // Play notification sound when receiving messages
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
+      playNotificationSound();
+    }
+  }, [messages]);
+
+  const playNotificationSound = () => {
+    try {
+      // Create a simple notification sound using Web Audio API
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.2);
+    } catch (error) {
+      console.log('Could not play notification sound:', error);
+    }
+  };
+
+  // Handle resize functionality
+  useEffect(() => {
+    const handleMouseDown = (e) => {
+      if (e.target.closest('[data-resize-handle]')) {
+        isResizing.current = true;
+        startPos.current = { x: e.clientX, y: e.clientY };
+        startSize.current = { width: dimensions.width, height: dimensions.height };
+        document.body.style.cursor = 'se-resize';
+        document.body.style.userSelect = 'none';
+      }
+    };
+
+    const handleMouseMove = (e) => {
+      if (isResizing.current) {
+        const deltaX = e.clientX - startPos.current.x;
+        const deltaY = e.clientY - startPos.current.y;
+        
+        const newWidth = Math.max(300, Math.min(800, startSize.current.width + deltaX));
+        const newHeight = Math.max(400, Math.min(800, startSize.current.height + deltaY));
+        
+        setDimensions({ width: newWidth, height: newHeight });
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isResizing.current) {
+        isResizing.current = false;
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+      }
+    };
+
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [dimensions]);
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
@@ -169,7 +262,7 @@ export default function ChatWindow({ loading, error }) {
 
   if (loading) {
     return (
-      <Container theme={config.theme}>
+      <Container theme={config.theme} width={dimensions.width} height={dimensions.height}>
         <Header primaryColor={config.primaryColor}>
           <Logo>AI</Logo>
           <Title>Loading...</Title>
@@ -178,13 +271,14 @@ export default function ChatWindow({ loading, error }) {
           <Spinner primaryColor={config.primaryColor} />
           <span>Loading chat...</span>
         </LoadingContainer>
+        <ResizeHandle theme={config.theme} primaryColor={config.primaryColor} data-resize-handle />
       </Container>
     );
   }
 
   if (error) {
     return (
-      <Container theme={config.theme}>
+      <Container theme={config.theme} width={dimensions.width} height={dimensions.height}>
         <Header primaryColor={config.primaryColor}>
           <Logo>AI</Logo>
           <Title>Error</Title>
@@ -195,12 +289,13 @@ export default function ChatWindow({ loading, error }) {
             <p>{error}</p>
           </div>
         </ErrorContainer>
+        <ResizeHandle theme={config.theme} primaryColor={config.primaryColor} data-resize-handle />
       </Container>
     );
   }
 
   return (
-    <Container theme={config.theme}>
+    <Container theme={config.theme} width={dimensions.width} height={dimensions.height}>
       <Header primaryColor={config.primaryColor}>
         <Logo>{config.name ? config.name.charAt(0).toUpperCase() : 'AI'}</Logo>
         <Title>{config.name || 'AI Assistant'}</Title>
@@ -222,6 +317,7 @@ export default function ChatWindow({ loading, error }) {
           primaryColor={config.primaryColor}
         />
       </Content>
+      <ResizeHandle theme={config.theme} primaryColor={config.primaryColor} data-resize-handle />
     </Container>
   );
 }

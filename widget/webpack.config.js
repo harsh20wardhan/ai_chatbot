@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -34,6 +35,13 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
+      // Define browser-compatible values for Node.js globals
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(argv.mode || 'development'),
+        'process.env': '{}',
+        'process.platform': JSON.stringify('browser'),
+        'process.version': JSON.stringify(''),
+      }),
       // Only use HTML plugin for development
       ...(isProduction ? [] : [
         new HtmlWebpackPlugin({

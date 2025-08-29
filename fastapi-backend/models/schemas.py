@@ -79,6 +79,8 @@ class CreateBotRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=255)
     description: Optional[str] = Field(None, max_length=1000)
     website_url: Optional[str] = None
+    custom_prompt: Optional[str] = Field(None, max_length=2000)  # New field for custom bot prompt
+    logo_url: Optional[str] = None  # New field for bot logo URL
     
     @validator('website_url')
     def validate_url(cls, v):
@@ -91,6 +93,8 @@ class UpdateBotRequest(BaseModel):
     name: Optional[str] = Field(None, min_length=1, max_length=255)
     description: Optional[str] = Field(None, max_length=1000)
     website_url: Optional[str] = None
+    custom_prompt: Optional[str] = Field(None, max_length=2000)  # New field for custom bot prompt
+    logo_url: Optional[str] = None  # New field for bot logo URL
     
     @validator('website_url')
     def validate_url(cls, v):
@@ -104,6 +108,8 @@ class BotResponse(BaseModel):
     name: str
     description: Optional[str]
     website_url: Optional[str]
+    custom_prompt: Optional[str] = None
+    logo_url: Optional[str] = None
     user_id: str
     created_at: datetime
     updated_at: Optional[datetime] = None
@@ -114,6 +120,8 @@ class BotWithStatsResponse(BaseModel):
     name: str
     description: Optional[str]
     website_url: Optional[str]
+    custom_prompt: Optional[str] = None
+    logo_url: Optional[str] = None
     user_id: str
     created_at: str  # ISO format string for frontend compatibility
     updated_at: Optional[str] = None  # ISO format string for frontend compatibility
@@ -438,3 +446,30 @@ class HealthCheckResponse(BaseModel):
     version: str
     timestamp: float
     dependencies: Optional[Dict[str, str]] = None
+
+# Landing page models
+class LandingPageContent(BaseModel):
+    """Landing page content model"""
+    hero_title: str
+    hero_subtitle: str
+    features: List[Dict[str, Any]]
+    pricing_plans: List[Dict[str, Any]]
+    contact_info: Dict[str, Any]
+
+class LandingPageRequest(BaseModel):
+    """Landing page update request model"""
+    page_type: str = Field(..., description="Type of page: home, pricing, contact")
+    title: str
+    content: LandingPageContent
+    meta_data: Optional[Dict[str, Any]] = None
+
+class LandingPageResponse(BaseModel):
+    """Landing page response model"""
+    id: str
+    page_type: str
+    title: str
+    content: LandingPageContent
+    meta_data: Dict[str, Any]
+    is_active: bool
+    created_at: datetime
+    updated_at: Optional[datetime] = None

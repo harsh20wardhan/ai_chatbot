@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -52,6 +52,15 @@ export default function WidgetPreview() {
   const [inputMessage, setInputMessage] = useState('');
   const [sending, setSending] = useState(false);
   const [conversationId, setConversationId] = useState(null);
+  
+  // Resizing state
+  const [dimensions, setDimensions] = useState({ width: 400, height: 500 });
+  const isResizing = useRef(false);
+  const startPos = useRef({ x: 0, y: 0 });
+  const startSize = useRef({ width: 0, height: 0 });
+  
+  // Sound notification
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const fetchWidgetData = async () => {
@@ -79,6 +88,81 @@ export default function WidgetPreview() {
 
     fetchWidgetData();
   }, [botId]);
+
+  // Play notification sound when receiving messages
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].sender === 'bot') {
+      playNotificationSound();
+    }
+  }, [messages]);
+
+  // Handle resize functionality
+  useEffect(() => {
+    const handleMouseDown = (e) => {
+      console.log('Mouse down event:', e.target);
+      if (e.target.closest('[data-resize-handle]')) {
+        console.log('Resize handle clicked!');
+        isResizing.current = true;
+        startPos.current = { x: e.clientX, y: e.clientY };
+        startSize.current = { width: dimensions.width, height: dimensions.height };
+        document.body.style.cursor = 'nw-resize';
+        document.body.style.userSelect = 'none';
+      }
+    };
+
+    const handleMouseMove = (e) => {
+      if (isResizing.current) {
+        const deltaX = startPos.current.x - e.clientX;
+        const deltaY = startPos.current.y - e.clientY;
+        
+        const newWidth = Math.max(300, Math.min(800, startSize.current.width + deltaX));
+        const newHeight = Math.max(400, Math.min(800, startSize.current.height + deltaY));
+        
+        setDimensions({ width: newWidth, height: newHeight });
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isResizing.current) {
+        isResizing.current = false;
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+      }
+    };
+
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [dimensions]);
+
+  const playNotificationSound = () => {
+    try {
+      // Create a simple notification sound using Web Audio API
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.2);
+    } catch (error) {
+      console.log('Could not play notification sound:', error);
+    }
+  };
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || sending) return;
@@ -166,7 +250,7 @@ export default function WidgetPreview() {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(o)) return;
     js = d.createElement(s); js.id = o;
-    js.src = '${window.location.origin}/widget/ai-chatbot-widget.js';
+            js.src = '${window.location.origin}/widget/ai-chatbot-widget.js?v=' + Date.now();
     js.async = 1;
     js.dataset.botId = '${botId}';
     fjs.parentNode.insertBefore(js, fjs);
@@ -420,14 +504,15 @@ export default function WidgetPreview() {
           <Box sx={{
           display: isWidgetOpen ? 'flex' : 'none',
           flexDirection: 'column',
-          width: 350,
-          height: isWidgetMinimized ? 60 : 500,
+          width: dimensions.width,
+          height: isWidgetMinimized ? 60 : dimensions.height,
            bgcolor: config?.theme === 'dark' ? '#1f2937' : '#ffffff',
           borderRadius: 3,
            boxShadow: '0 10px 30px rgba(2, 6, 23, 0.12)',
            border: `1px solid ${config?.theme === 'dark' ? '#374151' : '#e2e8f0'}`,
           overflow: 'hidden',
           transition: 'height 0.3s ease',
+          position: 'relative',
         }}>
           
           {/* Header */}
@@ -534,7 +619,45 @@ export default function WidgetPreview() {
                     alignItems: 'center',
                     gap: 1,
                   }}>
-                    <CircularProgress size={16} />
+                    <Box sx={{ display: 'flex', gap: 0.5 }}>
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          bgcolor: config?.theme === 'dark' ? '#9ca3af' : '#6b7280',
+                          animation: 'typing 1.4s infinite ease-in-out',
+                          '&:nth-of-type(1)': { animationDelay: '0s' },
+                          '&:nth-of-type(2)': { animationDelay: '0.2s' },
+                          '&:nth-of-type(3)': { animationDelay: '0.4s' },
+                          '@keyframes typing': {
+                            '0%, 60%, 100%': { transform: 'translateY(0)', opacity: 0.4 },
+                            '30%': { transform: 'translateY(-10px)', opacity: 1 },
+                          },
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          bgcolor: config?.theme === 'dark' ? '#9ca3af' : '#6b7280',
+                          animation: 'typing 1.4s infinite ease-in-out',
+                          animationDelay: '0.2s',
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          bgcolor: config?.theme === 'dark' ? '#9ca3af' : '#6b7280',
+                          animation: 'typing 1.4s infinite ease-in-out',
+                          animationDelay: '0.4s',
+                        }}
+                      />
+                    </Box>
+
                   </Box>
                 </Box>
               )}
@@ -585,6 +708,31 @@ export default function WidgetPreview() {
                 </Button>
               </Box>
             </Box>
+          )}
+          
+          {/* Resize Handle */}
+          {!isWidgetMinimized && (
+            <Box
+              data-resize-handle
+              sx={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: 20,
+                height: 20,
+                cursor: 'nw-resize',
+                zIndex: 1000,
+                background: `linear-gradient(45deg, transparent 30%, ${config?.primary_color || '#2563eb'} 30%, ${config?.primary_color || '#2563eb'} 40%, transparent 40%)`,
+                border: `2px solid ${config?.primary_color || '#2563eb'}`,
+                borderRadius: '12px 0 0 0',
+                '&:hover': {
+                  background: `linear-gradient(45deg, transparent 30%, ${config?.primary_color || '#2563eb'} 30%, ${config?.primary_color || '#2563eb'} 40%, transparent 40%)`,
+                  opacity: 0.8,
+                  transform: 'scale(1.1)',
+                },
+                transition: 'all 0.2s ease',
+              }}
+            />
           )}
         </Box>
         

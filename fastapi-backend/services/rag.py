@@ -32,7 +32,8 @@ class RAGService:
         query: str,
         bot_id: str,
         conversation_id: Optional[str] = None,
-        message_history: Optional[List[Dict[str, str]]] = None
+        message_history: Optional[List[Dict[str, str]]] = None,
+        custom_prompt: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Process a chat query using RAG pipeline.
@@ -46,7 +47,8 @@ class RAGService:
             query=query[:50] + "..." if len(query) > 50 else query,
             bot_id=bot_id,
             conversation_id=conversation_id,
-            message_history_length=len(message_history) if message_history else 0
+            message_history_length=len(message_history) if message_history else 0,
+            custom_prompt_provided=bool(custom_prompt)
         )
         
         if message_history is None:
@@ -86,8 +88,11 @@ class RAGService:
             self.logger.info(f"Chat history formatted: {len(chat_history)} characters")
             
             # 5. Build prompt with context and history
-            prompt = self._build_prompt(context, chat_history, query)
+            prompt = self._build_prompt(context, chat_history, query, custom_prompt)
             self.logger.info(f"Prompt built: {len(prompt)} characters")
+            if custom_prompt:
+                self.logger.info(f"Custom prompt used: {custom_prompt[:100]}...")
+                self.logger.info(f"Final prompt preview: {prompt[:200]}...")
             
             # 6. Generate answer using LLM
             answer = await self._generate_answer(prompt)
@@ -95,8 +100,11 @@ class RAGService:
             # 7. Filter and format the response
             filtered_answer = filter_ai_response(answer)
             
+            # Clean up the answer to remove any HTML-like formatting issues
+            cleaned_answer = self._clean_answer_formatting(filtered_answer)
+            
             # Build HTML and plain-text variants for frontend consumption
-            answer_html = await self._format_answer_html(filtered_answer)
+            answer_html = await self._format_answer_html(cleaned_answer)
             answer_text = await self._format_answer_text(answer_html)
             
             # Calculate tokens used (approximate)
@@ -246,10 +254,25 @@ class RAGService:
         
         return formatted
     
-    def _build_prompt(self, context: str, chat_history: str, query: str) -> str:
+    def _build_prompt(self, context: str, chat_history: str, query: str, custom_prompt: Optional[str] = None) -> str:
         """Build the prompt for the LLM"""
         
-        prompt = f"""Answer the user's question based on the following context. If you cannot find the answer in the context, say that you don't know but provide your best guess based on general knowledge.
+        if custom_prompt:
+            # Custom prompt should be instructions/guidelines, not the complete prompt
+            # Combine custom prompt with the actual question and context
+            prompt = f"""{custom_prompt}
+
+Now, based on the above instructions, please answer the user's question using the following context:
+
+Context:
+{context}
+{chat_history}
+
+User Question: {query}
+
+Answer:"""
+        else:
+            prompt = f"""Answer the user's question based on the following context. If you cannot find the answer in the context, say that you don't know but provide your best guess based on general knowledge.
 
 Context:
 {context}
@@ -260,6 +283,28 @@ User Question: {query}
 Answer:"""
         
         return prompt
+    
+    def _clean_answer_formatting(self, answer: str) -> str:
+        """Clean up answer formatting to remove HTML-like issues"""
+        if not answer or not isinstance(answer, str):
+            return answer
+        
+        # Remove any HTML-like tags that might cause formatting issues
+        import re
+        
+        # Remove HTML tags
+        answer = re.sub(r'<[^>]+>', '', answer)
+        
+        # Clean up excessive whitespace and line breaks
+        answer = re.sub(r'\n\s*\n\s*\n', '\n\n', answer)
+        answer = re.sub(r' +', ' ', answer)
+        
+        # Fix common formatting issues
+        answer = answer.replace('---', '\n---\n')  # Fix horizontal rules
+        answer = answer.replace('**', '**')  # Ensure markdown bold works
+        answer = answer.replace('*', '*')    # Ensure markdown italic works
+        
+        return answer.strip()
     
     async def _generate_answer(self, prompt: str) -> str:
         """Generate answer using Bedrock GPT model"""

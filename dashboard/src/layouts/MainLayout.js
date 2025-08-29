@@ -32,6 +32,7 @@ import {
   Logout,
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
+import LogiQuadLogo from '../components/LogiQuadLogo';
 
 const drawerWidth = 264;
 
@@ -136,14 +137,7 @@ export default function MainLayout() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, fontWeight: 800, letterSpacing: '-0.02em' }}
-          >
-            AI Chatbot Dashboard
-          </Typography>
+          <LogiQuadLogo variant="compact" sx={{ flexGrow: 1 }} />
           
           {user && (
             <div>

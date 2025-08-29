@@ -45,7 +45,8 @@ from routers import (
     admin,
     analytics,
     widget,
-    health
+    health,
+    landing
 )
 
 # Setup logging
@@ -261,6 +262,12 @@ app.include_router(
     widget.router,
     prefix="/api/widget",
     tags=["Widget"]
+)
+
+app.include_router(
+    landing.router,
+    prefix="/api/landing",
+    tags=["Landing Pages"]
 )
 
 # Root endpoint

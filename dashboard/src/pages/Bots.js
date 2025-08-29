@@ -43,6 +43,8 @@ export default function Bots() {
     name: '',
     description: '',
     website_url: '',
+    custom_prompt: '',
+    logo_url: '',
   });
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -95,6 +97,8 @@ export default function Bots() {
         name: bot.name,
         description: bot.description || '',
         website_url: bot.website_url || '',
+        custom_prompt: bot.custom_prompt || '',
+        logo_url: bot.logo_url || '',
       });
     } else {
       setSelectedBot(null);
@@ -102,6 +106,8 @@ export default function Bots() {
         name: '',
         description: '',
         website_url: '',
+        custom_prompt: '',
+        logo_url: '',
       });
     }
     setOpenDialog(true);
@@ -276,11 +282,27 @@ export default function Bots() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      position: 'relative',
+                      overflow: 'hidden',
                     }}
                   >
-                    <Typography variant="h4" color="white">
-                      {bot.name.charAt(0).toUpperCase()}
-                    </Typography>
+                    {bot.logo_url ? (
+                      <Box
+                        component="img"
+                        src={bot.logo_url}
+                        alt={`${bot.name} logo`}
+                        sx={{
+                          maxWidth: '80%',
+                          maxHeight: '80%',
+                          objectFit: 'contain',
+                          borderRadius: 1,
+                        }}
+                      />
+                    ) : (
+                      <Typography variant="h4" color="white">
+                        {bot.name.charAt(0).toUpperCase()}
+                      </Typography>
+                    )}
                   </CardMedia>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h6" component="div" gutterBottom sx={{ fontWeight: 700 }}>
@@ -407,6 +429,31 @@ export default function Bots() {
             value={formData.website_url}
             onChange={handleInputChange}
             placeholder="https://example.com"
+          />
+          <TextField
+            margin="dense"
+            name="custom_prompt"
+            label="Custom Prompt"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={formData.custom_prompt}
+            onChange={handleInputChange}
+            multiline
+            rows={3}
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            margin="dense"
+            name="logo_url"
+            label="Logo URL"
+            type="url"
+            fullWidth
+            variant="outlined"
+            value={formData.logo_url}
+            onChange={handleInputChange}
+            placeholder="https://example.com/logo.png"
+            sx={{ mt: 2 }}
           />
         </DialogContent>
         <DialogActions>

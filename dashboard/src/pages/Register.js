@@ -51,7 +51,7 @@ export default function Register() {
       if (response.access_token) {
         // User is automatically signed in
         setSuccess('Account created successfully! Redirecting...');
-        setTimeout(() => navigate('/'), 1500);
+        setTimeout(() => navigate('/dashboard'), 1500);
       } else if (response.message) {
         // Email confirmation required or other message
         setSuccess(response.message);

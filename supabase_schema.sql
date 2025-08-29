@@ -4,8 +4,22 @@ CREATE TABLE bots (
   name TEXT NOT NULL,
   description TEXT,
   website_url TEXT,
+  custom_prompt TEXT, -- New field for custom bot prompt
+  logo_url TEXT, -- New field for bot logo URL
   settings JSONB DEFAULT '{}',
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ
+);
+
+-- Create landing_page table for public landing page
+CREATE TABLE landing_page (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  page_type TEXT NOT NULL UNIQUE, -- 'home', 'pricing', 'contact'
+  title TEXT NOT NULL,
+  content JSONB NOT NULL DEFAULT '{}',
+  meta_data JSONB DEFAULT '{}',
+  is_active BOOLEAN NOT NULL DEFAULT true,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ
 );
@@ -201,6 +215,19 @@ CREATE POLICY documents_storage_policy ON storage.objects
     SPLIT_PART(name, '/', 1) = auth.uid()::text
   );
 
+-- Create storage bucket for bot logos (safe to run multiple times)
+INSERT INTO storage.buckets (id, name, public) VALUES ('bot-logos', 'bot-logos', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- RLS policy for bot logos storage (public read, authenticated write)
+CREATE POLICY bot_logos_storage_policy ON storage.objects
+  FOR ALL USING (bucket_id = 'bot-logos')
+  WITH CHECK (
+    bucket_id = 'bot-logos' AND
+    -- Extract user_id from storage path (format: {user_id}/{bot_id}/{filename})
+    SPLIT_PART(name, '/', 1) = auth.uid()::text
+  );
+
 -- Create indexes for better performance
 CREATE INDEX idx_crawled_pages_crawl_job_id ON crawled_pages(crawl_job_id);
 CREATE INDEX idx_crawled_pages_bot_id ON crawled_pages(bot_id);
@@ -212,4 +239,34 @@ CREATE INDEX idx_document_chunks_bot_id ON document_chunks(bot_id);
 
 -- Migration: Add pages_crawled column to existing crawl_jobs table
 -- (This is safe to run multiple times)
-ALTER TABLE crawl_jobs ADD COLUMN IF NOT EXISTS pages_crawled INTEGER DEFAULT 0; 
+ALTER TABLE crawl_jobs ADD COLUMN IF NOT EXISTS pages_crawled INTEGER DEFAULT 0;
+
+-- Migration: Add custom_prompt and logo_url columns to existing bots table
+-- (This is safe to run multiple times)
+ALTER TABLE bots ADD COLUMN IF NOT EXISTS custom_prompt TEXT;
+ALTER TABLE bots ADD COLUMN IF NOT EXISTS logo_url TEXT;
+
+-- Migration: Update existing bots to have default values
+UPDATE bots SET custom_prompt = NULL WHERE custom_prompt IS NULL;
+UPDATE bots SET logo_url = NULL WHERE logo_url IS NULL;
+
+-- Migration: Create landing_page table if it doesn't exist
+CREATE TABLE IF NOT EXISTS landing_page (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  page_type TEXT NOT NULL UNIQUE,
+  title TEXT NOT NULL,
+  content JSONB NOT NULL DEFAULT '{}',
+  meta_data JSONB DEFAULT '{}',
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ
+);
+
+-- Migration: Insert default landing page content
+INSERT INTO landing_page (page_type, title, content, meta_data) 
+VALUES (
+  'home',
+  'AI Chatbot Platform',
+  '{"hero_title": "AI-Powered Chatbots for Your Business", "hero_subtitle": "Create intelligent chatbots that understand your business and provide instant customer support", "features": [{"title": "AI-Powered Responses", "description": "Advanced language models provide human-like conversations", "icon": "🤖"}, {"title": "Easy Integration", "description": "Simple widget that integrates with any website", "icon": "🔗"}, {"title": "24/7 Availability", "description": "Provide instant support to customers anytime", "icon": "⏰"}], "pricing_plans": [{"name": "Starter", "price": "$29", "period": "per month", "features": ["1 Bot", "1000 messages/month", "Basic support"]}, {"name": "Professional", "price": "$99", "period": "per month", "features": ["5 Bots", "10000 messages/month", "Priority support"]}], "contact_info": {"email": "contact@logiquad.com", "phone": "+1 (555) 123-4567", "address": "123 AI Street, Tech City, TC 12345"}}',
+  '{"description": "Default landing page content"}'
+) ON CONFLICT (page_type) DO NOTHING; 

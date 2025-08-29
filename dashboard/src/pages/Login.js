@@ -33,7 +33,7 @@ export default function Login() {
       setLoading(true);
       
       await signIn(email, password);
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       let errorMessage = 'Failed to sign in';

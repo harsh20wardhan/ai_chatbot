@@ -141,7 +141,7 @@ async def get_bots(
             
             # Get all bots for the user
             bot_rows = await conn.fetch("""
-                SELECT id, name, description, website_url, user_id, created_at, updated_at
+                SELECT id, name, description, website_url, custom_prompt, logo_url, user_id, created_at, updated_at
                 FROM bots
                 WHERE user_id = $1
                 ORDER BY created_at DESC
@@ -202,6 +202,8 @@ async def get_bots(
                     'name': row['name'],
                     'description': row['description'],
                     'website_url': row['website_url'],
+                    'custom_prompt': row['custom_prompt'],
+                    'logo_url': row['logo_url'],
                     'user_id': str(row['user_id']),  # Convert UUID to string
                     'created_at': row['created_at'].isoformat() if row['created_at'] else None,
                     'updated_at': row['updated_at'].isoformat() if row['updated_at'] else None,
@@ -264,7 +266,7 @@ async def get_bot(
     try:
         async with get_db_connection() as conn:
             bot_row = await conn.fetchrow("""
-                SELECT id, name, description, website_url, user_id, created_at, updated_at
+                SELECT id, name, description, website_url, custom_prompt, logo_url, user_id, created_at, updated_at
                 FROM bots
                 WHERE id = $1 AND user_id = $2
             """, bot_id, current_user.id)
@@ -288,6 +290,8 @@ async def get_bot(
                 name=bot_row['name'],
                 description=bot_row['description'],
                 website_url=bot_row['website_url'],
+                custom_prompt=bot_row['custom_prompt'],
+                logo_url=bot_row['logo_url'],
                 user_id=str(bot_row['user_id']),  # Convert UUID to string
                 created_at=bot_row['created_at'],
                 updated_at=bot_row['updated_at']
@@ -342,13 +346,15 @@ async def create_bot(
         async with get_db_transaction() as conn:
             # Insert the bot
             await conn.execute("""
-                INSERT INTO bots (id, name, description, website_url, user_id, created_at, updated_at)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                INSERT INTO bots (id, name, description, website_url, custom_prompt, logo_url, user_id, created_at, updated_at)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
             """, 
                 bot_id,
                 request.name,
                 request.description,
                 request.website_url,
+                request.custom_prompt,
+                request.logo_url,
                 current_user.id,
                 now,
                 now
