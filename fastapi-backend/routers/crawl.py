@@ -1,8 +1,8 @@
 """
-Crawling Router
+Enhanced Crawling Router
 
 Migrated from api/src/handlers/crawl.js and api/src/handlers/realtime_crawl.js
-to provide website crawling functionality within the FastAPI backend.
+to provide enhanced website crawling functionality with deep crawling capabilities.
 """
 
 from fastapi import APIRouter, HTTPException, Request, status, Depends, Query, BackgroundTasks
@@ -37,18 +37,18 @@ async def start_crawl(
     current_user: AuthenticatedUser = Depends(get_current_user)
 ):
     """
-    Start a website crawl job.
-    Migrated from api/src/handlers/crawl.js startCrawl function
+    Start an enhanced website crawl job with depth control.
     """
     
     correlation_id = getattr(http_request.state, 'correlation_id', 'unknown')
     
     log_service_call(
         logger,
-        "CrawlRouter",
+        "EnhancedCrawlRouter",
         "start_crawl",
         url=request.url,
         bot_id=request.bot_id,
+        max_depth=getattr(request, 'max_depth', 5),
         user_id=current_user.id,
         correlation_id=correlation_id
     )
@@ -67,52 +67,70 @@ async def start_crawl(
                     detail="Bot not found or access denied"
                 )
         
-        # Create crawl job
+        # Create crawl job with enhanced parameters
         job_id = generate_uuid()
         now = current_timestamp()
+        
+        # Extract enhanced parameters with defaults
+        max_depth = getattr(request, 'max_depth', 5)
+        max_pages = getattr(request, 'max_pages', 100)
+        exclude_patterns = getattr(request, 'exclude_patterns', [])
+        include_patterns = getattr(request, 'include_patterns', [])
+        respect_robots_txt = getattr(request, 'respect_robots_txt', True)
+        delay_between_requests = getattr(request, 'delay_between_requests', 1.0)
         
         async with get_db_transaction() as conn:
             await conn.execute("""
                 INSERT INTO crawl_jobs (
-                    id, bot_id, user_id, url, max_depth, exclude_patterns,
+                    id, bot_id, user_id, url, max_depth, max_pages, exclude_patterns,
+                    include_patterns, respect_robots_txt, delay_between_requests,
                     status, created_at, updated_at
                 )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
             """, 
                 job_id,
                 request.bot_id,
                 current_user.id,
                 request.url,
-                request.max_pages or 20,
-                request.exclude_patterns or [],
+                max_depth,
+                max_pages,
+                exclude_patterns,
+                include_patterns,
+                respect_robots_txt,
+                delay_between_requests,
                 'pending',
                 now,
                 now
             )
         
-        # Start crawling in background
+        # Start enhanced crawling in background
         background_tasks.add_task(
-            _run_crawl_job,
+            _run_enhanced_crawl_job,
             job_id,
             request.bot_id,
             current_user.id,
             request.url,
-            request.max_pages or 20,
-            request.exclude_patterns or []
+            max_pages,
+            max_depth,
+            exclude_patterns,
+            include_patterns,
+            respect_robots_txt,
+            delay_between_requests
         )
         
         log_service_result(
             logger,
-            "CrawlRouter",
+            "EnhancedCrawlRouter",
             "start_crawl",
             True,
             job_id=job_id,
+            max_depth=max_depth,
             correlation_id=correlation_id
         )
         
         return CrawlJobResponse(
             job_id=job_id,
-            message="Crawl job started successfully",
+            message="Enhanced crawl job started successfully",
             status="pending"
         )
         
@@ -121,17 +139,17 @@ async def start_crawl(
     except Exception as e:
         log_service_result(
             logger,
-            "CrawlRouter",
+            "EnhancedCrawlRouter",
             "start_crawl",
             False,
             error=str(e),
             correlation_id=correlation_id
         )
         
-        logger.error(f"Start crawl error: {e}", exc_info=True)
+        logger.error(f"Start enhanced crawl error: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to start crawl job"
+            detail="Failed to start enhanced crawl job"
         )
 
 @router.get("/jobs", response_model=CrawlJobListResponse)
@@ -630,68 +648,65 @@ async def get_realtime_crawl_status(
 @router.get("/realtime/{job_id}/pages", response_model=CrawledPageListResponse)
 async def get_crawled_pages(
     job_id: str,
-    page: int = Query(1, ge=1, description="Page number"),
-    limit: int = Query(20, ge=1, le=100, description="Items per page"),
+    http_request: Request,
     current_user: AuthenticatedUser = Depends(get_current_user)
 ):
     """
-    Get crawled pages for a job.
-    Migrated from api/src/handlers/realtime_crawl.js getCrawledPages function
+    Get all crawled pages for a specific crawl job.
     """
+    
+    correlation_id = getattr(http_request.state, 'correlation_id', 'unknown')
     
     log_service_call(
         logger,
         "CrawlRouter",
         "get_crawled_pages",
         job_id=job_id,
-        user_id=current_user.id
+        user_id=current_user.id,
+        correlation_id=correlation_id
     )
     
     try:
-        offset = (page - 1) * limit
-        
         async with get_db_connection() as conn:
-            # Verify job ownership
+            # First verify the crawl job exists and user has access
             job_row = await conn.fetchrow("""
-                SELECT id FROM crawl_jobs
-                WHERE id = $1 AND user_id = $2
+                SELECT cj.id, cj.bot_id, cj.user_id, cj.url
+                FROM crawl_jobs cj
+                WHERE cj.id = $1 AND cj.user_id = $2
             """, job_id, current_user.id)
             
             if not job_row:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
-                    detail="Crawl job not found"
+                    detail="Crawl job not found or access denied"
                 )
             
-            # Get total count
-            count_row = await conn.fetchrow("""
-                SELECT COUNT(*) as total
-                FROM crawled_pages
-                WHERE crawl_job_id = $1
+            # Fetch all crawled pages for this job
+            pages_rows = await conn.fetch("""
+                SELECT 
+                    cp.id,
+                    cp.url,
+                    cp.title,
+                    cp.content_length,
+                    cp.status,
+                    cp.created_at,
+                    cp.embedded_at
+                FROM crawled_pages cp
+                WHERE cp.crawl_job_id = $1
+                ORDER BY cp.created_at DESC
             """, job_id)
-            total = count_row['total']
             
-            # Get pages
-            page_rows = await conn.fetch("""
-                SELECT id, url, title, content_length, status, created_at, embedded_at
-                FROM crawled_pages
-                WHERE crawl_job_id = $1
-                ORDER BY created_at DESC
-                LIMIT $2 OFFSET $3
-            """, job_id, limit, offset)
-            
-            pages = [
-                CrawledPageResponse(
-                    id=row['id'],
+            pages = []
+            for row in pages_rows:
+                pages.append(CrawledPageResponse(
+                    id=str(row['id']),
                     url=row['url'],
-                    title=row['title'],
+                    title=row['title'] or "Untitled Page",
                     content_length=row['content_length'],
                     status=row['status'],
                     created_at=row['created_at'],
                     embedded_at=row['embedded_at']
-                )
-                for row in page_rows
-            ]
+                ))
             
             log_service_result(
                 logger,
@@ -703,12 +718,7 @@ async def get_crawled_pages(
             
             return CrawledPageListResponse(
                 pages=pages,
-                pagination={
-                    "page": page,
-                    "limit": limit,
-                    "total": total,
-                    "total_pages": (total + limit - 1) // limit
-                }
+                total=len(pages)
             )
             
     except HTTPException:
@@ -725,7 +735,100 @@ async def get_crawled_pages(
         logger.error(f"Get crawled pages error: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to get crawled pages"
+            detail="Failed to fetch crawled pages"
+        )
+
+@router.get("/{job_id}/pages", response_model=CrawledPageListResponse)
+async def get_crawl_job_pages(
+    job_id: str,
+    http_request: Request,
+    current_user: AuthenticatedUser = Depends(get_current_user)
+):
+    """
+    Get all crawled pages for a specific regular crawl job.
+    """
+    
+    correlation_id = getattr(http_request.state, 'correlation_id', 'unknown')
+    
+    log_service_call(
+        logger,
+        "CrawlRouter",
+        "get_crawl_job_pages",
+        job_id=job_id,
+        user_id=current_user.id,
+        correlation_id=correlation_id
+    )
+    
+    try:
+        async with get_db_connection() as conn:
+            # First verify the crawl job exists and user has access
+            job_row = await conn.fetchrow("""
+                SELECT cj.id, cj.bot_id, cj.user_id, cj.url
+                FROM crawl_jobs cj
+                WHERE cj.id = $1 AND cj.user_id = $2
+            """, job_id, current_user.id)
+            
+            if not job_row:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Crawl job not found or access denied"
+                )
+            
+            # Fetch all crawled pages for this job
+            pages_rows = await conn.fetch("""
+                SELECT 
+                    cp.id,
+                    cp.url,
+                    cp.title,
+                    cp.content_length,
+                    cp.status,
+                    cp.created_at,
+                    cp.embedded_at
+                FROM crawled_pages cp
+                WHERE cp.crawl_job_id = $1
+                ORDER BY cp.created_at DESC
+            """, job_id)
+            
+            pages = []
+            for row in pages_rows:
+                pages.append(CrawledPageResponse(
+                    id=str(row['id']),
+                    url=row['url'],
+                    title=row['title'] or "Untitled Page",
+                    content_length=row['content_length'],
+                    status=row['status'],
+                    created_at=row['created_at'],
+                    embedded_at=row['embedded_at']
+                ))
+            
+            log_service_result(
+                logger,
+                "CrawlRouter",
+                "get_crawl_job_pages",
+                True,
+                pages_count=len(pages)
+            )
+            
+            return CrawledPageListResponse(
+                pages=pages,
+                total=len(pages)
+            )
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        log_service_result(
+            logger,
+            "CrawlRouter",
+            "get_crawl_job_pages",
+            False,
+            error=str(e)
+        )
+        
+        logger.error(f"Get crawl job pages error: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to fetch crawled pages"
         )
 
 @router.get("/pages/{page_id}", response_model=dict)
@@ -877,15 +980,19 @@ async def delete_crawled_page(
 
 # Background task functions
 
-async def _run_crawl_job(
+async def _run_enhanced_crawl_job(
     job_id: str,
     bot_id: str,
     user_id: str,
     url: str,
     max_pages: int,
-    exclude_patterns: List[str]
+    max_depth: int,
+    exclude_patterns: List[str],
+    include_patterns: List[str],
+    respect_robots_txt: bool,
+    delay_between_requests: float
 ):
-    """Run crawl job in background"""
+    """Run enhanced crawl job in background"""
     
     try:
         await crawler_service.crawl_website(
@@ -894,10 +1001,14 @@ async def _run_crawl_job(
             user_id=user_id,
             base_url=url,
             max_pages=max_pages,
-            exclude_patterns=exclude_patterns
+            max_depth=max_depth,
+            exclude_patterns=exclude_patterns,
+            include_patterns=include_patterns,
+            respect_robots_txt=respect_robots_txt,
+            delay_between_requests=delay_between_requests
         )
     except Exception as e:
-        logger.error(f"Background crawl job {job_id} failed: {e}", exc_info=True)
+        logger.error(f"Background enhanced crawl job {job_id} failed: {e}", exc_info=True)
 
 async def _run_realtime_crawl_job(
     job_id: str,

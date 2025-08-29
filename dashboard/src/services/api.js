@@ -167,7 +167,32 @@ export const documentApi = {
 
 // API methods for crawling
 export const crawlApi = {
-  // Start a crawl job
+  // Start an enhanced crawl job with all new parameters
+  startEnhancedCrawl: async (botId, url, options = {}) => {
+    const {
+      max_pages = 100,
+      max_depth = 5,
+      exclude_patterns = [],
+      include_patterns = [],
+      respect_robots_txt = true,
+      delay_between_requests = 1.0
+    } = options;
+    
+    const response = await api.post('/crawl', {
+      bot_id: botId,
+      url,
+      max_pages,
+      max_depth,
+      exclude_patterns,
+      include_patterns,
+      respect_robots_txt,
+      delay_between_requests,
+    });
+    
+    return response.data;
+  },
+
+  // Start a crawl job (legacy method for backward compatibility)
   startCrawl: async (botId, url, maxDepth = 3, excludePatterns = []) => {
     const response = await api.post('/crawl', {
       bot_id: botId,
@@ -181,17 +206,42 @@ export const crawlApi = {
   
   // Get crawl job status
   getCrawlStatus: async (jobId) => {
-    const response = await api.get(`/crawl/status/${jobId}`);
+    const response = await api.get(`/crawl/job/${jobId}`);
     return response.data;
   },
 
   // Get all crawl jobs for a specific bot
   getCrawlJobsByBot: async (botId) => {
-    const response = await api.get(`/crawl/jobs?botId=${botId}`);
+    const response = await api.get(`/crawl/bot/${botId}`);
     return response.data.jobs;
   },
   
-  // Start a realtime crawl job
+  // Start a realtime crawl job with enhanced parameters
+  startEnhancedRealtimeCrawl: async (botId, url, options = {}) => {
+    const {
+      max_pages = 100,
+      max_depth = 5,
+      exclude_patterns = [],
+      include_patterns = [],
+      respect_robots_txt = true,
+      delay_between_requests = 1.0
+    } = options;
+    
+    const response = await api.post('/crawl/realtime', {
+      bot_id: botId,
+      url,
+      max_pages,
+      max_depth,
+      exclude_patterns,
+      include_patterns,
+      respect_robots_txt,
+      delay_between_requests,
+    });
+    
+    return response.data;
+  },
+
+  // Start a realtime crawl job (legacy method for backward compatibility)
   startRealtimeCrawl: async (botId, url, maxDepth = 3, excludePatterns = []) => {
     const response = await api.post('/crawl/realtime', {
       bot_id: botId,
@@ -205,14 +255,20 @@ export const crawlApi = {
   
   // Get realtime crawl job status
   getRealtimeCrawlStatus: async (jobId) => {
-    const response = await api.get(`/realtime-crawl/status/${jobId}`);
+    const response = await api.get(`/crawl/realtime/${jobId}`);
     return response.data;
   },
 
   // Get all realtime crawl jobs for a specific bot
   getRealtimeCrawlJobsByBot: async (botId) => {
-    const response = await api.get(`/realtime-crawl/jobs?botId=${botId}`);
+    const response = await api.get(`/crawl/realtime/${botId}/jobs`);
     return response.data.jobs;
+  },
+
+  // Get crawled pages for a specific crawl job
+  getCrawledPages: async (jobId) => {
+    const response = await api.get(`/crawl/${jobId}/pages`);
+    return response.data.pages;
   },
 };
 

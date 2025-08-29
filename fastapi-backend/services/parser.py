@@ -1,8 +1,8 @@
 """
-Parser Service
+Enhanced Parser Service
 
-Migrated from parser_service.py to provide document parsing functionality
-within the FastAPI backend.
+Migrated from parser_service.py to provide advanced document parsing functionality
+within the FastAPI backend with improved content extraction.
 """
 
 import asyncio
@@ -15,10 +15,16 @@ import uuid
 import pandas as pd
 from pathlib import Path
 import httpx
+import re
+from collections import defaultdict
 
 # Document parsing libraries
 import PyPDF2
 import docx2txt
+from PyPDF2 import PdfReader
+import fitz  # PyMuPDF for better PDF parsing
+import mammoth  # Better DOCX parsing
+import openpyxl  # Better Excel parsing
 
 from config.database import get_db_connection, get_db_transaction, get_qdrant_client, get_bedrock_client, get_supabase_admin_client
 from config.settings import settings
@@ -27,12 +33,27 @@ from utils.helpers import current_timestamp, generate_uuid, chunk_text
 
 logger = logging.getLogger(__name__)
 
-class ParserService:
-    """Service for document parsing and processing operations"""
+class EnhancedParserService:
+    """Enhanced service for document parsing and processing operations"""
     
     def __init__(self):
         self.logger = logger
         self.embedding_model_id = "amazon.titan-embed-text-v2:0"
+        
+        # Content quality patterns
+        self.noise_patterns = [
+            r'^\s*$',  # Empty lines
+            r'^\s*\d+\s*$',  # Just numbers
+            r'^\s*[A-Za-z]\s*$',  # Just single letters
+            r'^\s*[^\w\s]{1,3}\s*$',  # Just punctuation
+            r'^\s*Page\s+\d+\s*$',  # Page numbers
+            r'^\s*©\s*\d{4}\s*.*$',  # Copyright notices
+            r'^\s*All rights reserved\s*$',  # Legal text
+            r'^\s*Confidential\s*$',  # Confidentiality notices
+        ]
+        
+        # Compile regex patterns for performance
+        self.noise_regex = [re.compile(pattern, re.IGNORECASE) for pattern in self.noise_patterns]
     
     async def parse_document(
         self,
@@ -42,13 +63,12 @@ class ParserService:
         bot_id: str
     ) -> Dict[str, Any]:
         """
-        Parse a document and process it for embedding.
-        Migrated from parser_service.py /parse endpoint
+        Enhanced parse a document and process it for embedding.
         """
         
         log_service_call(
             self.logger,
-            "ParserService",
+            "EnhancedParserService",
             "parse_document",
             document_id=document_id,
             file_type=file_type,
@@ -65,15 +85,21 @@ class ParserService:
             local_path = await self._download_file_from_storage(file_path)
             
             try:
-                # Parse file based on type
-                text = await self._parse_file_by_type(local_path, file_type)
+                # Parse file based on type with enhanced extraction
+                text = await self._enhanced_parse_file_by_type(local_path, file_type)
                 
                 if not text:
                     raise ValueError(f"No text extracted from document {document_id}")
                 
-                # Chunk the text
-                chunks = chunk_text(text)
-                self.logger.info(f"Document {document_id} split into {len(chunks)} chunks")
+                # Enhanced text cleaning and processing
+                cleaned_text = self._enhance_text_quality(text)
+                
+                if not cleaned_text:
+                    raise ValueError(f"No meaningful content after cleaning for document {document_id}")
+                
+                # Enhanced chunking with semantic awareness
+                chunks = self._enhanced_chunk_text(cleaned_text)
+                self.logger.info(f"Document {document_id} split into {len(chunks)} enhanced chunks")
                 
                 # Store chunks in database
                 chunk_ids = await self._store_document_chunks(document_id, bot_id, user_id, chunks)
@@ -84,7 +110,7 @@ class ParserService:
                 if success:
                     log_service_result(
                         self.logger,
-                        "ParserService",
+                        "EnhancedParserService",
                         "parse_document",
                         True,
                         chunks_count=len(chunks)
@@ -94,7 +120,9 @@ class ParserService:
                         "status": "processed",
                         "document_id": document_id,
                         "bot_id": bot_id,
-                        "chunks_count": len(chunks)
+                        "chunks_count": len(chunks),
+                        "original_length": len(text),
+                        "cleaned_length": len(cleaned_text)
                     }
                 else:
                     raise ValueError("Failed to embed and store chunks")
@@ -112,7 +140,7 @@ class ParserService:
             
             log_service_result(
                 self.logger,
-                "ParserService",
+                "EnhancedParserService",
                 "parse_document",
                 False,
                 error=str(e)
@@ -180,88 +208,148 @@ class ParserService:
             self.logger.error(f"Error downloading file: {e}", exc_info=True)
             raise
     
-    async def _parse_file_by_type(self, file_path: str, file_type: str) -> str:
-        """Parse file based on its type"""
+    async def _enhanced_parse_file_by_type(self, file_path: str, file_type: str) -> str:
+        """Enhanced parse file based on its type with better extraction"""
         
         file_type_lower = file_type.lower()
         
         if file_type_lower == "pdf":
-            return await self._parse_pdf(file_path)
+            return await self._enhanced_parse_pdf(file_path)
         elif file_type_lower == "docx":
-            return await self._parse_docx(file_path)
+            return await self._enhanced_parse_docx(file_path)
         elif file_type_lower in ["txt", "md"]:
-            return await self._parse_txt(file_path)
+            return await self._enhanced_parse_txt(file_path)
         elif file_type_lower in ["xlsx", "xls"]:
-            return await self._parse_excel(file_path)
+            return await self._enhanced_parse_excel(file_path)
         else:
             raise ValueError(f"Unsupported file type: {file_type}")
     
-    async def _parse_pdf(self, file_path: str) -> str:
-        """Extract text from PDF using PyPDF2"""
+    async def _enhanced_parse_pdf(self, file_path: str) -> str:
+        """Enhanced extract text from PDF using multiple methods"""
         
-        text = ""
+        text_parts = []
+        
         try:
+            # Method 1: Try PyMuPDF (fitz) for better text extraction
+            try:
+                doc = fitz.open(file_path)
+                for page_num in range(len(doc)):
+                    page = doc.load_page(page_num)
+                    page_text = page.get_text()
+                    if page_text.strip():
+                        text_parts.append(f"Page {page_num + 1}:\n{page_text}")
+                doc.close()
+                
+                if text_parts:
+                    self.logger.info(f"PDF parsed successfully with PyMuPDF: {file_path}")
+                    return "\n\n".join(text_parts)
+                    
+            except Exception as e:
+                self.logger.debug(f"PyMuPDF failed, falling back to PyPDF2: {e}")
+            
+            # Method 2: Fallback to PyPDF2
             with open(file_path, 'rb') as file:
-                pdf_reader = PyPDF2.PdfReader(file)
-                for page in pdf_reader.pages:
+                pdf_reader = PdfReader(file)
+                for page_num, page in enumerate(pdf_reader.pages):
                     page_text = page.extract_text()
-                    if page_text:
-                        text += page_text + "\n"
+                    if page_text and page_text.strip():
+                        text_parts.append(f"Page {page_num + 1}:\n{page_text}")
             
-            self.logger.info(f"PDF parsed successfully: {file_path}, extracted {len(text)} characters")
-            return text
-            
+            if text_parts:
+                self.logger.info(f"PDF parsed successfully with PyPDF2: {file_path}, extracted {len(''.join(text_parts))} characters")
+                return "\n\n".join(text_parts)
+            else:
+                raise ValueError("No text could be extracted from PDF")
+                
         except Exception as e:
             self.logger.error(f"Error parsing PDF: {e}", exc_info=True)
             raise
     
-    async def _parse_docx(self, file_path: str) -> str:
-        """Extract text from DOCX using docx2txt"""
+    async def _enhanced_parse_docx(self, file_path: str) -> str:
+        """Enhanced extract text from DOCX using multiple methods"""
         
         try:
+            # Method 1: Try mammoth for better formatting preservation
+            try:
+                with open(file_path, "rb") as docx_file:
+                    result = mammoth.extract_raw_text(docx_file)
+                    if result.value:
+                        self.logger.info(f"DOCX parsed successfully with mammoth: {file_path}")
+                        return result.value
+            except Exception as e:
+                self.logger.debug(f"Mammoth failed, falling back to docx2txt: {e}")
+            
+            # Method 2: Fallback to docx2txt
             text = docx2txt.process(file_path)
-            self.logger.info(f"DOCX parsed successfully: {file_path}, extracted {len(text)} characters")
-            return text
+            if text and text.strip():
+                self.logger.info(f"DOCX parsed successfully with docx2txt: {file_path}, extracted {len(text)} characters")
+                return text
+            else:
+                raise ValueError("No text could be extracted from DOCX")
+                
         except Exception as e:
             self.logger.error(f"Error parsing DOCX: {e}", exc_info=True)
             raise
     
-    async def _parse_txt(self, file_path: str) -> str:
-        """Extract text from TXT file"""
+    async def _enhanced_parse_txt(self, file_path: str) -> str:
+        """Enhanced extract text from TXT file with encoding detection"""
         
         try:
-            with open(file_path, "r", encoding="utf-8") as file:
-                text = file.read()
-                self.logger.info(f"TXT parsed successfully: {file_path}, extracted {len(text)} characters")
-                return text
+            # Try multiple encodings
+            encodings = ['utf-8', 'utf-8-sig', 'latin-1', 'cp1252', 'iso-8859-1']
+            
+            for encoding in encodings:
+                try:
+                    with open(file_path, "r", encoding=encoding) as file:
+                        text = file.read()
+                        if text and text.strip():
+                            self.logger.info(f"TXT parsed successfully: {file_path}, encoding: {encoding}, extracted {len(text)} characters")
+                            return text
+                except UnicodeDecodeError:
+                    continue
+            
+            raise ValueError("Could not decode text file with any supported encoding")
+            
         except Exception as e:
             self.logger.error(f"Error parsing TXT: {e}", exc_info=True)
             raise
     
-    async def _parse_excel(self, file_path: str) -> str:
-        """Extract text from Excel files"""
+    async def _enhanced_parse_excel(self, file_path: str) -> str:
+        """Enhanced extract text from Excel files with better formatting"""
         
         try:
-            # Read all sheets
-            excel_data = pd.read_excel(file_path, sheet_name=None)
+            # Use openpyxl for better Excel handling
+            workbook = openpyxl.load_workbook(file_path, data_only=True)
             text_parts = []
             
             # Process each sheet
-            for sheet_name, df in excel_data.items():
+            for sheet_name in workbook.sheetnames:
+                sheet = workbook[sheet_name]
                 text_parts.append(f"Sheet: {sheet_name}")
                 
-                # Convert headers and data to text
-                headers = df.columns.tolist()
-                text_parts.append(f"Headers: {', '.join(str(h) for h in headers)}")
+                # Get headers
+                headers = []
+                for col in range(1, sheet.max_column + 1):
+                    cell_value = sheet.cell(row=1, column=col).value
+                    if cell_value:
+                        headers.append(str(cell_value))
                 
-                # Convert each row to text
-                for idx, row in df.iterrows():
+                if headers:
+                    text_parts.append(f"Headers: {', '.join(headers)}")
+                
+                # Process data rows
+                for row in range(2, sheet.max_row + 1):
                     row_text = []
-                    for col in headers:
-                        value = row.get(col, '')
-                        if pd.notna(value):  # Skip NaN values
-                            row_text.append(f"{col}: {value}")
-                    text_parts.append("; ".join(row_text))
+                    for col in range(1, sheet.max_column + 1):
+                        cell_value = sheet.cell(row=row, column=col).value
+                        if cell_value is not None and str(cell_value).strip():
+                            header = headers[col - 1] if col <= len(headers) else f"Column {col}"
+                            row_text.append(f"{header}: {cell_value}")
+                    
+                    if row_text:
+                        text_parts.append("; ".join(row_text))
+            
+            workbook.close()
             
             text = "\n".join(text_parts)
             self.logger.info(f"Excel parsed successfully: {file_path}, extracted {len(text)} characters")
@@ -270,6 +358,120 @@ class ParserService:
         except Exception as e:
             self.logger.error(f"Error parsing Excel: {e}", exc_info=True)
             raise
+    
+    def _enhance_text_quality(self, text: str) -> str:
+        """
+        Enhance text quality by removing noise and improving structure.
+        """
+        
+        if not text:
+            return ""
+        
+        # Split into lines for processing
+        lines = text.split('\n')
+        enhanced_lines = []
+        
+        for line in lines:
+            line = line.strip()
+            
+            # Skip noise lines
+            if self._is_noise_line(line):
+                continue
+            
+            # Clean up the line
+            cleaned_line = self._clean_line(line)
+            
+            if cleaned_line:
+                enhanced_lines.append(cleaned_line)
+        
+        # Join lines and clean up
+        enhanced_text = '\n'.join(enhanced_lines)
+        
+        # Remove excessive whitespace
+        enhanced_text = re.sub(r'\n\s*\n\s*\n+', '\n\n', enhanced_text)
+        enhanced_text = re.sub(r' +', ' ', enhanced_text)
+        
+        return enhanced_text.strip()
+    
+    def _is_noise_line(self, line: str) -> bool:
+        """Check if a line is noise that should be removed"""
+        
+        if not line or len(line) < 3:
+            return True
+        
+        # Check against noise patterns
+        for pattern in self.noise_regex:
+            if pattern.match(line):
+                return True
+        
+        # Check for very short lines that are likely noise
+        if len(line.strip()) < 10 and not any(char.isalpha() for char in line):
+            return True
+        
+        return False
+    
+    def _clean_line(self, line: str) -> str:
+        """Clean individual line of text"""
+        
+        if not line:
+            return ""
+        
+        # Remove common artifacts
+        line = re.sub(r'^\s*[-_*]\s*', '', line)  # Remove leading bullets
+        line = re.sub(r'\s*[-_*]\s*$', '', line)  # Remove trailing bullets
+        
+        # Remove excessive punctuation
+        line = re.sub(r'[^\w\s.,!?;:()[\]{}"\'-]', '', line)
+        
+        # Clean up whitespace
+        line = re.sub(r'\s+', ' ', line)
+        
+        return line.strip()
+    
+    def _enhanced_chunk_text(self, text: str, chunk_size: int = 1000, overlap: int = 150) -> List[str]:
+        """
+        Enhanced text chunking that respects semantic boundaries and document structure.
+        """
+        
+        if not text:
+            return []
+        
+        # Split into paragraphs first
+        paragraphs = text.split('\n\n')
+        chunks = []
+        current_chunk = ""
+        
+        for paragraph in paragraphs:
+            paragraph = paragraph.strip()
+            if not paragraph:
+                continue
+            
+            # If adding this paragraph would exceed chunk size
+            if len(current_chunk) + len(paragraph) > chunk_size and current_chunk:
+                chunks.append(current_chunk.strip())
+                
+                # Start new chunk with overlap from previous
+                if overlap > 0:
+                    overlap_text = current_chunk[-overlap:] if len(current_chunk) > overlap else current_chunk
+                    current_chunk = overlap_text + "\n\n" + paragraph
+                else:
+                    current_chunk = paragraph
+            else:
+                current_chunk += "\n\n" + paragraph if current_chunk else paragraph
+        
+        # Add the last chunk if it exists
+        if current_chunk.strip():
+            chunks.append(current_chunk.strip())
+        
+        # Post-process chunks to ensure quality
+        final_chunks = []
+        for chunk in chunks:
+            if len(chunk) >= chunk_size // 2:  # Only keep reasonably sized chunks
+                final_chunks.append(chunk)
+            elif final_chunks:  # Merge small chunks with previous
+                final_chunks[-1] += "\n\n" + chunk
+        
+        return final_chunks
     
     async def _store_document_chunks(
         self,
@@ -476,4 +678,4 @@ class ParserService:
             self.logger.error(f"Failed to update document status: {e}", exc_info=True)
 
 # Global service instance
-parser_service = ParserService()
+parser_service = EnhancedParserService()

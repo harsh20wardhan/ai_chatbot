@@ -136,17 +136,25 @@ class CrawlStatus(str, Enum):
     CANCELLED = "cancelled"
 
 class CrawlRequest(BaseModel):
-    """Website crawl request model"""
+    """Enhanced website crawl request model with depth control"""
     url: str = Field(..., pattern=r'^https?://[^\s/$.?#].[^\s]*$')
-    max_pages: int = Field(3, ge=1, le=10)  # Changed from max_depth to match dashboard
+    max_pages: int = Field(100, ge=1, le=1000)  # Increased limit for deep crawling
+    max_depth: int = Field(5, ge=1, le=10)  # New depth parameter for deep crawling
     exclude_patterns: List[str] = Field(default_factory=list)
+    include_patterns: List[str] = Field(default_factory=list)  # New inclusion patterns
+    respect_robots_txt: bool = Field(True, description="Whether to respect robots.txt rules")
+    delay_between_requests: float = Field(1.0, ge=0.0, le=10.0, description="Delay between requests in seconds")
     bot_id: str
 
 class RealtimeCrawlRequest(BaseModel):
-    """Realtime crawl request model"""
+    """Enhanced realtime crawl request model with depth control"""
     url: str = Field(..., pattern=r'^https?://[^\s/$.?#].[^\s]*$')
-    max_pages: int = Field(3, ge=1, le=20)  # Changed from max_depth to match dashboard
+    max_pages: int = Field(100, ge=1, le=1000)  # Increased limit for deep crawling
+    max_depth: int = Field(5, ge=1, le=10)  # New depth parameter for deep crawling
     exclude_patterns: List[str] = Field(default_factory=list)
+    include_patterns: List[str] = Field(default_factory=list)  # New inclusion patterns
+    respect_robots_txt: bool = Field(True, description="Whether to respect robots.txt rules")
+    delay_between_requests: float = Field(1.0, ge=0.0, le=10.0, description="Delay between requests in seconds")
     bot_id: str
     # job_id is optional - will be generated if not provided
 
@@ -392,20 +400,28 @@ class WidgetConfig(BaseModel):
     bot_id: str
     title: str = "AI Assistant"
     subtitle: str = "How can I help you today?"
+    theme: str = "light"
     primary_color: str = "#007bff"
     text_color: str = "#333333"
     background_color: str = "#ffffff"
     position: str = Field("bottom-right", pattern=r'^(bottom-right|bottom-left|top-right|top-left)$')
+    welcome_message: str = "Hello! How can I assist you today?"
+    placeholder_text: str = "Ask me anything..."
+    show_sources: bool = True
     enabled: bool = True
 
 class UpdateWidgetConfigRequest(BaseModel):
     """Update widget configuration request model"""
     title: Optional[str] = None
     subtitle: Optional[str] = None
+    theme: Optional[str] = Field(None, description="Widget theme (light, dark, auto)")
     primary_color: Optional[str] = Field(None, pattern=r'^#[0-9a-fA-F]{6}$')
     text_color: Optional[str] = Field(None, pattern=r'^#[0-9a-fA-F]{6}$')
     background_color: Optional[str] = Field(None, pattern=r'^#[0-9a-fA-F]{6}$')
     position: Optional[str] = Field(None, pattern=r'^(bottom-right|bottom-left|top-right|top-left)$')
+    welcome_message: Optional[str] = Field(None, description="Custom welcome message for the widget")
+    placeholder_text: Optional[str] = Field(None, description="Placeholder text for the input field")
+    show_sources: Optional[bool] = Field(None, description="Whether to show source documents in responses")
     enabled: Optional[bool] = None
 
 class WidgetConfigResponse(BaseModel):
