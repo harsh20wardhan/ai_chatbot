@@ -97,6 +97,16 @@ export default function BotDetail() {
   const [crawledPages, setCrawledPages] = useState([]);
   const [pagesLoading, setPagesLoading] = useState(false);
   
+  // Document viewing functionality
+  const [viewingDocument, setViewingDocument] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [documentContent, setDocumentContent] = useState('');
+  const [documentLoading, setDocumentLoading] = useState(false);
+  
+  // Document deletion confirmation
+  const [openDeleteDocumentDialog, setOpenDeleteDocumentDialog] = useState(false);
+  const [documentToDelete, setDocumentToDelete] = useState(null);
+  
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: '',
@@ -425,6 +435,73 @@ export default function BotDetail() {
         message: 'Failed to delete crawl job',
         severity: 'error',
       });
+    }
+  };
+
+  const handleViewDocument = async (doc) => {
+    try {
+      setSelectedDocument(doc);
+      setDocumentLoading(true);
+      setViewingDocument(true);
+      
+      // Fetch document content from the API
+      const response = await documentApi.getDocument(doc.id);
+      setDocumentContent(response.content || 'Document content not available');
+    } catch (error) {
+      console.error('Error fetching document content:', error);
+      setSnackbar({
+        open: true,
+        message: error.response?.data?.detail || 'Failed to fetch document content',
+        severity: 'error',
+      });
+      setDocumentContent('Failed to load document content');
+    } finally {
+      setDocumentLoading(false);
+    }
+  };
+
+  const handleCloseDocumentDialog = () => {
+    setViewingDocument(false);
+    setSelectedDocument(null);
+    setDocumentContent('');
+  };
+
+  const handleDeleteDocument = async (documentId) => {
+    try {
+      await documentApi.deleteDocument(documentId);
+      
+      setSnackbar({
+        open: true,
+        message: 'Document deleted successfully',
+        severity: 'success',
+      });
+      
+      // Refresh documents list
+      fetchDocuments();
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      setSnackbar({
+        open: true,
+        message: 'Failed to delete document',
+        severity: 'error',
+      });
+    }
+  };
+
+  const handleOpenDeleteDocumentDialog = (doc) => {
+    setDocumentToDelete(doc);
+    setOpenDeleteDocumentDialog(true);
+  };
+
+  const handleCloseDeleteDocumentDialog = () => {
+    setOpenDeleteDocumentDialog(false);
+    setDocumentToDelete(null);
+  };
+
+  const handleConfirmDeleteDocument = async () => {
+    if (documentToDelete) {
+      await handleDeleteDocument(documentToDelete.id);
+      handleCloseDeleteDocumentDialog();
     }
   };
 
@@ -835,7 +912,7 @@ export default function BotDetail() {
                   <Card>
                     <CardContent>
                       <Typography variant="h6" gutterBottom noWrap>
-                        {doc.file_name}
+                        {doc.filename || doc.file_name || 'Untitled Document'}
                       </Typography>
                       
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -861,8 +938,8 @@ export default function BotDetail() {
                       )}
                     </CardContent>
                     <CardActions>
-                      <Button size="small">View</Button>
-                      <Button size="small" color="error">Delete</Button>
+                      <Button size="small" onClick={() => handleViewDocument(doc)}>View</Button>
+                      <Button size="small" color="error" onClick={() => handleOpenDeleteDocumentDialog(doc)}>Delete</Button>
                     </CardActions>
                   </Card>
                 </Grid>
@@ -1106,6 +1183,46 @@ export default function BotDetail() {
         </DialogActions>
       </Dialog>
       
+      {/* View Document Dialog */}
+      <Dialog open={viewingDocument} onClose={handleCloseDocumentDialog} maxWidth="md" fullWidth>
+        <DialogTitle>
+          {selectedDocument?.filename || selectedDocument?.file_name || 'Document'}
+        </DialogTitle>
+        <DialogContent>
+          {documentLoading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Box>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                <strong>File Type:</strong> {selectedDocument?.file_type} | 
+                <strong> Size:</strong> {selectedDocument?.file_size ? `${(selectedDocument.file_size / 1024).toFixed(2)} KB` : 'Unknown'}
+              </Typography>
+              
+              <Paper 
+                variant="outlined" 
+                sx={{ 
+                  p: 2, 
+                  maxHeight: '400px', 
+                  overflow: 'auto',
+                  bgcolor: 'grey.50',
+                  fontFamily: 'monospace',
+                  fontSize: '0.875rem'
+                }}
+              >
+                <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap', margin: 0 }}>
+                  {documentContent}
+                </Typography>
+              </Paper>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDocumentDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      
       {/* Delete Dialog */}
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle>Delete Bot</DialogTitle>
@@ -1117,6 +1234,22 @@ export default function BotDetail() {
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
           <Button onClick={handleDeleteBot} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
+      {/* Delete Document Confirmation Dialog */}
+      <Dialog open={openDeleteDocumentDialog} onClose={handleCloseDeleteDocumentDialog}>
+        <DialogTitle>Confirm Document Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete the document "{documentToDelete?.filename || documentToDelete?.file_name || 'Untitled Document'}"? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDocumentDialog}>Cancel</Button>
+          <Button onClick={handleConfirmDeleteDocument} color="error" variant="contained">
             Delete
           </Button>
         </DialogActions>

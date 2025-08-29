@@ -167,10 +167,20 @@ async def update_widget_config(
             
             # Prepare updates (only include non-None values)
             updates = {}
+            if request.name is not None:
+                updates['name'] = request.name
+            if request.title is not None:
+                updates['title'] = request.title
+            if request.subtitle is not None:
+                updates['subtitle'] = request.subtitle
             if request.theme is not None:
                 updates['theme'] = request.theme
             if request.primary_color is not None:
                 updates['primary_color'] = request.primary_color
+            if request.text_color is not None:
+                updates['text_color'] = request.text_color
+            if request.background_color is not None:
+                updates['background_color'] = request.background_color
             if request.position is not None:
                 updates['position'] = request.position
             if request.welcome_message is not None:
@@ -179,6 +189,8 @@ async def update_widget_config(
                 updates['placeholder_text'] = request.placeholder_text
             if request.show_sources is not None:
                 updates['show_sources'] = request.show_sources
+            if request.enabled is not None:
+                updates['enabled'] = request.enabled
             
             # Merge with existing widget settings
             updated_widget_settings = {
@@ -192,12 +204,38 @@ async def update_widget_config(
                 'widget': updated_widget_settings
             }
             
+            # Also update bot-level settings if provided
+            bot_updates = []
+            bot_params = []
+            param_count = 1
+            
+            if request.name is not None:
+                bot_updates.append(f"name = ${param_count}")
+                bot_params.append(request.name)
+                param_count += 1
+            
             # Save to database
-            await conn.execute("""
-                UPDATE bots
-                SET settings = $1, updated_at = $2
-                WHERE id = $3 AND user_id = $4
-            """, updated_settings, current_timestamp(), bot_id, current_user.id)
+            if bot_updates:
+                # Update both bot and settings
+                await conn.execute(f"""
+                    UPDATE bots
+                    SET {', '.join(bot_updates)}, updated_at = ${param_count}
+                    WHERE id = ${param_count + 1} AND user_id = ${param_count + 2}
+                """, *bot_params, current_timestamp(), bot_id, current_user.id)
+                
+                # Update settings separately - convert dict to JSON string
+                await conn.execute("""
+                    UPDATE bots
+                    SET settings = $1
+                    WHERE id = $2 AND user_id = $3
+                """, json.dumps(updated_settings), bot_id, current_user.id)
+            else:
+                # Only update settings - convert dict to JSON string
+                await conn.execute("""
+                    UPDATE bots
+                    SET settings = $1, updated_at = $2
+                    WHERE id = $3 AND user_id = $4
+                """, json.dumps(updated_settings), current_timestamp(), bot_id, current_user.id)
             
             log_service_result(
                 logger,
@@ -269,6 +307,14 @@ async def get_widget_settings(
             
             # Get full settings including widget configuration
             settings = bot_row['settings'] or {}
+            
+            # Handle case where settings might be stored as JSON string
+            if isinstance(settings, str):
+                try:
+                    settings = json.loads(settings)
+                except (json.JSONDecodeError, TypeError):
+                    settings = {}
+            
             widget_settings = settings.get('widget', {})
             
             log_service_result(
@@ -344,6 +390,14 @@ async def reset_widget_config(
             
             # Reset widget settings to defaults
             existing_settings = bot_row['settings'] or {}
+            
+            # Handle case where settings might be stored as JSON string
+            if isinstance(existing_settings, str):
+                try:
+                    existing_settings = json.loads(existing_settings)
+                except (json.JSONDecodeError, TypeError):
+                    existing_settings = {}
+            
             default_widget_settings = {
                 "theme": "light",
                 "primary_color": "#007BFF",
@@ -364,7 +418,7 @@ async def reset_widget_config(
                 UPDATE bots
                 SET settings = $1, updated_at = $2
                 WHERE id = $3 AND user_id = $4
-            """, updated_settings, current_timestamp(), bot_id, current_user.id)
+            """, json.dumps(updated_settings), current_timestamp(), bot_id, current_user.id)
             
             log_service_result(
                 logger,

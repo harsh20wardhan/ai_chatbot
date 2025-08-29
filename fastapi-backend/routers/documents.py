@@ -366,14 +366,108 @@ async def get_document(
             "DocumentsRouter",
             "get_document",
             False,
-            error=str(e),
-            correlation_id=correlation_id
+            error=str(e)
         )
         
         logger.error(f"Get document error: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve document"
+        )
+
+@router.get("/{document_id}/content", response_model=dict)
+async def get_document_content(
+    document_id: str,
+    http_request: Request,
+    current_user: AuthenticatedUser = Depends(get_current_user)
+):
+    """
+    Get document content for viewing.
+    """
+    
+    correlation_id = getattr(http_request.state, 'correlation_id', 'unknown')
+    
+    log_service_call(
+        logger,
+        "DocumentsRouter",
+        "get_document_content",
+        document_id=document_id,
+        user_id=current_user.id,
+        correlation_id=correlation_id
+    )
+    
+    try:
+        async with get_db_connection() as conn:
+            # First verify the document exists and user has access
+            document_row = await conn.fetchrow("""
+                SELECT id, bot_id, file_name, file_type, file_size, file_path
+                FROM documents
+                WHERE id = $1 AND user_id = $2
+            """, document_id, current_user.id)
+            
+            if not document_row:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Document not found or access denied"
+                )
+            
+            # Get document chunks for content
+            chunks = await conn.fetch("""
+                SELECT chunk_text, chunk_index
+                FROM document_chunks
+                WHERE document_id = $1
+                ORDER BY chunk_index
+            """, document_id)
+            
+            # Combine chunks to form content
+            content = ""
+            if chunks:
+                content = " ".join([chunk['chunk_text'] for chunk in chunks])
+            
+            # If no chunks, try to read from file path (for simple text files)
+            if not content and document_row['file_type'] in ['txt', 'md']:
+                try:
+                    import os
+                    file_path = document_row['file_path']
+                    if os.path.exists(file_path):
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            content = f.read()
+                except Exception as e:
+                    logger.warning(f"Failed to read file content: {e}")
+                    content = "Document content not available"
+            
+            log_service_result(
+                logger,
+                "DocumentsRouter",
+                "get_document_content",
+                True,
+                correlation_id=correlation_id
+            )
+            
+            return {
+                "id": str(document_row['id']),
+                "filename": document_row['file_name'],
+                "file_type": document_row['file_type'],
+                "file_size": document_row['file_size'],
+                "content": content,
+                "chunks_count": len(chunks)
+            }
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        log_service_result(
+            logger,
+            "DocumentsRouter",
+            "get_document_content",
+            False,
+            error=str(e)
+        )
+        
+        logger.error(f"Get document content error: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to retrieve document content"
         )
 
 @router.delete("/{document_id}", response_model=SuccessResponse)

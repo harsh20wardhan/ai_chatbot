@@ -412,8 +412,10 @@ class WidgetConfig(BaseModel):
 
 class UpdateWidgetConfigRequest(BaseModel):
     """Update widget configuration request model"""
-    title: Optional[str] = None
-    subtitle: Optional[str] = None
+    bot_id: Optional[str] = Field(None, description="Bot ID for the widget")
+    name: Optional[str] = Field(None, description="Bot name")
+    title: Optional[str] = Field(None, description="Widget title")
+    subtitle: Optional[str] = Field(None, description="Widget subtitle")
     theme: Optional[str] = Field(None, description="Widget theme (light, dark, auto)")
     primary_color: Optional[str] = Field(None, pattern=r'^#[0-9a-fA-F]{6}$')
     text_color: Optional[str] = Field(None, pattern=r'^#[0-9a-fA-F]{6}$')
@@ -421,7 +423,7 @@ class UpdateWidgetConfigRequest(BaseModel):
     position: Optional[str] = Field(None, pattern=r'^(bottom-right|bottom-left|top-right|top-left)$')
     welcome_message: Optional[str] = Field(None, description="Custom welcome message for the widget")
     placeholder_text: Optional[str] = Field(None, description="Placeholder text for the input field")
-    show_sources: Optional[bool] = Field(None, description="Whether to show source documents in responses")
+    show_sources: Optional[bool] = Field(None, description="Whether to show sources in responses")
     enabled: Optional[bool] = None
 
 class WidgetConfigResponse(BaseModel):

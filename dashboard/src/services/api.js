@@ -163,6 +163,12 @@ export const documentApi = {
     const response = await api.delete(`/documents/${documentId}`);
     return response.data;
   },
+  
+  // Get a specific document
+  getDocument: async (documentId) => {
+    const response = await api.get(`/documents/${documentId}/content`);
+    return response.data;
+  },
 };
 
 // API methods for crawling
