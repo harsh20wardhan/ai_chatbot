@@ -38,6 +38,7 @@ export default function Bots() {
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
+  const [promptDialog, setPromptDialog] = useState(false);
   const [selectedBot, setSelectedBot] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -125,6 +126,16 @@ export default function Bots() {
 
   const handleCloseDeleteDialog = () => {
     setDeleteDialog(false);
+    setSelectedBot(null);
+  };
+
+  const handleOpenPromptDialog = (bot) => {
+    setSelectedBot(bot);
+    setPromptDialog(true);
+  };
+
+  const handleClosePromptDialog = () => {
+    setPromptDialog(false);
     setSelectedBot(null);
   };
 
@@ -317,19 +328,30 @@ export default function Bots() {
                       </Typography>
                     )}
                     <Divider sx={{ my: 2 }} />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Chip 
-                        label={`${bot.messages_count || 0} messages`} 
-                        size="small" 
-                        color="primary" 
-                        variant="outlined" 
-                      />
-                      <Chip 
-                        label={`${bot.documents_count || 0} docs`} 
-                        size="small" 
-                        color="secondary" 
-                        variant="outlined" 
-                      />
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <Chip 
+                          label={`${bot.messages_count || 0} messages`} 
+                          size="small" 
+                          color="primary" 
+                          variant="outlined" 
+                        />
+                        <Chip 
+                          label={`${bot.documents_count || 0} docs`} 
+                          size="small" 
+                          color="secondary" 
+                          variant="outlined" 
+                        />
+                      </Box>
+                      {bot.custom_prompt && (
+                        <Chip 
+                          label="Custom Prompt" 
+                          size="small" 
+                          color="success" 
+                          variant="outlined"
+                          sx={{ fontSize: '0.75rem' }}
+                        />
+                      )}
                     </Box>
                   </CardContent>
                   <CardActions>
@@ -338,6 +360,15 @@ export default function Bots() {
                     </Button>
                     <Button size="small" onClick={() => navigate(`/bots/${bot.id}/widget`)} variant="text">
                       Widget
+                    </Button>
+                    <Button 
+                      size="small" 
+                      onClick={() => handleOpenPromptDialog(bot)} 
+                      variant="text"
+                      disabled={!bot.custom_prompt}
+                      title={bot.custom_prompt ? "View Custom Prompt" : "No custom prompt set"}
+                    >
+                      Prompt
                     </Button>
                     <Box sx={{ flexGrow: 1 }} />
                     <IconButton
@@ -440,7 +471,9 @@ export default function Bots() {
             value={formData.custom_prompt}
             onChange={handleInputChange}
             multiline
-            rows={3}
+            rows={4}
+            placeholder="Enter custom instructions for your bot. This will guide how the bot responds to user queries. You can include specific tone, style, or behavior instructions."
+            helperText="This prompt will guide your bot's responses. You can edit this anytime to change how your bot behaves."
             sx={{ mt: 2 }}
           />
           <TextField
@@ -477,6 +510,43 @@ export default function Bots() {
           <Button onClick={handleDelete} color="error" variant="contained">
             Delete
           </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* View Custom Prompt Dialog */}
+      <Dialog open={promptDialog} onClose={handleClosePromptDialog} maxWidth="md" fullWidth>
+        <DialogTitle>
+          Custom Prompt for "{selectedBot?.name}"
+        </DialogTitle>
+        <DialogContent>
+          {selectedBot?.custom_prompt ? (
+            <Box>
+              <Typography variant="body1" sx={{ mb: 2, whiteSpace: 'pre-wrap' }}>
+                {selectedBot.custom_prompt}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                This prompt guides how your bot responds to user queries. You can edit it by clicking the edit button on the bot card.
+              </Typography>
+            </Box>
+          ) : (
+            <Typography variant="body1" color="text.secondary">
+              No custom prompt has been set for this bot. You can add one by editing the bot.
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClosePromptDialog}>Close</Button>
+          {selectedBot?.custom_prompt && (
+            <Button 
+              onClick={() => {
+                handleClosePromptDialog();
+                handleOpenDialog(selectedBot);
+              }} 
+              variant="contained"
+            >
+              Edit Prompt
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
 
